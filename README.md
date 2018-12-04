@@ -39,6 +39,6 @@ Vigye haza bátran!
 Hívjon most a megrendelésért: 06-30/184-93-37
 Írjon e-mailt kérdéseivel: info@trswebdesign.hu
 
-Üdvözlettel:
-Handzsúr István
+Üdvözlettel: 
+Handzsúr István 
 TrS WebDesign
