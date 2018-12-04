@@ -46,15 +46,15 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 							text: 'Sikertelen kép törlés, SQL hiba történt!'
 						});
 					});
-					</script>"3;
+					</script>";
 		}
 	}
 	//mappa törlése
 	if(isset($_GET["dirtorol"]))
 	{
-		$csekkol=$pdo->query("select mappakep from ".$elotag."_mappak where mappakod='".$_GET["dirtorol"]."'");
-		$mpkp=$csekkol->$fetch();
-		$mappakeptorol=unlink("../galeria/".$mpkp["mappakep"]);
+		$csekkol=$pdo->query("select * from ".$elotag."_mappak where mappakod='".$_GET["dirtorol"]."'");
+		$mapkp=$csekkol->fetch();
+		$mappakeptorol=unlink("../galeria/".$mapkp["mappakep"]."");
 		$dirdel=$pdo->query("delete from ".$elotag."_mappak where mappakod='".$_GET["dirtorol"]."'");
 		if($dirdel)
 		{
@@ -305,7 +305,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 			echo "<input type='file' name='kep[]' required='required' multiple><br />";
 			echo "<font face='arial' size='2' color='#190210'>Válassza ki hová tölti fel:</font><br>&nbsp;&nbsp; ";
 			echo "<select name='mappa' id='mappa'>";
-			while($em=$mappak->$fetch())
+			while($em=$mappak->fetch())
 			{
 				echo "<option value='".$em["mappaut"]."'>".$em["mappanev"]."</option>";
 			}
