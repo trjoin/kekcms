@@ -181,6 +181,8 @@
 		</div>
 	</div>
 <?php
+if(!isset($_REQUEST["furl"]))
+{
 	$modslidebe=$pdo->query("select * from ".$elotag."_modulok where modulnev='slider'");
 	$slimod=$modslidebe->fetch();
 	if($slimod["bekapcsolva"]=="igen")
@@ -217,6 +219,7 @@
 	</div>
 <?php
 	}
+}
 ?>
 
 	<div class="banner-bottom">
