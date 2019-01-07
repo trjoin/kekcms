@@ -374,13 +374,12 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		echo "Szlogen (SITESLOGEN):<br />&nbsp;&nbsp;&nbsp;<input type='text' name='siteslogen' value='".$beallitasok["siteslogen"]."' style='width:200px;' required><br />";
 		echo "Copyright:<br />&nbsp;&nbsp;&nbsp;<input type='text' name='copyright' value='".$beallitasok["copyright"]."' style='width:200px;' required><br />";
 		echo "Téma:<br />&nbsp;&nbsp;&nbsp;<select name='sablon' size='1' style='width:200px;'>";
-		echo "<option value='".$beallitasok["sablon"]."'>".$beallitasok["sablon"]."</option>";
 			$themes=opendir("../themes");
 			while($fajl=readdir($themes))
 			{
 				if($fajl!="." and $fajl!=".." and is_dir("../themes/".$fajl))
 				{
-					echo "<option value='".$fajl."'>".$fajl."</option>";
+					echo "<option value='".$fajl."' ".($beallitasok["sablon"]==$fajl ? "selected" : "").">".$fajl."</option>";
 				}
 			}
 		echo "</select></p>";
