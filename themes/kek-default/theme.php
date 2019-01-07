@@ -285,7 +285,7 @@ if(!isset($_REQUEST["furl"]))
 			{
 				echo '<div class="col-md-4 grid_info">
 						<div class="icon_info">
-							'.($egyhir["kiskep"]=="" ? '<span class="fa fa-comments-o" aria-hidden="true"></span>' : '<img src="blog/'.$egyhir["kiskep"].'" class="img-responsive"').'
+							'.($egyhir["kiskep"]=="" ? '<span class="fa fa-comments-o" aria-hidden="true"></span>' : '<img src="blog/'.$egyhir["kiskep"].'" class="img-responsive" alt="'.$egyhir["cim"].'">').'
 							<h5>'.$egyhir["cim"].'</h5>
 							<p><i>'.$egyhir["datum"].'</i></p><br>
 							'.$egyhir["bevezeto"].'<br><br>
