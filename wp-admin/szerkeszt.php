@@ -18,7 +18,7 @@ if(isset($_GET["modosit"]))
 	echo "<p align='left'><big><b><u>Menüpont címe:</u></b></big><br><input type='text' name='mfnev' value='".$oldal["nev"]."'></p>";
 	echo "<p align='left'><big><b><u>Meta TITLE:</u></b></big><br><input type='text' name='metatitle' value='".$oldal["metatitle"]."'></p>";
 	echo "<p align='left'><big><b><u>Meta KEYWORDS:</u></b></big><br><input type='text' name='metakeywords' value='".$oldal["metakeywords"]."'></p>";
-	echo "<p align='left'><big><b><u>Meta DESCRIPTION:</u></b></big><br><input type='text' name='metadesc' value='".$oldal["metadesc"]."'></p><br />";
+	echo "<p align='left'><big><b><u>Meta DESCRIPTION:</u></b></big><br><input type='text' name='metadesc' value='".$oldal["metadesc"]."'></p>";
 	echo "<p align='left'><big><b><u>Külső hivatkozás (ha van):</u></b></big><br><input type='text' name='tolink' value='".$oldal["tolink"]."'></p><br />";
 }
 elseif(isset($_GET["almodosit"]))
@@ -28,7 +28,7 @@ elseif(isset($_GET["almodosit"]))
 	echo "<p align='left'><big><b><u>Almenüpont címe:</u></b></big><br><input type='text' name='manev' value='".$oldal["nev"]."'></p>";
 	echo "<p align='left'><big><b><u>Meta TITLE:</u></b></big><br><input type='text' name='metatitle' value='".$oldal["metatitle"]."'></p>";
 	echo "<p align='left'><big><b><u>Meta KEYWORDS:</u></b></big><br><input type='text' name='metakeywords' value='".$oldal["metakeywords"]."'></p>";
-	echo "<p align='left'><big><b><u>Meta DESCRIPTION:</u></b></big><br><input type='text' name='metadesc' value='".$oldal["metadesc"]."'></p><br />";
+	echo "<p align='left'><big><b><u>Meta DESCRIPTION:</u></b></big><br><input type='text' name='metadesc' value='".$oldal["metadesc"]."'></p>";
 	echo "<p align='left'><big><b><u>Külső hivatkozás (ha van):</u></b></big><br><input type='text' name='tolink' value='".$oldal["tolink"]."'></p><br />";
 }
 elseif(isset($_GET["blokkszerk"]))

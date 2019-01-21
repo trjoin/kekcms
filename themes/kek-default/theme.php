@@ -598,7 +598,7 @@ if(!isset($_REQUEST["furl"]))
 		}
 	}
 ?>
-		<p>Copyright &copy; <?php $d=getDate(); $datum=$d["year"]; print($datum." ".$webadatok["copyright"]; ?> | Programozás: <a href="https://trswebdesign.hu" target="_blank" title="webfejlesztés szolnok" rel="nofollow">TrJoin</a></p>
+		<p>Copyright &copy; <?php $d=getDate(); $datum=$d["year"]; echo $datum." ".$webadatok["copyright"]; ?> | Programozás: <a href="https://trswebdesign.hu" target="_blank" title="webfejlesztés szolnok" rel="nofollow">TrJoin</a></p>
 	</div>
 	<script>
 		$('ul.dropdown-menu li').hover(function () {

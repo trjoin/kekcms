@@ -215,8 +215,8 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		echo "<input type='submit' value='mentés' class='btn btn-large btn-secondary'>";
 		echo "</form><br />";
 	}
-	//új felhasználói hozzáadása
-	if(isset($_GET["usermod"]))
+	//új felhasználó hozzáadása
+	if(isset($_GET["newuser"]))
 	{
 		echo "<h3>Felhasználó hozzáadása:</h3>";
 		echo "<form action='index.php?lng=".$webaktlang."&mod=y' method='POST'>";
@@ -433,7 +433,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 			$bt6=$pdo->query("select * from ".$elotag."_modulok where modulnev='gmaps'");
 			$md6=$bt6->fetch();
 			echo "<label for='gmaps'>Google térkép: (".$md6["bekapcsolva"].")</label>
-				<select name='gmaps' id='gmaps' size='1'><option value='igen'>bekapcsolom</option><option value='nem'>nem kérem</option></select><br />");
+				<select name='gmaps' id='gmaps' size='1'><option value='igen'>bekapcsolom</option><option value='nem'>nem kérem</option></select><br />";
 			$bt7=$pdo->query("select * from ".$elotag."_modulok where modulnev='letoltes'");
 			$md7=$bt7->fetch();
 			echo "<label for='downmodul'>Letöltések modul: (".$md7["bekapcsolva"].")</label>
@@ -441,7 +441,8 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 			$bt8=$pdo->query("select * from ".$elotag."_modulok where modulnev='shop'");
 			$md8=$bt8->fetch();
 			echo "<label for='shopmodul'>WEBSHOP: (".$md8["bekapcsolva"].")</label>
-				<select name='shopmodul' id='shopmodul' size='1'><option value='igen'>bekapcsolom</option><option value='nem'>nem kérem</option></select><br />";
+				<select name='shopmodul' id='shopmodul' size='1'><option value='igen'>bekapcsolom</option><option value='nem'>nem kérem</option></select><br /><br />";
+			echo '<input type="submit" value="mentés" class="btn btn-large btn-secondary">';
 		echo "</form>";
 	}
 }
