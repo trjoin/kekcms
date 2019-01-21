@@ -220,8 +220,8 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 	{
 		echo "<h3>Felhasználó hozzáadása:</h3>";
 		echo "<form action='index.php?lng=".$webaktlang."&mod=y' method='POST'>";
-		echo "<big>Felhasználónév:</big><br>&nbsp; <input type='text' name='newadminnev' placeholder='adja meg felhasználónevét' value='".$ua["nev"]."'><br>";
-		echo "<big>E-mail cím:</big><br>&nbsp; <input type='text' name='newemailcim' placeholder='adja meg e-mail címét' value='".$ua["email"]."'><br>";
+		echo "<big>Felhasználónév:</big><br>&nbsp; <input type='text' name='newadminnev' placeholder='adja meg felhasználónevét'><br>";
+		echo "<big>E-mail cím:</big><br>&nbsp; <input type='text' name='newemailcim' placeholder='adja meg e-mail címét'><br>";
 		echo "<big>Jelszó:</big><br>&nbsp; <input type='password' name='newadminpass' placeholder='adja meg jelszavát' pattern='.{3,}' minlength='5' required><br><br>";
 		echo "<input type='submit' value='hozzáadás' class='btn btn-large btn-secondary'>";
 		echo "</form><br />";
