@@ -47,6 +47,13 @@ if(isset($_POST["username"]) AND $_POST["username"]!="" AND $_POST["username"]!=
 				echo '<script> alert(\'Az Ön szoftverének terméktámogatása lejárt, a további zavartalan használhatoz kérjük keressen fel bennünket elérhetőségeinken.\'); </script>';
 			}
 		}
+		else
+		{
+			/*** $error="<span style='color:#f00;'>Az Ön terméktámogatása (24 hónap) lejárt, kérjük a szoftver használatának meghosszabbításához keressen minket elérhetőségeinken!</span><br>"; ***/
+			$egy_sor=$login->fetch(\PDO::FETCH_ASSOC);
+			$_SESSION["userlogged"]=$egy_sor["nev"];
+			echo '<script> alert(\'Az Ön szoftverének terméktámogatása lejárt, a további zavartalan használhatoz kérjük keressen fel bennünket elérhetőségeinken.\'); </script>';
+		}
 	}
 	else
 	{
@@ -105,7 +112,14 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 						<ul class="dropdown-menu">
 							<li><a href="index.php?lng='.$webaktlang.'&mod=y&usermod=1">Profil</a></li>
 							<li class="divider"></li>
-							<li><a href="?kilepes">Kilépés</a></li>
+							<li><a href="index.php?lng='.$webaktlang.'&mod=y&newuser=1">Új felhasználó</a></li>
+							<li class="divider"></li>';
+							if($_SESSION["userlogged"]=="nimda")
+							{
+								echo '<li><a href="index.php?lng='.$webaktlang.'&mod=y&rootmodul=1">Modulok kezelése</a></li>
+										<li class="divider"></li>';
+							}
+						echo '<li><a href="?kilepes">Kilépés</a></li>
 						</ul>
 					</li>';
 }

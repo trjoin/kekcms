@@ -25,6 +25,8 @@
 		$description=$ad["metadesc"];
 		$sitename=$ad["metatitle"];
 		$siteslogen="";
+		$ogimage=$ad["ogimage"];
+		$ogimagealt=$ad["metadesc"];
 	}
 	elseif(isset($_REQUEST["hir"]))
 	{
@@ -35,6 +37,8 @@
 		$description=$ad["metadesc"];
 		$sitename=$ad["metatitle"];
 		$siteslogen="";
+		$ogimage="/blog/".$ad["kiskep"];
+		$ogimagealt=$ad["bevezeto"];
 	}
 	else
 	{
@@ -45,6 +49,8 @@
 		$description=$ad["description"];
 		$sitename=$ad["sitename"];
 		$siteslogen=$ad["siteslogen"];
+		$ogimage=$ad["ogimage"];
+		$ogimagealt=$sitename." ".$siteslogen;
 	}
 	
 ?>
@@ -62,8 +68,8 @@
 	<meta property="og:title" content="<?php echo $title; ?>" />
 	<meta property="og:site_name" content="<?php echo $sitename; ?>" />
 	<meta property="og:url" content="<?php echo $fullurl; ?>" />
-	<meta property="og:image" content="<?php echo $absp; ?>/header-bg.jpg" />
-	<meta property="og:image:alt" content="<?php echo $sitename." ".$siteslogen; ?>" />
+	<meta property="og:image" content="<?php echo $ogimage; ?>" />
+	<meta property="og:image:alt" content="<?php echo $ogimagealt; ?>" />
 	<meta property="og:description" content="<?php echo $description; ?>" />
 	<meta property="og:locale" content="hu_HU" />
 	<meta name="DC.coverage" content="Hungary" />
@@ -162,14 +168,21 @@
 					<ul class="dropdown-menu">';
 					while($eamp=$almenu->fetch())
 					{
-						echo '<li><a href="/'.$eamp["furl"].'">'.$eamp["nev"].'</a></li>';
+						echo '<li><a href="'.($eamp["tolink"]!="" ? $eamp["tolink"] : "/".$eamp["furl"]).'">'.$eamp["nev"].'</a></li>';
 					}
 			echo '	</ul>
 				  </li>';
 		}
 		else
 		{
-			echo '<li><a href="/'.$emu["furl"].'">'.$emu["nev"].'</a></li>';
+			if($emu["kod"]=="1")
+			{
+				echo '<li><a href="'.($emu["tolink"]!="" ? $emu["tolink"] : "/").'">'.$emu["nev"].'</a></li>';
+			}
+			else
+			{
+				echo '<li><a href="'.($emu["tolink"]!="" ? $emu["tolink"] : "/".$emu["furl"]).'">'.$emu["nev"].'</a></li>';
+			}
 		}
 	}
 ?>
@@ -285,7 +298,7 @@ if(!isset($_REQUEST["furl"]))
 			{
 				echo '<div class="col-md-4 grid_info">
 						<div class="icon_info">
-							'.($egyhir["kiskep"]=="" ? '<span class="fa fa-comments-o" aria-hidden="true"></span>' : '<img src="blog/'.$egyhir["kiskep"].'" class="img-responsive" alt="'.$egyhir["cim"].'">').'
+							'.($egyhir["kiskep"]=="" ? '<span class="fa fa-comments-o" aria-hidden="true"></span>' : '<img src="/blog/'.$egyhir["kiskep"].'" class="img-responsive" alt="'.$egyhir["cim"].'">').'
 							<h5>'.$egyhir["cim"].'</h5>
 							<p><i>'.$egyhir["datum"].'</i></p><br>
 							'.$egyhir["bevezeto"].'<br><br>
@@ -299,7 +312,7 @@ if(!isset($_REQUEST["furl"]))
 								  </div>
 								  <div class="modal-body">
 									'.$egyhir["szoveg"].'<br><br>
-									'.$egyhir["tags"].'
+									'.($egyhir["tags"]!="" ? $egyhir["tags"] : "").'
 								  </div>
 								</div>
 							  </div>
@@ -566,21 +579,26 @@ if(!isset($_REQUEST["furl"]))
 	</div>
 	<div class="footer_wthree_agile">
 <?php
-	$socmod=$pdo->query("select * from ".$elotag."_social");
-	if($socmod->rowCount()>0)
+	$socmodbe=$pdo->query("select * from ".$elotag."_modulok where modulnev='social'");
+	$socmod=$socmodbe->fetch();
+	if($socmod["bekapcsolva"]=="igen")
 	{
-		echo '<p>';
-		while($sm=$socmod->fetch())
+		$soci=$pdo->query("select * from ".$elotag."_social");
+		if($soci->rowCount()>0)
 		{
-			if($sm["sociallink"]!="#" AND $sm["sociallink"]!="" AND $sm["sociallink"]!=" ")
+			echo '<p>';
+			while($sm=$soci->fetch())
 			{
-				echo '<a href="'.$sm["sociallink"].'" target="_blank"><i class="fa fa-lg fa-'.strtolower($sm["socialsite"]).'" aria-hidden="true"></i></a> &nbsp; ';
+				if($sm["sociallink"]!="#" AND $sm["sociallink"]!="" AND $sm["sociallink"]!=" ")
+				{
+					echo '<a href="'.$sm["sociallink"].'" target="_blank"><i class="fa fa-lg fa-'.strtolower($sm["socialsite"]).'" aria-hidden="true"></i></a> &nbsp; ';
+				}
 			}
+			echo '</p>';
 		}
-		echo '</p>';
 	}
 ?>
-		<p>Copyright &copy; 2018 <?php echo $webadatok["copyright"]; ?> | Programozás: <a href="https://trswebdesign.hu" target="_blank" title="webfejlesztés szolnok">TrJoin</a></p>
+		<p>Copyright &copy; <?php $d=getDate(); $datum=$d["year"]; print($datum." ".$webadatok["copyright"]; ?> | Programozás: <a href="https://trswebdesign.hu" target="_blank" title="webfejlesztés szolnok" rel="nofollow">TrJoin</a></p>
 	</div>
 	<script>
 		$('ul.dropdown-menu li').hover(function () {

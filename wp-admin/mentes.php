@@ -5,19 +5,19 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 {
 	$mirol=array("í","é","á","ű","ú","ő","ó","ü","ö","Í","É","Á","Ű","Ú","Ő","Ó","Ü","Ö","_","+",":",",","?","=","(",")","[","]","{","}","&","#","@","<",">","$","'","!","/"," ");
 	$mire=array("i","e","a","u","u","o","o","u","o","i","e","a","u","u","o","o","u","o","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-");
-	include("../connect.php");
+	
 	//webtartalom - menütartalom - frissitése
 	if(isset($_POST["modosit"]))
 	{
 		$furl=str_replace($mirol, $mire, strtolower($_POST["mfnev"]));
-		$parancs="update ".$elotag."_menu_".$webaktlang." set furl='".$furl."',nev='".$_POST["mfnev"]."',tartalom='".trim($_POST["tartalom"])."',metatitle='".trim($_POST["metatitle"])."',metakeywords='".trim($_POST["metakeywords"])."',metadesc='".trim($_POST["metadesc"])."',datum=now() where kod=".$_POST["modosit"];
+		$parancs="update ".$elotag."_menu_".$webaktlang." set furl='".$furl."',tolink='".$_POST["tolink"]."',nev='".$_POST["mfnev"]."',tartalom='".trim($_POST["tartalom"])."',metatitle='".trim($_POST["metatitle"])."',metakeywords='".trim($_POST["metakeywords"])."',metadesc='".trim($_POST["metadesc"])."',datum=now() where kod=".$_POST["modosit"];
 		$hova="index.php?lng=".$webaktlang."&page=".$_POST["modosit"];
 	}
 	//új menüpont és tartalom mentése
 	if(isset($_POST["menunev"]))
 	{
 		$furl=str_replace($mirol, $mire, strtolower($_POST["menunev"]));
-		$parancs="insert into ".$elotag."_menu_".$webaktlang." (furl,nev,tartalom,sorszam,datum) values('".$furl."','".$_POST["menunev"]."','".addslashes(trim($_POST["tartalom"]))."','".$_POST["sorszam"]."',now())";
+		$parancs="insert into ".$elotag."_menu_".$webaktlang." (furl,tolink,nev,tartalom,sorszam,datum) values('".$furl."','".$_POST["tolink"]."','".$_POST["menunev"]."','".addslashes(trim($_POST["tartalom"]))."','".$_POST["sorszam"]."',now())";
 		$hova="index.php?lng=".$webaktlang."&page=saved";
 	}
 	//menüpont aktiválás
@@ -75,14 +75,14 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 	if(isset($_POST["almodosit"]))
 	{
 		$furl=str_replace($mirol, $mire, strtolower($_POST["manev"]));
-		$parancs="update ".$elotag."_almenu_".$webaktlang." set furl='".$furl."',nev='".$_POST["manev"]."',tartalom='".trim($_POST["tartalom"])."',metatitle='".trim($_POST["metatitle"])."',metakeywords='".trim($_POST["metakeywords"])."',metadesc='".trim($_POST["metadesc"])."',datum=now() where kod=".$_POST["almodosit"];
+		$parancs="update ".$elotag."_almenu_".$webaktlang." set furl='".$furl."',tolink='".$_POST["tolink"]."',nev='".$_POST["manev"]."',tartalom='".trim($_POST["tartalom"])."',metatitle='".trim($_POST["metatitle"])."',metakeywords='".trim($_POST["metakeywords"])."',metadesc='".trim($_POST["metadesc"])."',datum=now() where kod=".$_POST["almodosit"];
 		$hova="index.php?lng=".$webaktlang."&alpage=".$_POST["almodosit"];
 	}
 	//új almenüpont és tartalom mentése
 	if(isset($_POST["almenunev"]))
 	{
 		$furl=str_replace($mirol, $mire, strtolower($_POST["almenunev"]));
-		$parancs="insert into ".$elotag."_almenu_".$webaktlang." (furl,nev,szulo,tartalom,datum) values('".$furl."','".$_POST["almenunev"]."','".$_POST["szulo"]."','".addslashes (trim ($_POST["tartalom"]))."',now())";
+		$parancs="insert into ".$elotag."_almenu_".$webaktlang." (furl,tolink,nev,szulo,tartalom,datum) values('".$furl."','".$_POST["tolink"]."','".$_POST["almenunev"]."','".$_POST["szulo"]."','".addslashes (trim ($_POST["tartalom"]))."',now())";
 		$hova="index.php?lng=".$webaktlang."&page=saved";
 	}
 	//almenüpont aktiválás
@@ -306,10 +306,10 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 	if(isset($_POST["ujnyelv"]))
 	{
 		//menüpont és oldalak létrehozása
-		$letrehoz_menu_most=$pdo->query("CREATE TABLE ".$elotag."_menu_".$_POST["ujnyelv"]." (kod INT(10) auto_increment, furl TEXT, aktiv INT(2), nev VARCHAR(50), tartalom TEXT, metatitle TEXT, metakeywords TEXT, metadesc TEXT, sorszam VARCHAR(2), datum DATETIME DEFAULT '0000-00-00 00:00:00', PRIMARY KEY(kod)) DEFAULT CHARSET=utf8");
-		$feltolt_menu_most=$pdo->query("insert into ".$elotag."_menu_".$_POST["ujnyelv"]." (furl,nev,tartalom,sorszam) values ('/','Üdvözlet a K.E.K.-ben!','<br /><font face=Verdana size=3 color=#3333DD><b>Sikeresen feltelepítette a K.E.K. CMS programot!</b></font><br /><br /><font face=Verdana size=2 color=#000000>Mostmár használatba veheti a CMS motort! Az adminisztráció linkre kattintva tud bejelentkezni, majd login után szerkeszteni ezt a szöveget is, illetve minden mást a rendszeren belül! Sikeres felhasználást kívánok!</font>','1')");
+		$letrehoz_menu_most=$pdo->query("CREATE TABLE ".$elotag."_menu_".$_POST["ujnyelv"]." (kod INT(10) auto_increment, furl TEXT, tolink TEXT, aktiv INT(2), nev VARCHAR(50), tartalom TEXT, metatitle TEXT, metakeywords TEXT, metadesc TEXT, sorszam VARCHAR(2), datum DATETIME DEFAULT '0000-00-00 00:00:00', PRIMARY KEY(kod)) DEFAULT CHARSET=utf8");
+		$feltolt_menu_most=$pdo->query("insert into ".$elotag."_menu_".$_POST["ujnyelv"]." (furl,nev,tartalom,sorszam,aktiv) values ('/','Üdvözlet a K.E.K.-ben!','<br /><font face=Verdana size=3 color=#3333DD><b>Sikeresen feltelepítette a K.E.K. CMS programot!</b></font><br /><br /><font face=Verdana size=2 color=#000000>Mostmár használatba veheti a CMS motort! Az adminisztráció linkre kattintva tud bejelentkezni, majd login után szerkeszteni ezt a szöveget is, illetve minden mást a rendszeren belül! Sikeres felhasználást kívánok!</font>','1','1')");
 		//almenü létrehozása
-		$letrehoz_almenu_most=$pdo->query("CREATE TABLE ".$elotag."_almenu_".$_POST["ujnyelv"]." (kod INT(10) auto_increment, furl TEXT, aktiv INT(2), nev VARCHAR(50), szulo int(20), tartalom TEXT, metatitle TEXT, metakeywords TEXT, metadesc TEXT, datum DATETIME DEFAULT '0000-00-00 00:00:00', PRIMARY KEY(kod)) DEFAULT CHARSET=utf8");
+		$letrehoz_almenu_most=$pdo->query("CREATE TABLE ".$elotag."_almenu_".$_POST["ujnyelv"]." (kod INT(10) auto_increment, furl TEXT, tolink TEXT, aktiv INT(2), nev VARCHAR(50), szulo int(20), tartalom TEXT, metatitle TEXT, metakeywords TEXT, metadesc TEXT, datum DATETIME DEFAULT '0000-00-00 00:00:00', PRIMARY KEY(kod)) DEFAULT CHARSET=utf8");
 		//oldalsáv és tartalma létrehozása
 		$letrehoz_oldalsav_most=$pdo->query("CREATE TABLE ".$elotag."_oldalsav_".$_POST["ujnyelv"]." (kod INT(10) auto_increment, cim VARCHAR(200), aktiv INT(2), szoveg TEXT, sorszam VARCHAR(2), PRIMARY KEY(kod)) DEFAULT CHARSET=utf8");
 		$feltolt_oldalsav_most=$pdo->query("insert into ".$elotag."_oldalsav_".$_POST["ujnyelv"]." (cim,szoveg,sorszam) values ('Oldalsáv','Ide blokkokat helyezhet el, szerkesztheti őket, illetve törölni is tudja, ha nem kellenek! Mindezt az adminon való bejelentkezés után tudja megtenni! Az adminisztrátori bejelentkezéshez a telepítés során adta meg a hozzáférést!','1')");
@@ -406,8 +406,54 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 	//weboldal paraméterek módosítása
 	if(isset($_POST["title"]))
 	{
-		$parancs="update ".$elotag."_parameterek set title='".$_POST["title"]."',keywords='".$_POST["keywords"]."',description='".$_POST["description"]."',sitename='".$_POST["sitename"]."',siteslogen='".$_POST["siteslogen"]."',copyright='".$_POST["copyright"]."',sablon='".$_POST["sablon"]."'";
-		$hova="index.php?lng=".$webaktlang."&mod=y&settings=1";
+		if(isset($_FILES['ogimage']) AND $_FILES['ogimage']['name']!="")
+		{
+			$SafeFile = $_FILES['ogimage']['name'];
+			$SafeFile = strtolower($SafeFile);
+			$SafeFile = str_replace($mirol, $mire, $SafeFile);
+			
+			$datummost=getDate();
+			$datekeszit=mktime($datummost["hours"],$datummost["minutes"],$datummost["seconds"],$datummost["mon"],$datummost["mday"],$datummost["year"]);
+			$dazo=date("Ymdhms",$datekeszit);
+			$fajlnev=$SafeFile."-".$dazo;
+			
+			$ext = strtolower(substr(strrchr($_FILES["ogimage"]["name"], "."), 1));
+			if($ext == "jpg" || $ext == "jpeg" || $ext == "png")
+			{
+				if(move_uploaded_file($_FILES['ogimage']['tmp_name'],"../".$fajlnev))
+				{
+					list($width, $height) = getimagesize("../".$fajlnev);
+					if($width>="1")
+					{
+						$ogimage=$fajlnev;
+						$parancs="update ".$elotag."_parameterek set title='".$_POST["title"]."',keywords='".$_POST["keywords"]."',description='".$_POST["description"]."',sitename='".$_POST["sitename"]."',siteslogen='".$_POST["siteslogen"]."',copyright='".$_POST["copyright"]."',sablon='".$_POST["sablon"]."',ogimage='".$ogimage."'";
+						$hova="index.php?lng=".$webaktlang."&mod=y&settings=1";
+					}
+					else
+					{
+						unlink("../".$fajlnev);
+						echo "<script> alert('Fájl feltöltési hiba, ez nem kép!'); </script>";
+						$hova="index.php?lng=".$webaktlang."&mod=y&settings=1";
+					}
+				}
+				else
+				{
+					echo "<script> alert('Sikertelen művelet. :( A képet nem sikerült feltölteni.'); </script>";
+					$hova="index.php?lng=".$webaktlang."&page=hirek";
+				}
+				
+			}
+			else
+			{
+				echo "<script> alert('Sikertelen művelet. :( A kép formátuma nem volt megfelelő, a feltölthető formátum: JPG, PNG.'); </script>";
+				$hova="index.php?lng=".$webaktlang."&mod=y&settings=1";
+			}
+		}
+		else
+		{
+			$parancs="update ".$elotag."_parameterek set title='".$_POST["title"]."',keywords='".$_POST["keywords"]."',description='".$_POST["description"]."',sitename='".$_POST["sitename"]."',siteslogen='".$_POST["siteslogen"]."',copyright='".$_POST["copyright"]."',sablon='".$_POST["sablon"]."'";
+			$hova="index.php?lng=".$webaktlang."&mod=y&settings=1";
+		}
 	}
 	//karbantartás mód bekapcsolása
 	if(isset($_GET["breakoff"]))
@@ -490,6 +536,153 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 	{
 		$parancs="update ".$elotag."_admin set nev='".$_POST["ujadminnev"]."',email='".$_POST["ujemailcim"]."',jelszo='".md5($_POST["ujadminpass"])."' where kod='".$_POST["userkod"]."'";
 		$hova="index.php?lng=".$webaktlang."&mod=y&usermod=1";
+	}
+	//felhasználó hozzáadásának mentése
+	if(isset($_POST["newadminnev"]))
+	{
+		$parancs="insert into ".$elotag."_admin (nev,email,jelszo) values('".$_POST["newadminnev"]."','".$_POST["newemailcim"]."','".md5($_POST["newadminpass"])."')";
+		$hova="index.php?lng=".$webaktlang."";
+	}
+	//modulok telepítése
+	if(isset($_POST["modulinstall"]) AND $_POST["modulinstall"]!="" AND $_POST["modulinstall"]!=" " AND $_SESSION["userlogged"]=="nimda")
+	{
+		if(isset($_POST["slidermodul"]))
+		{
+			$modules=$pdo->query("select * from ".$elotag."_modulok where modulnev='slider'");
+			if($modules->rowCount()>0)
+			{
+				$save_mod=$pdo->query("update ".$elotag."_modulok set bekapcsolva='".$_POST["slidermodul"]."' where modulnev='slider'");
+			}
+			else
+			{
+				$save_mod=$pdo->query("insert into ".$elotag."_modulok (modulnev,bekapcsolva) values('slider','".$_POST["slidermodul"]."')");
+				$letrehoz_slider=$pdo->query("CREATE TABLE ".$elotag."_slider (sliderkod INT(10) auto_increment, slidert TEXT, hiperlink TEXT, dumahozza TEXT, PRIMARY KEY(sliderkod)) DEFAULT CHARSET=utf8");
+				mkdir("../slider", 0777, true);
+			}
+		}
+		if(isset($_POST["galeriamodul"]))
+		{
+			$modules=$pdo->query("select * from ".$elotag."_modulok where modulnev='galeria'");
+			if($modules->rowCount()>0)
+			{
+				$save_mod=$pdo->query("update ".$elotag."_modulok set bekapcsolva='".$_POST["galeriamodul"]."' where modulnev='galeria'");
+			}
+			else
+			{
+				$save_mod=$pdo->query("insert into ".$elotag."_modulok (modulnev,bekapcsolva) values('galeria','".$_POST["galeriamodul"]."')");
+				$letrehoz_galeria=$pdo->query("CREATE TABLE ".$elotag."_mappak (mappakod INT(10) AUTO_INCREMENT, furl TEXT, mappanev TEXT, mappaut TEXT, mappakep TEXT, PRIMARY KEY (mappakod)) DEFAULT CHARSET=utf8");
+				mkdir("../galeria", 0777, true);
+				mkdir("../leirasok", 0777, true);
+			}
+		}
+		if(isset($_POST["videomodul"]))
+		{
+			$modules=$pdo->query("select * from ".$elotag."_modulok where modulnev='video'");
+			if($modules->rowCount()>0)
+			{
+				$save_mod=$pdo->query("update ".$elotag."_modulok set bekapcsolva='".$_POST["videomodul"]."' where modulnev='video'");
+			}
+			else
+			{
+				$save_mod=$pdo->query("insert into ".$elotag."_modulok (modulnev,bekapcsolva) values('video','".$_POST["videomodul"]."')");
+				$letrehoz_video=$pdo->query("CREATE TABLE ".$elotag."_videok (videokod INT(10) AUTO_INCREMENT, videocim TEXT, vhiv TEXT, PRIMARY KEY (videokod)) DEFAULT CHARSET=utf8");
+			}
+		}
+		if(isset($_POST["hirekmodul"]))
+		{	
+			$modules=$pdo->query("select * from ".$elotag."_modulok where modulnev='hirek'");
+			if($modules->rowCount()>0)
+			{
+				$save_mod=$pdo->query("update ".$elotag."_modulok set bekapcsolva='".$_POST["hirekmodul"]."' where modulnev='hirek'");
+			}
+			else
+			{
+				$save_mod=$pdo->query("insert into ".$elotag."_modulok (modulnev,bekapcsolva) values('hirek','".$_POST["videomodul"]."')");
+				$nyelvek=$pdo->query("select * from ".$elotag."_nyelvek");
+				while($egynyelv=$nyelvek->fetch())
+				{
+					$val=$egynyelv["langnev"];
+					$letrehoz_hir=$pdo->query("CREATE TABLE ".$elotag."_hirkezelo_".$val." (hirkod INT(20) auto_increment, furl TEXT, aktiv INT(2), cim VARCHAR(200), bevezeto VARCHAR(200), tags VARCHAR(200), szoveg TEXT, kiskep TEXT, metatitle TEXT, metakeywords TEXT, metadesc TEXT, datum DATETIME DEFAULT '0000-00-00 00:00:00', PRIMARY KEY (hirkod)) DEFAULT CHARSET=utf8");
+				}
+				mkdir("../blog", 0777, true);
+				if(!file_exists("../blog/index.php"))
+				{
+					touch("../blog/index.php");
+				}
+				$fm=fopen("../blog/index.php","w");
+				fwrite($fm,"<?php \n include('../connect.php'); \n header('Content-Type: application/rss+xml; charset=UTF-8'); \n \$rssfeed = '<?xml version=\"1.0\" encoding=\"UTF-8\"?>'; \n \$rssfeed .= '<rss version=\"2.0\">'; \n \$rssfeed .= '<channel>'; \n \$rssfeed .= '<title>Blog Feed</title>'; \n \$rssfeed .= '<link>".$absp."/blog/</link>'; \n \$rssfeed .= '<description>RSS FEED</description>'; \n \$rssfeed .= '<language>hu</language>'; \n \$rssfeed .= '<copyright>Copyright (C) ".date('Y')." ".$absp."</copyright>'; \n \$query = \$pdo->query('SELECT * FROM '.\$elotag.'_hirkezelo_hun ORDER BY datum DESC'); \n while(\$row = \$query->fetch()) { \n \$rssfeed .= '<item>'; \n \$rssfeed .= '<title>'.\$row['cim'].'</title>'; \n \$rssfeed .= '<description>'.\$row['bevezeto'].'</description>'; \n \$rssfeed .= '<link>'.\$absp.'/blog/'.\$row['furl'].'</link>'; \n \$rssfeed .= '<pubDate>'.\$row['datum'].' +0000</pubDate>'; \n \$rssfeed .= '</item>'; \n} \n \$rssfeed .= '</channel>'; \n \$rssfeed .= '</rss>'; \n echo \$rssfeed; \n ?>");
+			}
+		}
+		if(isset($_POST["socialmod"]))
+		{
+			$modules=$pdo->query("select * from ".$elotag."_modulok where modulnev='social'");
+			if($modules->rowCount()>0)
+			{
+				$save_mod=$pdo->query("update ".$elotag."_modulok set bekapcsolva='".$_POST["socialmod"]."' where modulnev='social'");
+			}
+			else
+			{
+				$save_mod=$pdo->query("insert into ".$elotag."_modulok (modulnev,bekapcsolva) values('social','".$_POST["socialmod"]."')");
+				
+				$letrehoz_social=$pdo->query("CREATE TABLE ".$elotag."_social (sockod INT(10) auto_increment, socialsite TEXT, sociallink TEXT, PRIMARY KEY(sockod)) DEFAULT CHARSET=utf8");
+				
+				$pdo->query("insert into ".$elotag."_social (socialsite,sociallink) values('Facebook','#')");
+				$pdo->query("insert into ".$elotag."_social (socialsite,sociallink) values('Twitter','#')");
+				$pdo->query("insert into ".$elotag."_social (socialsite,sociallink) values('Google Plus','#')");
+				$pdo->query("insert into ".$elotag."_social (socialsite,sociallink) values('Pinterest','#')");
+				$pdo->query("insert into ".$elotag."_social (socialsite,sociallink) values('Instagram','#')");
+				$pdo->query("insert into ".$elotag."_social (socialsite,sociallink) values('Youtube','#')");
+			}
+		}
+		if(isset($_POST["gmaps"]))
+		{
+			$modules=$pdo->query("select * from ".$elotag."_modulok where modulnev='gmaps'");
+			if($modules->rowCount()>0)
+			{
+				$save_mod=$pdo->query("update ".$elotag."_modulok set bekapcsolva='".$_POST["gmaps"]."' where modulnev='gmaps'");
+			}
+			else
+			{
+				$save_mod=$pdo->query("insert into ".$elotag."_modulok (modulnev,bekapcsolva) values('gmaps','".$_POST["gmaps"]."')");
+				$letrehoz_gmaps=$pdo->query("CREATE TABLE ".$elotag."_gmaps (gmkod INT(2) auto_increment, gmapskey TEXT, PRIMARY KEY(gmkod)) DEFAULT CHARSET=utf8");
+			}
+		}
+		if(isset($_POST["downmodul"]))
+		{
+			$modules=$pdo->query("select * from ".$elotag."_modulok where modulnev='letoltes'");
+			if($modules->rowCount()>0)
+			{
+				$save_mod=$pdo->query("update ".$elotag."_modulok set bekapcsolva='".$_POST["downmodul"]."' where modulnev='letoltes'");
+			}
+			else
+			{
+				$save_mod=$pdo->query("insert into ".$elotag."_modulok (modulnev,bekapcsolva) values('letoltes','".$_POST["downmodul"]."')");
+				$letrehoz_down=$pdo->query("CREATE TABLE ".$elotag."_letoltesek (lekod INT(20) auto_increment, lelink VARCHAR(200), lenev TEXT, leleiras TEXT, PRIMARY KEY (lekod)) DEFAULT CHARSET=utf8");
+				mkdir("../letoltesek", 0777, true);
+			}
+		}
+		if(isset($_POST["shopmodul"]))
+		{
+			$modules=$pdo->query("select * from ".$elotag."_modulok where modulnev='shop'");
+			if($modules->rowCount()>0)
+			{
+				$save_mod=$pdo->query("update ".$elotag."_modulok set bekapcsolva='".$_POST["shopmodul"]."' where modulnev='shop'");
+			}
+			else
+			{
+				$save_mod=$pdo->query("insert into ".$elotag."_modulok (modulnev,bekapcsolva) values('shop','".$_POST["shopmodul"]."')");
+				$letrehoz_shop=$pdo->query("CREATE TABLE ".$elotag."_shop_termek (t_id int(20) NOT NULL AUTO_INCREMENT, t_gyarto varchar(200) NOT NULL, t_nev text NOT NULL, t_ar varchar(200) NOT NULL, t_kategoria varchar(200) NOT NULL, t_fkep text NOT NULL, t_kepek text NOT NULL, t_kleiras varchar(200) NOT NULL, t_nleiras text NOT NULL, t_datum date NOT NULL DEFAULT '0000-00-00', t_pdf text NOT NULL, PRIMARY KEY (t_id)) DEFAULT CHARSET=utf8");
+				$letrehoz_gyartok=$pdo->query("CREATE TABLE ".$elotag."_shop_gyartok (shop_gyartoid int(20) NOT NULL AUTO_INCREMENT, shop_gyartonev varchar(200) NOT NULL, PRIMARY KEY (shop_gyartoid)) DEFAULT CHARSET=utf8");
+				$letrehoz_kategok=$pdo->query("CREATE TABLE ".$elotag."_shop_kategoriak (shop_kategoriaid int(20) NOT NULL AUTO_INCREMENT, shop_kategkep text NOT NULL, shop_kategorianev varchar(200) NOT NULL, PRIMARY KEY (shop_kategoriaid)) DEFAULT CHARSET=utf8");
+				$letrehoz_rendelesek=$pdo->query("CREATE TABLE ".$elotag."_shop_rendelesek (m_id int(20) NOT NULL AUTO_INCREMENT, megrendelo text NOT NULL, tetelek text NOT NULL, szallitas text NOT NULL, fizetes varchar(200) NOT NULL, datum date NOT NULL, duma text NOT NULL, PRIMARY KEY (m_id)) DEFAULT CHARSET=utf8");
+				mkdir("../shop", 0777, true);
+				mkdir("../shop/kepek", 0777, true);
+				mkdir("../shop/kateg", 0777, true);
+			}
+		}
+		
+		$parancs="select title from ".$elotag."_parameterek";
+		$hova="index.php?lng=".$webaktlang."";
 	}
 	//parancsok lefuttatása
 	if($pdo->query($parancs))

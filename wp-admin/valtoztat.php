@@ -2,7 +2,6 @@
 session_start();
 if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION["userlogged"]!=" ")
 {
-	include("../connect.php");
 	//új menüpont hozzáadása
 	if(isset($_GET["ujmenu"]))
 	{
@@ -12,8 +11,10 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		echo "<h3>Új menüpont létrehozása</h3>";
 		echo "<form action='index.php?lng=".$webaktlang."&mod=y' method='POST'>";
 		echo "<font face='Verdana' size='2' color='#000000'><b>Írja be ide a menüpont nevét:</b></font><br />";
-		echo "<input type='hidden' name='tartalom' value='Új weboldal tartalom mentve!'>";
 		echo "<input type='text' name='menunev' style='width:200px;' required><br /><br />";
+		echo "<font face='Verdana' size='2' color='#000000'><b>Ha külső tartalomra mutat, add meg itt a linket:</b></font><br />";
+		echo "<input type='text' name='tolink' style='width:200px;' value=''><br /><br />";
+		echo "<input type='hidden' name='tartalom' value='Új weboldal tartalom mentve!'>";
 		echo "<input type='hidden' name='sorszam' value='".$ujsorszam."'>";
 		echo "<input type='submit' value='mentés' class='btn btn-large btn-secondary'></form>";
 	}
@@ -48,8 +49,10 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		echo "<h3>Új almenüpont létrehozása</h3>";
 		echo "<form action='index.php?lng=".$webaktlang."&mod=y' method='POST'>";
 		echo "<font face='Verdana' size='2' color='#000000'><b>Írja be ide az almenüpont nevét:</b></font><br />";
-		echo "<input type='hidden' name='tartalom' value='Új alweboldal tartalom mentve!'>";
 		echo "<input type='text' name='almenunev' style='width:200px;' required><br /><br />";
+		echo "<font face='Verdana' size='2' color='#000000'><b>Ha külső tartalomra mutat, add meg itt a linket:</b></font><br />";
+		echo "<input type='text' name='tolink' style='width:200px;' value=''><br /><br />";
+		echo "<input type='hidden' name='tartalom' value='Új almenü tartalom mentve!'>";
 		echo "<font face='Verdana' size='2' color='#000000'><b>Szülőmenü:</b></font>";
 		echo "<input type=hidden name='szulo' value='".$_GET["ujalmenu"]."'>";
 		$szulok=$pdo->query("select * from ".$elotag."_menu_".$webaktlang." where kod='".$_GET["ujalmenu"]."'");
@@ -212,6 +215,17 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		echo "<input type='submit' value='mentés' class='btn btn-large btn-secondary'>";
 		echo "</form><br />";
 	}
+	//új felhasználói hozzáadása
+	if(isset($_GET["usermod"]))
+	{
+		echo "<h3>Felhasználó hozzáadása:</h3>";
+		echo "<form action='index.php?lng=".$webaktlang."&mod=y' method='POST'>";
+		echo "<big>Felhasználónév:</big><br>&nbsp; <input type='text' name='newadminnev' placeholder='adja meg felhasználónevét' value='".$ua["nev"]."'><br>";
+		echo "<big>E-mail cím:</big><br>&nbsp; <input type='text' name='newemailcim' placeholder='adja meg e-mail címét' value='".$ua["email"]."'><br>";
+		echo "<big>Jelszó:</big><br>&nbsp; <input type='password' name='newadminpass' placeholder='adja meg jelszavát' pattern='.{3,}' minlength='5' required><br><br>";
+		echo "<input type='submit' value='hozzáadás' class='btn btn-large btn-secondary'>";
+		echo "</form><br />";
+	}
 	//új nyelv hozzáadása
 	if(isset($_GET["ujnyelv"]))
 	{
@@ -365,13 +379,18 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		$betoltes=$pdo->query("select * from ".$elotag."_parameterek");
 		$beallitasok=$betoltes->fetch();
 		
-		echo "<form action='index.php?lng=".$webaktlang."&mod=y' method='POST'>";
+		echo "<form action='index.php?lng=".$webaktlang."&mod=y' method='POST' enctype='multipart/form-data'>";
 		echo "<h3>Weboldal paramétereinek szerkesztése:</h3><p>";
 		echo "Címsor (TITLE):<br />&nbsp;&nbsp;&nbsp;<input type='text' name='title' value='".$beallitasok["title"]."' style='width:200px;' required><br />";
 		echo "Kulcsszavak (KEYWORDS):<br />&nbsp;&nbsp;&nbsp;<input type='text' name='keywords' value='".$beallitasok["keywords"]."' style='width:200px;' required><br />";
 		echo "META leírás (DESCRIPTION):<br />&nbsp;&nbsp;&nbsp;<input type='text' name='description' value='".$beallitasok["description"]."' style='width:200px;' required><br />";
 		echo "Fejléc szöveg (SITENAME):<br />&nbsp;&nbsp;&nbsp;<input type='text' name='sitename' value='".$beallitasok["sitename"]."' style='width:200px;' required><br />";
 		echo "Szlogen (SITESLOGEN):<br />&nbsp;&nbsp;&nbsp;<input type='text' name='siteslogen' value='".$beallitasok["siteslogen"]."' style='width:200px;' required><br />";
+		echo "Megosztási kép (OG:IMG):<br />&nbsp;&nbsp;&nbsp;<input type='file' name='ogimage' style='width:200px;'><br />";
+		if($beallitasok["ogimage"]!="")
+		{
+			echo '<img src="/'.$beallitasok["ogimage"].'" class="img-responsive" style="max-width:250px !important;"><br>';
+		}
 		echo "Copyright:<br />&nbsp;&nbsp;&nbsp;<input type='text' name='copyright' value='".$beallitasok["copyright"]."' style='width:200px;' required><br />";
 		echo "Téma:<br />&nbsp;&nbsp;&nbsp;<select name='sablon' size='1' style='width:200px;'>";
 			$themes=opendir("../themes");
@@ -384,6 +403,46 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 			}
 		echo "</select></p>";
 		echo "<br /><input type='submit' value='mentés' class='btn btn-large btn-secondary'></form><br>";
+	}
+	//root modulok telepítése
+	if(isset($_GET["rootmodul"]) AND $_SESSION["userlogged"]=="nimda")
+	{
+		echo "<form name='root-module' action='index.php?lng=".$webaktlang."&mod=y' method='POST'>";
+			echo '<input type="hidden" name="modulinstall" value="root">';
+			echo "<h4>Weboldal MODULOK telepítése:</h4>";
+			$bt1=$pdo->query("select * from ".$elotag."_modulok where modulnev='slider'");
+			$md1=$bt1->fetch();
+			echo "<label for='slidermodul'>Slider: (".$md1["bekapcsolva"].")</label>
+				<select name='slidermodul' id='slidermodul' size='1'><option value='igen'>bekapcsolom</option><option value='nem'>nem kérem</option></select><br />";
+			$bt2=$pdo->query("select * from ".$elotag."_modulok where modulnev='galeria'");
+			$md2=$bt2->fetch();
+			echo "<label for='galeriamodul'>Galéria: (".$md2["bekapcsolva"].")</label>
+				<select name='galeriamodul' id='galeriamodul' size='1'><option value='igen'>bekapcsolom</option><option value='nem'>nem kérem</option></select><br />";
+			$bt3=$pdo->query("select * from ".$elotag."_modulok where modulnev='video'");
+			$md3=$bt3->fetch();
+			echo "<label for='videomodul'>Videók: (".$md3["bekapcsolva"].")</label>
+				<select name='videomodul' id='videomodul' size='1'><option value='igen'>bekapcsolom</option><option value='nem'>nem kérem</option></select><br />";
+			$bt4=$pdo->query("select * from ".$elotag."_modulok where modulnev='hirek'");
+			$md4=$bt4->fetch();
+			echo "<label for='hirekmodul'>Hírek: (".$md4["bekapcsolva"].")</label>
+				<select name='hirekmodul' id='hirekmodul' size='1'><option value='igen'>bekapcsolom</option><option value='nem'>nem kérem</option></select><br />";
+			$bt5=$pdo->query("select * from ".$elotag."_modulok where modulnev='social'");
+			$md5=$bt5->fetch();
+			echo "<label for='socialmod'>Közösségi portálok: (".$md5["bekapcsolva"].")</label>
+				<select name='socialmod' id='socialmod' size='1'><option value='igen'>bekapcsolom</option><option value='nem'>nem kérem</option></select><br />";
+			$bt6=$pdo->query("select * from ".$elotag."_modulok where modulnev='gmaps'");
+			$md6=$bt6->fetch();
+			echo "<label for='gmaps'>Google térkép: (".$md6["bekapcsolva"].")</label>
+				<select name='gmaps' id='gmaps' size='1'><option value='igen'>bekapcsolom</option><option value='nem'>nem kérem</option></select><br />");
+			$bt7=$pdo->query("select * from ".$elotag."_modulok where modulnev='letoltes'");
+			$md7=$bt7->fetch();
+			echo "<label for='downmodul'>Letöltések modul: (".$md7["bekapcsolva"].")</label>
+				<select name='downmodul' id='downmodul' size='1'><option value='igen'>bekapcsolom</option><option value='nem'>nem kérem</option></select><br />";
+			$bt8=$pdo->query("select * from ".$elotag."_modulok where modulnev='shop'");
+			$md8=$bt8->fetch();
+			echo "<label for='shopmodul'>WEBSHOP: (".$md8["bekapcsolva"].")</label>
+				<select name='shopmodul' id='shopmodul' size='1'><option value='igen'>bekapcsolom</option><option value='nem'>nem kérem</option></select><br />";
+		echo "</form>";
 	}
 }
 else { echo 'ERROR!'; }
