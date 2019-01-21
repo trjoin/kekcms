@@ -415,7 +415,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 			$datummost=getDate();
 			$datekeszit=mktime($datummost["hours"],$datummost["minutes"],$datummost["seconds"],$datummost["mon"],$datummost["mday"],$datummost["year"]);
 			$dazo=date("Ymdhms",$datekeszit);
-			$fajlnev=$SafeFile."-".$dazo;
+			$fajlnev=$SafeFile;
 			
 			$ext = strtolower(substr(strrchr($_FILES["ogimage"]["name"], "."), 1));
 			if($ext == "jpg" || $ext == "jpeg" || $ext == "png")
