@@ -21,7 +21,7 @@ if(isset($_GET["modosit"]))
 	echo "<p align='left'><big><b><u>Meta DESCRIPTION:</u></b></big><br><input type='text' name='metadesc' value='".$oldal["metadesc"]."'></p>";
 	echo "<p align='left'><big><b><u>Külső hivatkozás (ha van):</u></b></big><br><input type='text' name='tolink' value='".$oldal["tolink"]."'></p><br />";
 }
-elseif(isset($_GET["almodosit"]))
+if(isset($_GET["almodosit"]))
 {
 	$lekerdez=$pdo->query("select * from ".$elotag."_almenu_".$webaktlang." where kod='".$_GET["almodosit"]."'");
 	$oldal=$lekerdez->fetch();
@@ -31,13 +31,13 @@ elseif(isset($_GET["almodosit"]))
 	echo "<p align='left'><big><b><u>Meta DESCRIPTION:</u></b></big><br><input type='text' name='metadesc' value='".$oldal["metadesc"]."'></p>";
 	echo "<p align='left'><big><b><u>Külső hivatkozás (ha van):</u></b></big><br><input type='text' name='tolink' value='".$oldal["tolink"]."'></p><br />";
 }
-elseif(isset($_GET["blokkszerk"]))
+if(isset($_GET["blokkszerk"]))
 {
 	$lekerdez=$pdo->query("select * from ".$elotag."_oldalsav_".$webaktlang." where kod='".$_GET["blokkszerk"]."'");
 	$blokk=$lekerdez->fetch();
 	echo "<p align='left'><big><b><u>Blokk címe:</u></b></big><br><input type='text' name='bcim' value='".$blokk["cim"]."'></p><br />";
 }
-elseif(isset($_GET["cikkmod"]))
+if(isset($_GET["cikkmod"]))
 {
 	$lekerdez=$pdo->query("select * from ".$elotag."_hirkezelo_".$webaktlang." where hirkod='".$_GET["cikkmod"]."'");
 	$cikk=$lekerdez->fetch();
@@ -59,19 +59,19 @@ if(isset($_GET["modosit"]))
 	$oldal=$lekerdez->fetch();
 	print($oldal["tartalom"]);
 }
-elseif(isset($_GET["almodosit"]))
+if(isset($_GET["almodosit"]))
 {
 	$lekerdez=$pdo->query("select * from ".$elotag."_almenu_".$webaktlang." where kod='".$_GET["almodosit"]."'");
 	$oldal=$lekerdez->fetch();
 	print($oldal["tartalom"]);
 }
-elseif(isset($_GET["blokkszerk"]))
+if(isset($_GET["blokkszerk"]))
 {
 	$lekerdez=$pdo->query("select * from ".$elotag."_oldalsav_".$webaktlang." where kod='".$_GET["blokkszerk"]."'");
 	$blokk=$lekerdez->fetch();
 	print($blokk["szoveg"]);
 }
-elseif(isset($_GET["cikkmod"]))
+if(isset($_GET["cikkmod"]))
 {
 	$lekerdez=$pdo->query("select * from ".$elotag."_hirkezelo_".$webaktlang." where hirkod='".$_GET["cikkmod"]."'");
 	$cikk=$lekerdez->fetch();
@@ -84,15 +84,15 @@ if(isset($_GET["modosit"]))
 {
 	echo "<input type='hidden' name='modosit' value='".$_GET["modosit"]."'>";
 }
-else if(isset($_GET["almodosit"]))
+if(isset($_GET["almodosit"]))
 {
 	echo "<input type='hidden' name='almodosit' value='".$_GET["almodosit"]."'>";
 }
-else if(isset($_GET["blokkszerk"]))
+if(isset($_GET["blokkszerk"]))
 {
 	echo "<input type='hidden' name='blokkszerk' value='".$_GET["blokkszerk"]."'>";
 }
-else if(isset($_GET["cikkmod"]))
+if(isset($_GET["cikkmod"]))
 {
 	echo "<input type='hidden' name='cikkmod' value='".$_GET["cikkmod"]."'>";
 }

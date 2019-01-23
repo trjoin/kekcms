@@ -1223,7 +1223,6 @@ function PDFetismod(f)
 	else
 	{
 		//jQ_Datatables script
-		echo "<script src='./js/libs/jquery-migrate-1.1.1.min.js'></script>";
 ?>
 	<script src='./js/libs/jquery-migrate-1.1.1.min.js'></script>
 	<link href="https://cdn.datatables.net/1.10.18/css/dataTables.jqueryui.min.css" rel="stylesheet" type="text/css" />
@@ -1318,6 +1317,7 @@ function PDFetismod(f)
 
 			var table = $('#datatables').DataTable({
 				"pageLength": 50,
+				"order": [[ 0, "desc" ]],
 				dom: 'Brtip'
 			});
 

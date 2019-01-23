@@ -1,5 +1,6 @@
 <?php
 session_start();
+include("../connect.php");
 $webaktlang=$_GET["lng"];
 if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION["userlogged"]!=" ")
 {
@@ -10,7 +11,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 	if(isset($_POST["modosit"]))
 	{
 		$furl=str_replace($mirol, $mire, strtolower($_POST["mfnev"]));
-		$parancs="update ".$elotag."_menu_".$webaktlang." set furl='".$furl."',tolink='".$_POST["tolink"]."',nev='".$_POST["mfnev"]."',tartalom='".trim($_POST["tartalom"])."',metatitle='".trim($_POST["metatitle"])."',metakeywords='".trim($_POST["metakeywords"])."',metadesc='".trim($_POST["metadesc"])."',datum=now() where kod=".$_POST["modosit"];
+		$parancs="update ".$elotag."_menu_".$webaktlang." set furl='".$furl."',tolink='".$_POST["tolink"]."',nev='".$_POST["mfnev"]."',tartalom='".trim($_POST["tartalom"])."',metatitle='".trim($_POST["metatitle"])."',metakeywords='".trim($_POST["metakeywords"])."',metadesc='".trim($_POST["metadesc"])."',datum=now() where kod='".$_POST["modosit"]."'";
 		$hova="index.php?lng=".$webaktlang."&page=".$_POST["modosit"];
 	}
 	//új menüpont és tartalom mentése
@@ -46,8 +47,8 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 			$lekerdez2=$pdo->query("select * from ".$elotag."_menu_".$webaktlang." where sorszam='".$ujsorszam."'");
 			$betolt2=$lekerdez2->fetch();
 			
-			$muvelet=$pdo->query("update ".$elotag."_menu_".$webaktlang." set sorszam='".$ujsorszam2."' where kod=".$betolt2["kod"]);
-			$parancs="update ".$elotag."_menu_".$webaktlang." set sorszam='".$ujsorszam."' where kod=".$_GET["menusorszam"];
+			$muvelet=$pdo->query("update ".$elotag."_menu_".$webaktlang." set sorszam='".$ujsorszam2."' where kod='".$betolt2["kod"]."'");
+			$parancs="update ".$elotag."_menu_".$webaktlang." set sorszam='".$ujsorszam."' where kod='".$_GET["menusorszam"]."'";
 		}
 		if($_GET["irany"]=="le")
 		{
@@ -60,8 +61,8 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 			$lekerdez2=$pdo->query("select * from ".$elotag."_menu_".$webaktlang." where sorszam='".$ujsorszam."'");
 			$betolt2=$lekerdez2->fetch();
 			
-			$muvelet=$pdo->query("update ".$elotag."_menu_".$webaktlang." set sorszam='".$ujsorszam2."' where kod=".$betolt2["kod"]);
-			$parancs="update ".$elotag."_menu_".$webaktlang." set sorszam='".$ujsorszam."' where kod=".$_GET["menusorszam"];
+			$muvelet=$pdo->query("update ".$elotag."_menu_".$webaktlang." set sorszam='".$ujsorszam2."' where kod='".$betolt2["kod"]."'");
+			$parancs="update ".$elotag."_menu_".$webaktlang." set sorszam='".$ujsorszam."' where kod='".$_GET["menusorszam"]."'";
 		}
 		$hova="index.php?lng=".$webaktlang."&mod=y&menusormod=1";
 	}
@@ -75,7 +76,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 	if(isset($_POST["almodosit"]))
 	{
 		$furl=str_replace($mirol, $mire, strtolower($_POST["manev"]));
-		$parancs="update ".$elotag."_almenu_".$webaktlang." set furl='".$furl."',tolink='".$_POST["tolink"]."',nev='".$_POST["manev"]."',tartalom='".trim($_POST["tartalom"])."',metatitle='".trim($_POST["metatitle"])."',metakeywords='".trim($_POST["metakeywords"])."',metadesc='".trim($_POST["metadesc"])."',datum=now() where kod=".$_POST["almodosit"];
+		$parancs="update ".$elotag."_almenu_".$webaktlang." set furl='".$furl."',tolink='".$_POST["tolink"]."',nev='".$_POST["manev"]."',tartalom='".trim($_POST["tartalom"])."',metatitle='".trim($_POST["metatitle"])."',metakeywords='".trim($_POST["metakeywords"])."',metadesc='".trim($_POST["metadesc"])."',datum=now() where kod='".$_POST["almodosit"]."'";
 		$hova="index.php?lng=".$webaktlang."&alpage=".$_POST["almodosit"];
 	}
 	//új almenüpont és tartalom mentése
@@ -124,7 +125,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 	//blokk tartalom módosítás
 	if(isset($_POST["blokkszerk"]))
 	{
-		$parancs="update ".$elotag."_oldalsav_".$webaktlang." set cim='".$_POST["bcim"]."',szoveg='".$_POST["tartalom"]."' where kod=".$_POST["blokkszerk"];
+		$parancs="update ".$elotag."_oldalsav_".$webaktlang." set cim='".$_POST["bcim"]."',szoveg='".$_POST["tartalom"]."' where kod='".$_POST["blokkszerk"]."'";
 		$hova="index.php?lng=".$webaktlang."&mod=y&blokkok=".$_POST["blokkszerk"];
 	}
 	//blokk sorszám módosítás
@@ -141,8 +142,8 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 			$lekerdez2=$pdo->query("select * from ".$elotag."_oldalsav_".$webaktlang." where sorszam='".$ujsorszam."'");
 			$betolt2=$lekerdez2->fetch();
 			
-			$muvelet=$pdo->query("update ".$elotag."_oldalsav_".$webaktlang." set sorszam='".$ujsorszam2."' where kod=".$betolt2["kod"]);
-			$parancs="update ".$elotag."_oldalsav_".$webaktlang." set sorszam='".$ujsorszam."' where kod=".$_GET["blokksorszam"];
+			$muvelet=$pdo->query("update ".$elotag."_oldalsav_".$webaktlang." set sorszam='".$ujsorszam2."' where kod='".$betolt2["kod"]."'");
+			$parancs="update ".$elotag."_oldalsav_".$webaktlang." set sorszam='".$ujsorszam."' where kod='".$_GET["blokksorszam"]."'";
 		}
 		if($_GET["irany"]=="le")
 		{
@@ -155,8 +156,8 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 			$lekerdez2=$pdo->query("select * from ".$elotag."_oldalsav_".$webaktlang." where sorszam='".$ujsorszam."'");
 			$betolt2=$lekerdez2->fetch();
 			
-			$muvelet=$pdo->query("update ".$elotag."_oldalsav_".$webaktlang." set sorszam='".$ujsorszam2."' where kod=".$betolt2["kod"]);
-			$parancs="update ".$elotag."_oldalsav_".$webaktlang." set sorszam='".$ujsorszam."' where kod=".$_GET["blokksorszam"];
+			$muvelet=$pdo->query("update ".$elotag."_oldalsav_".$webaktlang." set sorszam='".$ujsorszam2."' where kod='".$betolt2["kod"]."'");
+			$parancs="update ".$elotag."_oldalsav_".$webaktlang." set sorszam='".$ujsorszam."' where kod='".$_GET["blokksorszam"]."'";
 		}
 		$hova="index.php?lng=".$webaktlang."&mod=y&blokksormod=1";
 	}
@@ -197,7 +198,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 					list($width, $height) = getimagesize("../blog/".$fajlnev);
 					if($width>="1")
 					{
-						$parancs="update ".$elotag."_hirkezelo_".$webaktlang." set furl='".$furl."',cim='".$_POST["ccim"]."',bevezeto='".$_POST["bevezeto"]."',tags='".$_POST["tags"]."',szoveg='".$_POST["tartalom"]."',kiskep='".$fajlnev."',metatitle='".$_POST["metatitle"]."',metakeywords='".$_POST["metakeywords"]."',metadesc='".$_POST["metadesc"]."',datum=now() where hirkod=".$_POST["cikkmod"];
+						$parancs="update ".$elotag."_hirkezelo_".$webaktlang." set furl='".$furl."',cim='".$_POST["ccim"]."',bevezeto='".$_POST["bevezeto"]."',tags='".$_POST["tags"]."',szoveg='".$_POST["tartalom"]."',kiskep='".$fajlnev."',metatitle='".$_POST["metatitle"]."',metakeywords='".$_POST["metakeywords"]."',metadesc='".$_POST["metadesc"]."',datum=now() where hirkod='".$_POST["cikkmod"]."'";
 						$hova="index.php?lng=".$webaktlang."&page=hirek";
 					}
 					else
@@ -221,7 +222,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		}
 		else
 		{
-			$parancs="update ".$elotag."_hirkezelo_".$webaktlang." set furl='".$furl."',cim='".$_POST["ccim"]."',bevezeto='".$_POST["bevezeto"]."',tags='".$_POST["tags"]."',szoveg='".$_POST["tartalom"]."',metatitle='".$_POST["metatitle"]."',metakeywords='".$_POST["metakeywords"]."',metadesc='".$_POST["metadesc"]."',datum=now() where hirkod=".$_POST["cikkmod"];
+			$parancs="update ".$elotag."_hirkezelo_".$webaktlang." set furl='".$furl."',cim='".$_POST["ccim"]."',bevezeto='".$_POST["bevezeto"]."',tags='".$_POST["tags"]."',szoveg='".$_POST["tartalom"]."',metatitle='".$_POST["metatitle"]."',metakeywords='".$_POST["metakeywords"]."',metadesc='".$_POST["metadesc"]."',datum=now() where hirkod='".$_POST["cikkmod"]."'";
 			$hova="index.php?lng=".$webaktlang."&page=hirek";
 		}
 	}
@@ -520,9 +521,15 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		$hova="index.php?lng=".$webaktlang."&mod=y&downmod=1";
 	}
 	//új videó hozzáadása
-	if(isset($_POST["videocim"]))
+	if(isset($_POST["ujvideocim"]))
 	{		
-		$parancs="insert into ".$elotag."_videok(videocim,vhiv) values('".$_POST["videocim"]."','".$_POST["vhiv"]."')";
+		$parancs="insert into ".$elotag."_videok(videocim,vhiv,vtext) values('".$_POST["ujvideocim"]."','".$_POST["vhiv"]."','".$_POST["vtext"]."')";
+		$hova="index.php?lng=".$webaktlang."&page=video";
+	}
+	//videó módosítás mentés
+	if(isset($_POST["videomodkod"]))
+	{		
+		$parancs="update ".$elotag."_videok set videocim='".$_POST["videocim"]."',vhiv='".$_POST["vhiv"]."',vtext='".$_POST["vtext"]."' where videokod='".$_POST["videomodkod"]."'";
 		$hova="index.php?lng=".$webaktlang."&page=video";
 	}
 	//videó törlése

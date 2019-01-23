@@ -348,12 +348,57 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 	//videó hozzáadása
 	if(isset($_GET["ujvideo"]))
 	{
+		?>
+			<script type="text/javascript" src="ckeditor/ckeditor.js"></script>
+			<script src="ckeditor/adapters/jquery.js"></script>
+			<script>
+				CKEDITOR.env.isCompatible = true;
+			</script>
+		<?php
 		echo "<h2>Videótár - hozzáadás</h2>
 		<form name='ujvidi' method='POST' action='index.php?lng=".$webaktlang."&mod=y' enctype='multipart/form-data'>
-			<font face='Verdana' size='2' color='#000000'><b>Videó címe:</b></font><br><input type='text' name='videocim' id='videocim' style='width:400px;' placeholder='Videó címe'><br />
+			<font face='Verdana' size='2' color='#000000'><b>Videó címe:</b></font><br><input type='text' name='ujvideocim' id='ujvideocim' style='width:400px;' placeholder='Videó címe'><br />
 			<font face='Verdana' size='2' color='#000000'><b>Videó linkje:</b></font><br><input type='text' name='vhiv' id='vhiv' style='width:400px;' placeholder='Videó LINK-je a böngésző címsorából'><br />
+			<font face='Verdana' size='2' color='#000000'><b>Videó leírása:</b></font><br><textarea name='vtext' style='width:400px;' placeholder='Oktató anyag, vagy leírás a videóról'></textarea><br />
 			<input type='submit' value=' videó mentése ' class='btn btn-large btn-secondary'>
 		</form>";
+		?>
+		<script>
+			CKEDITOR.replace( 'vtext', {
+				language: 'hu',
+				toolbar : 'Full'
+			});
+		</script>
+		<?php
+	}
+	//videó módosítása
+	if(isset($_GET["videomod"]))
+	{
+		?>
+			<script type="text/javascript" src="ckeditor/ckeditor.js"></script>
+			<script src="ckeditor/adapters/jquery.js"></script>
+			<script>
+				CKEDITOR.env.isCompatible = true;
+			</script>
+		<?php
+		$videok=$pdo->query("select * from ".$elotag."_videok where videokod='".$_GET["videomod"]."'");
+		$v=$videok->fetch();
+		echo "<h2>Videótár - módosítás</h2>
+		<form name='modvidi' method='POST' action='index.php?lng=".$webaktlang."&mod=y' enctype='multipart/form-data'>
+			<input type='hidden' name='videomodkod' value='".$_GET["videomod"]."'>
+			<font face='Verdana' size='2' color='#000000'><b>Videó címe:</b></font><br><input type='text' name='videocim' id='videocim' style='width:400px;' value='".$v["videocim"]."' placeholder='Videó címe'><br />
+			<font face='Verdana' size='2' color='#000000'><b>Videó linkje:</b></font><br><input type='text' name='vhiv' id='vhiv' style='width:400px;' value='".$v["vhiv"]."' placeholder='Videó LINK-je a böngésző címsorából'><br />
+			<font face='Verdana' size='2' color='#000000'><b>Videó leírása:</b></font><br><textarea name='vtext'style='width:400px;'>".$v["vtext"]."</textarea><br />
+			<input type='submit' value=' videó mentése ' class='btn btn-large btn-secondary'>
+		</form>";
+		?>
+		<script>
+			CKEDITOR.replace( 'vtext', {
+				language: 'hu',
+				toolbar : 'Full'
+			});
+		</script>
+		<?php
 	}
 	//sitemap - oldaltérkép készitése
 	if(isset($_GET["createxml"]))

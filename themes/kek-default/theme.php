@@ -467,7 +467,7 @@ if(!isset($_REQUEST["furl"]))
 				}
 
 				echo '<div class="col-md-6 text-center">
-						'.$video.'<br>'.$ev["videocim"].'
+						'.$video.'<br>'.$ev["videocim"].'<br><br><small>'.$ev["vtext"].'</small>
 					</div>';
 				$vid++;
 				if($vid%2==0)
