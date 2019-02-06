@@ -196,9 +196,12 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 									<b class="caret"></b>
 								</a>	    
 							
-								<ul class="dropdown-menu">
-
-									<li class="dropdown-submenu">
+								<ul class="dropdown-menu">';
+		$modlangbe=$pdo->query("select bekapcsolva from ".$elotag."_modulok where modulnev='nyelv'");
+		$langmod=$modlangbe->fetch();
+		if($langmod["bekapcsolva"]=="igen")
+		{
+			echo '					<li class="dropdown-submenu">
 									  <a tabindex="-1" href="#">Nyelvek</a>
 									  <ul class="dropdown-menu">';
 								$weblangok=$pdo->query("select langnev from ".$elotag."_nyelvek order by langkod");
@@ -210,10 +213,11 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 									$nyelvnev=str_replace($mirol, $mire, $miben);
 									echo "<li><a href='index.php?lng=".$webegylang["langnev"]."&nologin' title='".$webegylang["langnev"]."'>".$nyelvnev."</a></li>";
 								}
-	echo '								<li class="divider"></li>
+			echo '						<li class="divider"></li>
 										<li><a tabindex="-2" href="index.php?lng='.$webaktlang.'&mod=y&ujnyelv=1">&plus; Új nyelv telepítése</a></li>
 									  </ul>
 									</li>';
+		}
 		$modgalbe=$pdo->query("select bekapcsolva from ".$elotag."_modulok where modulnev='galeria'");
 		$galmod=$modgalbe->fetch();
 		if($galmod["bekapcsolva"]=="igen")
