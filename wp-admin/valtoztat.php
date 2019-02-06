@@ -457,36 +457,36 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 			echo "<h4>Weboldal MODULOK telepítése:</h4>";
 			$bt1=$pdo->query("select * from ".$elotag."_modulok where modulnev='slider'");
 			$md1=$bt1->fetch();
-			echo "<label for='slidermodul'>Slider: (".$md1["bekapcsolva"].")</label>
-				<select name='slidermodul' id='slidermodul' size='1'><option value='igen'>bekapcsolom</option><option value='nem'>nem kérem</option></select><br />";
+			echo "<label for='slidermodul'>Slider: (".($md1["bekapcsolva"]=="igen" ? "már telepítve" : "nincs telepítve").")</label>
+				<select name='slidermodul' id='slidermodul' size='1'><option value='igen'>Telepítem</option><option value='nem'>nem kérem</option></select><br />";
 			$bt2=$pdo->query("select * from ".$elotag."_modulok where modulnev='galeria'");
 			$md2=$bt2->fetch();
-			echo "<label for='galeriamodul'>Galéria: (".$md2["bekapcsolva"].")</label>
-				<select name='galeriamodul' id='galeriamodul' size='1'><option value='igen'>bekapcsolom</option><option value='nem'>nem kérem</option></select><br />";
+			echo "<label for='galeriamodul'>Galéria: (".($md2["bekapcsolva"]=="igen" ? "már telepítve" : "nincs telepítve").")</label>
+				<select name='galeriamodul' id='galeriamodul' size='1'><option value='igen'>Telepítem</option><option value='nem'>nem kérem</option></select><br />";
 			$bt3=$pdo->query("select * from ".$elotag."_modulok where modulnev='video'");
 			$md3=$bt3->fetch();
-			echo "<label for='videomodul'>Videók: (".$md3["bekapcsolva"].")</label>
-				<select name='videomodul' id='videomodul' size='1'><option value='igen'>bekapcsolom</option><option value='nem'>nem kérem</option></select><br />";
+			echo "<label for='videomodul'>Videók: (".($md3["bekapcsolva"]=="igen" ? "már telepítve" : "nincs telepítve").")</label>
+				<select name='videomodul' id='videomodul' size='1'><option value='igen'>Telepítem</option><option value='nem'>nem kérem</option></select><br />";
 			$bt4=$pdo->query("select * from ".$elotag."_modulok where modulnev='hirek'");
 			$md4=$bt4->fetch();
-			echo "<label for='hirekmodul'>Hírek: (".$md4["bekapcsolva"].")</label>
-				<select name='hirekmodul' id='hirekmodul' size='1'><option value='igen'>bekapcsolom</option><option value='nem'>nem kérem</option></select><br />";
+			echo "<label for='hirekmodul'>Hírek: (".($md4["bekapcsolva"]=="igen" ? "már telepítve" : "nincs telepítve").")</label>
+				<select name='hirekmodul' id='hirekmodul' size='1'><option value='igen'>Telepítem</option><option value='nem'>nem kérem</option></select><br />";
 			$bt5=$pdo->query("select * from ".$elotag."_modulok where modulnev='social'");
 			$md5=$bt5->fetch();
-			echo "<label for='socialmod'>Közösségi portálok: (".$md5["bekapcsolva"].")</label>
-				<select name='socialmod' id='socialmod' size='1'><option value='igen'>bekapcsolom</option><option value='nem'>nem kérem</option></select><br />";
+			echo "<label for='socialmod'>Közösségi portálok: (".($md5["bekapcsolva"]=="igen" ? "már telepítve" : "nincs telepítve").")</label>
+				<select name='socialmod' id='socialmod' size='1'><option value='igen'>Telepítem</option><option value='nem'>nem kérem</option></select><br />";
 			$bt6=$pdo->query("select * from ".$elotag."_modulok where modulnev='gmaps'");
 			$md6=$bt6->fetch();
-			echo "<label for='gmaps'>Google térkép: (".$md6["bekapcsolva"].")</label>
-				<select name='gmaps' id='gmaps' size='1'><option value='igen'>bekapcsolom</option><option value='nem'>nem kérem</option></select><br />";
+			echo "<label for='gmaps'>Google térkép: (".($md6["bekapcsolva"]=="igen" ? "már telepítve" : "nincs telepítve").")</label>
+				<select name='gmaps' id='gmaps' size='1'><option value='igen'>Telepítem</option><option value='nem'>nem kérem</option></select><br />";
 			$bt7=$pdo->query("select * from ".$elotag."_modulok where modulnev='letoltes'");
 			$md7=$bt7->fetch();
-			echo "<label for='downmodul'>Letöltések modul: (".$md7["bekapcsolva"].")</label>
-				<select name='downmodul' id='downmodul' size='1'><option value='igen'>bekapcsolom</option><option value='nem'>nem kérem</option></select><br />";
+			echo "<label for='downmodul'>Letöltések modul: (".($md7["bekapcsolva"]=="igen" ? "már telepítve" : "nincs telepítve").")</label>
+				<select name='downmodul' id='downmodul' size='1'><option value='igen'>Telepítem</option><option value='nem'>nem kérem</option></select><br />";
 			$bt8=$pdo->query("select * from ".$elotag."_modulok where modulnev='shop'");
 			$md8=$bt8->fetch();
-			echo "<label for='shopmodul'>WEBSHOP: (".$md8["bekapcsolva"].")</label>
-				<select name='shopmodul' id='shopmodul' size='1'><option value='igen'>bekapcsolom</option><option value='nem'>nem kérem</option></select><br /><br />";
+			echo "<label for='shopmodul'>WEBSHOP: (".($md8["bekapcsolva"]=="igen" ? "már telepítve" : "nincs telepítve").")</label>
+				<select name='shopmodul' id='shopmodul' size='1'><option value='igen'>Telepítem</option><option value='nem'>nem kérem</option></select><br /><br />";
 			echo '<input type="submit" value="mentés" class="btn btn-large btn-secondary">';
 		echo "</form>";
 	}
