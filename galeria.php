@@ -41,7 +41,7 @@
 							$melyik=opendir("galeria/".$mem["mappaut"]);
 							while($fajl=readdir($melyik))
 							{
-								if($fajl!="." and $fajl!="..")
+								if($fajl!="." and $fajl!=".." and $fajl!=".htaccess")
 								{
 									echo '<div class="col-md-4"><a href="galeria/'.$mem["mappaut"].'/'.$fajl.'" class="fancybox" rel="galeria"><img src="galeria/'.$mem["mappaut"].'/'.$fajl.'" class="img-responsive" alt="'.$title.'"></a></div>';
 									$ig++;
