@@ -5,3 +5,10 @@ logo: http://kek.trswebdesign.hu/images/logo.png
 favicon: https://trswebdesign.hu/favicon.png
 copyright: 2002-2019 Handzsúr István
 breadcrumb_home_name: Start
+footer-links:
+  facebook: https://www.facebook.com/ihandzsur
+  github: trjoin/kekcms
+  pinterest: trswebdesign
+  twitter: trswebdesign
+url: http://kek.trswebdesign.hu
+version: v2.2.0
