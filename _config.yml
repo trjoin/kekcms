@@ -1,15 +1,14 @@
 theme: jekyll-theme-minimal
-title:
-description: Egyedi fejlesztésű, teljesen magyar nyelvű, sallangmentes, könnyedén használható tartalom kezelő rendszer. 
+title: Üdvözöllek a
+description: Egyedi fejlesztésű, teljesen magyar nyelvű, sallangmentes, könnyedén használható tartalom kezelő rendszer project oldalán. 
 use_logo: true
 logo: http://kek.trswebdesign.hu/images/logo.png
 favicon: https://trswebdesign.hu/favicon.png
 copyright: 2002-2019 Handzsúr István
+version: v2.2.0
 breadcrumb_home_name: Start
 footer-links:
   facebook: https://www.facebook.com/ihandzsur
   github: trjoin/kekcms
   pinterest: trswebdesign
   twitter: trswebdesign
-url: http://kek.trswebdesign.hu
-version: v2.2.0
