@@ -1,4 +1,5 @@
 theme: jekyll-theme-minimal
+title:
 description: Egyedi fejlesztésű, teljesen magyar nyelvű, sallangmentes, könnyedén használható tartalom kezelő rendszer. 
 use_logo: true
 logo: http://kek.trswebdesign.hu/images/logo.png
