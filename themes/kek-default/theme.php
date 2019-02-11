@@ -1,8 +1,27 @@
 <?php
+	session_start();
 	$absp=(isset($_SERVER['HTTPS']) ? "https" : "http") . "://".$_SERVER["HTTP_HOST"];
 	$fullurl=$absp.$_SERVER["REQUEST_URI"];
 	$mirol=array("í","é","á","ű","ú","ő","ó","ü","ö","Í","É","Á","Ű","Ú","Ő","Ó","Ü","Ö","_","+",":",",","?","=","(",")","[","]","{","}","&","#","@","<",">","$","'","!","/"," ");
 	$mire=array("i","e","a","u","u","o","o","u","o","i","e","a","u","u","o","o","u","o","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-");
+	/*** NYELVVÁLTÁS, MUNKAMENETTEL, BÁRMELYIK ÉS BÁRMENNYI NYELVHEZ JÓ! ***/
+	if(isset($_REQUEST["lng"]))
+	{
+		$_SESSION["lng"]=$_REQUEST["lng"];
+		$webaktlang=$_SESSION["lng"];
+	}
+	else
+	{
+		if(!isset($_SESSION["lng"]) OR $_SESSION["lng"]=="")
+		{
+			$_SESSION["lng"]=$webaktlang;
+		}
+		else
+		{
+			$webaktlang=$_SESSION["lng"];
+		}
+	}
+	/*** LANG END! ***/
 ?>
 <!DOCTYPE html>
 <html lang="hu-HU" xml:lang="hu" dir="ltr">
