@@ -1,3 +1,5 @@
 theme: jekyll-theme-minimal
-title: Üdvözöllek a KEK CMS project oldalán.
-description: Maradj mindig tájékozott a projekttel kapcsolatban, iratkozz fel rám!
+title: KEK CMS
+description: Egyedi fejlesztésű, teljesen magyar nyelvű, sallangmentes, könnyedén használható tartalom kezelő rendszer. 
+use_logo: true
+logo: http://kek.trswebdesign.hu/images/logo.png
