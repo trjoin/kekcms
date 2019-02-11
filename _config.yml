@@ -2,6 +2,7 @@ theme: jekyll-theme-minimal
 description: Egyedi fejlesztésű, teljesen magyar nyelvű, sallangmentes, könnyedén használható tartalom kezelő rendszer. 
 use_logo: true
 logo: http://kek.trswebdesign.hu/images/logo.png
+favicon: https://trswebdesign.hu/favicon.png
 copyright: 2002-2019 Handzsúr István
 breadcrumb_home_name: Start
 show_feedback: true
