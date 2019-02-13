@@ -14,9 +14,9 @@ if($captcha!="" AND $response.success!=false AND isset($_POST["email"]) AND $_PO
 	$email=trim($_POST["email"]);
 	$uzenet=trim($_POST["message"]);
 	$mailcim  = "info@trswebdesign.hu";
-	$headers  =  "MIME-Version: 1.0" . "\r\n";    
-	$headers .=  "Content-type:text/html;charset=utf8" . "\r\n";   
-	$headers .= 'From: <'.$email.'>' . "\r\n";    
+	$headers  = "MIME-Version: 1.0" . "\r\n";    
+	$headers .= "Content-type:text/html;charset=utf8" . "\r\n";   
+	$headers .= "From: <".$email.">" . "\r\n";
 	$ido = ("Beérkezett: ".date("Y.m.d. H:i:s", time())."\r\n\r\n");
 	$level=mail ($mailcim, $targy, "<font face='verdana' size='2' color='#0FA300'><b>Üzenete érkezett!</b><br /><br />Az adatforgalmi figyelő értesít, hogy ".$felado." üzenetet írt az alábbiakban részletezett adatokkal.<br /><br /><b>Küldő adatai:</b><br />Név: ".$felado."<br />E-mail: ".$email."<br /><br />Üzenet:<br />" .$uzenet. "<br /><br /><br />" .$ido. "</font><br />",$headers);
 	if($level)

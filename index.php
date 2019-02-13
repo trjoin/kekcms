@@ -55,6 +55,6 @@ else
 	{
 		$webaktlang=$_GET["lng"];
 	}
-	include("./themes/".$webadatok["sablon"]."/theme.php");
+	include("themes/".$webadatok["sablon"]."/theme.php");
 }
 ?>
