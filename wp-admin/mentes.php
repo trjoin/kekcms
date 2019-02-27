@@ -379,13 +379,16 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		}
 		//blog behivása
 		$blog=$pdo->query("select * from ".$elotag."_hirkezelo_".$nyelv." where aktiv='1'");
-		while($b=$blog->fetch())
+		if($blog->rowCount()>0)
 		{
-			$cikkek.='<url>
-						  <loc>'.$webadatok["defaultlink"].'/'.$b["furl"].'</loc>
-						  <lastmod>'.str_replace(" ","T",$b["datum"]).'+00:00</lastmod>
-						  <priority>1.00</priority>
-						</url>';
+			while($b=$blog->fetch())
+			{
+				$cikkek.='<url>
+							  <loc>'.$webadatok["defaultlink"].'/'.$b["furl"].'</loc>
+							  <lastmod>'.str_replace(" ","T",$b["datum"]).'+00:00</lastmod>
+							  <priority>1.00</priority>
+							</url>';
+			}
 		}
 		//meglévő oldaltérkép létezés vizsgálat
 		if(file_exists("../sitemap.xml"))
