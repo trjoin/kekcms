@@ -379,7 +379,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		}
 		//blog behivása
 		$blog=$pdo->query("select * from ".$elotag."_hirkezelo_".$nyelv." where aktiv='1'");
-		if($blog->rowCount()>0)
+		if($blog)
 		{
 			while($b=$blog->fetch())
 			{
