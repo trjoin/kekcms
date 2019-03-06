@@ -260,14 +260,14 @@ if(!isset($_REQUEST["furl"]))
 /* menüpontok tartalmának megjelenitése */
 	if(isset($_REQUEST["furl"]) AND strpos($_REQUEST["furl"],"blog/")=== false AND strpos($_REQUEST["furl"],"galeria/")=== false)
 	{
-		$megjelenit=$pdo->query("select * from ".$elotag."_menu_".$webaktlang." where furl='".$_REQUEST["furl"]."'");
+		$megjelenit=$pdo->query("select * from ".$elotag."_menu_".$webaktlang." where aktiv='1' furl='".$_REQUEST["furl"]."'");
 		if($megjelenit->rowCount()>0)
 		{
 			$oldal=$megjelenit->fetch();
 		}
 		else
 		{
-			$megjelenit=$pdo->query("select * from ".$elotag."_almenu_".$webaktlang." where furl='".$_REQUEST["furl"]."'");
+			$megjelenit=$pdo->query("select * from ".$elotag."_almenu_".$webaktlang." where aktiv='1' furl='".$_REQUEST["furl"]."'");
 			$oldal=$megjelenit->fetch();
 		}
 		echo '<div class="tittle_head_w3layouts">
