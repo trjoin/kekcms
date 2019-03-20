@@ -93,7 +93,7 @@ if(isset($_POST["username"]) AND $_POST["username"]!="" AND $_POST["username"]!=
 	<div class="navbar-inner">
 		<div class="container">
 			<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><i class="icon-cog"></i></a>
-			<a class="brand" href="index.php"><img src="https://trswebdesign.hu/images/logo.png" border="0" style="max-height:25px;" alt="K.E.K. CMS Rendszer"> K.E.K. CMS <small>v2.2</small></span></a>
+			<a class="brand" href="index.php"><img src="https://trswebdesign.hu/images/logo.png" border="0" style="max-height:25px;" alt="K.E.K. CMS Rendszer"> K.E.K. CMS <small>v <?php include("version.trj"); ?></small></span></a>
 			<div class="nav-collapse collapse">
 				<ul class="nav pull-right">
 					<li><a href="#"><b>Ügyfélszolgálat:</b></a></li>
@@ -117,6 +117,8 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 							if($_SESSION["userlogged"]=="nimda")
 							{
 								echo '<li><a href="index.php?lng='.$webaktlang.'&mod=y&rootmodul=1">Modulok kezelése</a></li>
+										<li class="divider"></li>';
+								echo '<li><a href="index.php?lng='.$webaktlang.'&mod=y&sysupd=1">Rendszer frissítés</a></li>
 										<li class="divider"></li>';
 							}
 						echo '<li><a href="?kilepes">Kilépés</a></li>
@@ -572,8 +574,8 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 						- a főmenüben máris a választott idegen nyelvi tartalmak jelennek meg,<br>
 						- ezekre kattintva már szerkeszteni is fogja tudni.</p><br>
 						<p><b>FIGYELEM!</b><br><br>
-						Új menüpont létrehozásánál, CSAK az aktuális - oldal által használt és beállított - nyelven jön létre a tartalom!<br>
-						A többi nyelven a tartalmakat egyénileg létre kell hozni!</p>
+						Új adat létrehozásánál, CSAK az aktuális - az oldal által használt és beállított - nyelven jön létre a tartalom!<br>
+						A többi nyelven a tartalmakat egyénileg, külön létre kell hozni!</p>
 					</div>
 				</div>
 			</div>

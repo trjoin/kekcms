@@ -225,7 +225,7 @@ if(isset($_POST["lepes3"]) AND $_POST["lepes3"]=="igen")
 	//slider tábla
 		if($_POST["slidermodul"]=="igen")
 		{
-			$letrehoz_slider=$pdo->query("CREATE TABLE ".$elotag."_slider (sliderkod INT(10) auto_increment, slidert TEXT, hiperlink TEXT, dumahozza TEXT, PRIMARY KEY(sliderkod)) DEFAULT CHARSET=utf8");
+			$letrehoz_slider=$pdo->query("CREATE TABLE ".$elotag."_slider (sliderkod INT(10) auto_increment, slidert TEXT, hiperlink TEXT, gomblink TEXT, dumahozza TEXT, slidersor INT(5), PRIMARY KEY(sliderkod)) DEFAULT CHARSET=utf8");
 			mkdir("./slider", 0777, true);
 			if(!$letrehoz_slider){ $hibak_l++; $hibauzenet=$hibauzenet."- SLIDER-kezelő tábla létrehozása sikertelen!<br>"; }
 		}
@@ -328,7 +328,7 @@ if(isset($_POST["lepes3"]) AND $_POST["lepes3"]=="igen")
 				{
 					$pdo->query("insert into ".$elotag."_social (socialsite,sociallink) values('Facebook','#')");
 					$pdo->query("insert into ".$elotag."_social (socialsite,sociallink) values('Twitter','#')");
-					$pdo->query("insert into ".$elotag."_social (socialsite,sociallink) values('Google Plus','#')");
+					$pdo->query("insert into ".$elotag."_social (socialsite,sociallink) values('LinkedIn','#')");
 					$pdo->query("insert into ".$elotag."_social (socialsite,sociallink) values('Pinterest','#')");
 					$pdo->query("insert into ".$elotag."_social (socialsite,sociallink) values('Instagram','#')");
 					$pdo->query("insert into ".$elotag."_social (socialsite,sociallink) values('Youtube','#')");

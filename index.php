@@ -21,7 +21,7 @@ elseif(file_exists("install.php"))
 							{
 								location.href = 'index.php';
 							}
-							ID = window.setTimeout('atiranyit();', 1*1);
+							ID = window.setTimeout('atiranyit();', 1*50);
 						</script>");
 			}
 			else

@@ -3,7 +3,7 @@ session_start();
 if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION["userlogged"]!=" ")
 {
 	//új menüpont hozzáadása
-	if(isset($_GET["ujmenu"]))
+	if(isset($_REQUEST["ujmenu"]))
 	{
 		$sorszam=$pdo->query("select max(sorszam) as sorszam from ".$elotag."_menu_".$webaktlang);
 		$illeszt=$sorszam->fetch();
@@ -19,7 +19,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		echo "<input type='submit' value='mentés' class='btn btn-large btn-secondary'></form>";
 	}
 	//menüpont sorszám módosítása
-	if(isset($_GET["menusormod"]))
+	if(isset($_REQUEST["menusormod"]))
 	{
 		$lekerdez=$pdo->query("select * from ".$elotag."_menu_".$webaktlang." order by sorszam");
 			$lastmenu=$pdo->query("select max(sorszam) as utso from ".$elotag."_menu_".$webaktlang);
@@ -44,7 +44,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		}
 	}
 	//új almenüpont hozzáadása
-	if(isset($_GET["ujalmenu"]))
+	if(isset($_REQUEST["ujalmenu"]))
 	{
 		echo "<h3>Új almenüpont létrehozása</h3>";
 		echo "<form action='index.php?lng=".$webaktlang."&mod=y' method='POST'>";
@@ -54,14 +54,14 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		echo "<input type='text' name='tolink' style='width:200px;' value=''><br /><br />";
 		echo "<input type='hidden' name='tartalom' value='Új almenü tartalom mentve!'>";
 		echo "<font face='Verdana' size='2' color='#000000'><b>Szülőmenü:</b></font>";
-		echo "<input type=hidden name='szulo' value='".$_GET["ujalmenu"]."'>";
-		$szulok=$pdo->query("select * from ".$elotag."_menu_".$webaktlang." where kod='".$_GET["ujalmenu"]."'");
+		echo "<input type=hidden name='szulo' value='".$_REQUEST["ujalmenu"]."'>";
+		$szulok=$pdo->query("select * from ".$elotag."_menu_".$webaktlang." where kod='".$_REQUEST["ujalmenu"]."'");
 		$egy_szulo=$szulok->fetch();
 		echo "<b>".$egy_szulo["nev"]."</b><br /><br />";
 		echo "<input type='submit' value='mentés' class='btn btn-large btn-secondary'></form>";
 	}
 	//OLDALSÁV blokkok kezelése
-	if(isset($_GET["blokkok"]))
+	if(isset($_REQUEST["blokkok"]))
 	{
 		$lekerdez=$pdo->query("select * from ".$elotag."_oldalsav_".$webaktlang."");
 		echo "<h3>Oldalsáv blokkok kezelése</h3>";
@@ -106,7 +106,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		}
 	}
 	//új blokk hozzáadása
-	if(isset($_GET["ujblokk"]))
+	if(isset($_REQUEST["ujblokk"]))
 	{
 		$sorszam=$pdo->query("select max(sorszam) as sorszam from ".$elotag."_oldalsav_".$webaktlang."");
 		$illeszt=$sorszam->fetch();
@@ -120,20 +120,20 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		echo "<input type='submit' value='mentés' class='btn btn-large btn-secondary'></form>";
 	}
 	//blokk névváltoztatás
-	if(isset($_GET["blokkmod"]))
+	if(isset($_REQUEST["blokkmod"]))
 	{
-		$lekerdez=$pdo->query("select * from ".$elotag."_oldalsav_".$webaktlang." where kod='".$_GET["blokkmod"]."'");
+		$lekerdez=$pdo->query("select * from ".$elotag."_oldalsav_".$webaktlang." where kod='".$_REQUEST["blokkmod"]."'");
 		$oldalsav=$lekerdez->fetch();
 		$blokkcim=str_replace(" ","&nbsp;",$oldalsav["cim"]);
 
 		echo "<br /><form action='index.php?lng=".$webaktlang."&mod=y' method='POST'>";
 		echo "<font face='Verdana' size='2' color='#000000'><b>Írja be ide a blokk címét:</b></font><br />";
-		echo "<input type='hidden' name='kod' value='".$_GET["blokkmod"]."'>";
+		echo "<input type='hidden' name='kod' value='".$_REQUEST["blokkmod"]."'>";
 		echo "<input type='text' name='cim' value='".$blokkcim."' style='width:200px;' required><br /><br />";
 		echo "<input type='submit' value='mentés' class='btn btn-large btn-secondary'></form>";
 	}
 	//blokk sorszám módosítása
-	if(isset($_GET["blokksormod"]))
+	if(isset($_REQUEST["blokksormod"]))
 	{
 		$lekerdez=$pdo->query("select * from ".$elotag."_oldalsav_".$webaktlang." order by sorszam");
 			$lastblokk=$pdo->query("select max(sorszam) as utso from ".$elotag."_oldalsav_".$webaktlang."");
@@ -158,7 +158,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		}
 	}
 	//új hírcikk hozzáadása
-	if(isset($_GET["ujcikk"]))
+	if(isset($_REQUEST["ujcikk"]))
 	{
 		echo "<h4>Bejegyzés, hírcikk hozzáadása</h4>";
 		echo "<form action='index.php?lng=".$webaktlang."&mod=y' method='POST'>";
@@ -168,21 +168,53 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		echo "<input type=submit value='mentés' class='btn btn-large btn-secondary'></form>";
 	}
 	//új SLIDER bokk hozzáadása
-	if(isset($_GET["ujslider"]))
+	if(isset($_REQUEST["ujslider"]))
 	{
+		$foo=array();
+		$lekerdez=$pdo->query("select slidersor from ".$elotag."_slider");
+		while($sorszamok=$lekerdez->fetch())
+		{
+			array_push($foo, $sorszamok["slidersor"]);
+		}
+		$lastslidid=max($foo);
 		echo "<h3>Képváltó kezelése</h3>";
 		echo "<h4>Új képváltó hozzáadása</h4>";
 		echo "<form action='index.php?lng=".$webaktlang."&mod=y' method='POST' enctype='multipart/form-data'>";
 		echo "<font face='Verdana' size='2' color='#000000'><b>Töltsön fel egy képet:</b><br /></font><br />";
 		echo "<input type='file' name='ujsliderkep' id='ujsliderkep' required><br /><br />";
-		echo "<font face='Verdana' size='2' color='#000000'><b>Képváltó első sora:</b></font><br />";
+		echo "<font face='Verdana' size='2' color='#000000'><b>Képváltó első sora:</b><br><small>(ha a képváltó tartalmazza)</small></font><br />";
 		echo "<input type='text' name='dumahozza' id='dumahozza' style='width:280px;' placeholder='Egyszerű, rövid szöveg!' value=''><br /><br />";
-		echo "<font face='Verdana' size='2' color='#000000'><b>Képváltó második sora:</b></font><br />";
+		echo "<font face='Verdana' size='2' color='#000000'><b>Képváltó második sora:</b><br><small>(ha a képváltó tartalmazza)</small></font><br />";
 		echo "<input type='text' name='hivatkozas' id='hivatkozas' style='width:280px;' placeholder='Egyszerű, rövid szöveg!' value=''><br /><br />";
+		echo "<font face='Verdana' size='2' color='#000000'><b>Képváltó elem/gomb hivatkozása:</b><br><small>(ha a képváltó tartalmazza)</small></font><br />";
+		echo "<input type='text' name='gomblink' id='gomblink' style='width:280px;' placeholder='Teljes URL, link!' value=''><br /><br />";
+		echo "<font face='Verdana' size='2' color='#000000'><b>Képváltó elem sorszáma:</b></font><br />";
+		echo "<input type='number' name='slidersor' id='slidersor' style='width:280px;' value='".$lastslidid."'><br /><br />";
+		echo "<input type=submit value='mentés' class='btn btn-large btn-secondary'></form>";
+	}
+	//új SLIDER bokk szerkesztése
+	if(isset($_REQUEST["slidermod"]))
+	{
+		$lekerdez=$pdo->query("select * from ".$elotag."_slider where sliderkod='".$_REQUEST["slidermod"]."'");
+		$data=$lekerdez->fetch();
+		echo "<h3>Képváltó kezelése</h3>";
+		echo "<h4>Képváltó elem szerkesztése</h4>";
+		echo "<form action='index.php?lng=".$webaktlang."&mod=y' method='POST' enctype='multipart/form-data'>";
+		echo "<input type='hidden' name='sliderkodmod' id='sliderkodmod' value='".$data["sliderkod"]."'>";
+		echo "<font face='Verdana' size='2' color='#000000'><b>Töltsön fel egy képet:</b><br><small>(ha a képváltó képét cserélni akarja)</small><br /></font><br />";
+		echo "<input type='file' name='modsliderkep' id='modsliderkep'><br /><br />";
+		echo "<font face='Verdana' size='2' color='#000000'><b>Képváltó első sora:</b><br><small>(ha a képváltó tartalmazza)</small></font><br />";
+		echo "<input type='text' name='dumahozza' id='dumahozza' style='width:280px;' placeholder='Egyszerű, rövid szöveg!' value='".$data["dumahozza"]."'><br /><br />";
+		echo "<font face='Verdana' size='2' color='#000000'><b>Képváltó második sora:</b><br><small>(ha a képváltó tartalmazza)</small></font><br />";
+		echo "<input type='text' name='hivatkozas' id='hivatkozas' style='width:280px;' placeholder='Egyszerű, rövid szöveg!' value='".$data["hivatkozas"]."'><br /><br />";
+		echo "<font face='Verdana' size='2' color='#000000'><b>Képváltó elem/gomb hivatkozása:</b><br><small>(ha a képváltó tartalmazza)</small></font><br />";
+		echo "<input type='text' name='gomblink' id='gomblink' style='width:280px;' placeholder='Teljes URL, link!' value='".$data["gomblink"]."'><br /><br />";
+		echo "<font face='Verdana' size='2' color='#000000'><b>Képváltó elem sorszáma:</b></font><br />";
+		echo "<input type='number' name='slidersor' id='slidersor' style='width:280px;' value='".$data["slidersor"]."'><br /><br />";
 		echo "<input type=submit value='mentés' class='btn btn-large btn-secondary'></form>";
 	}
 	//SLIDER blokkok kezelése
-	if(isset($_GET["sliderek"]))
+	if(isset($_REQUEST["sliderek"]))
 	{
 		echo "<h3>Képváltó kezelése</h3>";
 		echo "<a href='index.php?lng=".$webaktlang."&mod=y&ujslider=1' class='btn'>+ Új hozzáadása</a><br><br>";
@@ -192,7 +224,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		{
 			while($oldal=$lekerdez->fetch())
 			{
-				echo "<tr><td><a class='btn' href='index.php?lng=".$webaktlang."&mod=y&sliderdel=".$oldal["sliderkod"]."'>KÉP TÖRLÉSE</a><br />Első sor szövege: ".$oldal["dumahozza"]."<br />Második sor szövege: ".$oldal["hiperlink"]."<br /><img src='../slider/".$oldal["slidert"]."' border='0' width='450'></td></tr><tr><td><hr></td></tr>";
+				echo "<tr><td><a class='btn' href='index.php?lng=".$webaktlang."&mod=y&sliderdel=".$oldal["sliderkod"]."'>TÖRLÉS</a> &nbsp; <a class='btn' href='index.php?lng=".$webaktlang."&mod=y&slidermod=".$oldal["sliderkod"]."'>MÓDOSÍTÁS</a><br />Első sor szövege: ".($oldal["dumahozza"]!="" ? $oldal["dumahozza"] : "nincs megadva")."<br />Második sor szövege: ".($oldal["hiperlink"]!="" ? $oldal["hiperlink"] : "nincs megadva")."<br />Gomb/elem hivatkozása: ".($oldal["gomblink"]!="" ? $oldal["gomblink"] : "nincs megadva")."<br /><img src='../slider/".$oldal["slidert"]."' border='0' width='450'></td></tr><tr><td><hr></td></tr>";
 			}
 		}
 		else
@@ -202,7 +234,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		echo "</table><br />";
 	}
 	//felhasználói adatok módosítása
-	if(isset($_GET["usermod"]))
+	if(isset($_REQUEST["usermod"]))
 	{
 		$useradat=$pdo->query("select * from ".$elotag."_admin where nev='".$_SESSION["userlogged"]."'");
 		$ua=$useradat->fetch();
@@ -216,7 +248,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		echo "</form><br />";
 	}
 	//új felhasználó hozzáadása
-	if(isset($_GET["newuser"]))
+	if(isset($_REQUEST["newuser"]))
 	{
 		echo "<h3>Felhasználó hozzáadása:</h3>";
 		echo "<form action='index.php?lng=".$webaktlang."&mod=y' method='POST'>";
@@ -227,7 +259,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		echo "</form><br />";
 	}
 	//új nyelv hozzáadása
-	if(isset($_GET["ujnyelv"]))
+	if(isset($_REQUEST["ujnyelv"]))
 	{
 		echo "<form action='index.php?lng=".$webaktlang."&mod=y' method='POST'>";
 		echo "<h3>Adja meg a telepíteni kívánt új nyelvet:</h3><br />";
@@ -262,7 +294,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		echo "<input type='submit' value='mentés' class='btn btn-large btn-secondary'></form><br>";
 	}
 	//social linkek kezelése
-	if(isset($_GET["social"]))
+	if(isset($_REQUEST["social"]))
 	{
 		echo "<h3>Közösségi portálok profil-linkjeinek kezelése</h3>";
 		echo "<form action='index.php?lng=".$webaktlang."&mod=y' method='POST'>";
@@ -277,7 +309,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		echo "</form>";
 	}
 	//google maps kezelése
-	if(isset($_GET["gmaps"]))
+	if(isset($_REQUEST["gmaps"]))
 	{
 		echo "<h3>Google Maps térkép elérés kezelése</h3>";
 		echo "<form action='index.php?lng=".$webaktlang."&mod=y' method='POST'>";
@@ -293,7 +325,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		}
 	}
 	//új LETÖLTÉS hozzáadása
-	if(isset($_GET["ujdown"]))
+	if(isset($_REQUEST["ujdown"]))
 	{
 		echo "<h3>Új letölthető fájl hozzáadása</h3>";
 		echo "<form action='index.php?lng=".$webaktlang."&mod=y' method='POST' enctype='multipart/form-data'>";
@@ -307,7 +339,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		echo "</form><br>";
 	}
 	//letöltések kezelése
-	if(isset($_GET["downmod"]))
+	if(isset($_REQUEST["downmod"]))
 	{
 		$lekerdez=$pdo->query("select * from ".$elotag."_letoltesek");
 		echo "<section id='tables'>";
@@ -346,7 +378,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		echo "</section><br />";
 	}
 	//videó hozzáadása
-	if(isset($_GET["ujvideo"]))
+	if(isset($_REQUEST["ujvideo"]))
 	{
 		?>
 			<script type="text/javascript" src="ckeditor/ckeditor.js"></script>
@@ -372,7 +404,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		<?php
 	}
 	//videó módosítása
-	if(isset($_GET["videomod"]))
+	if(isset($_REQUEST["videomod"]))
 	{
 		?>
 			<script type="text/javascript" src="ckeditor/ckeditor.js"></script>
@@ -381,11 +413,11 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 				CKEDITOR.env.isCompatible = true;
 			</script>
 		<?php
-		$videok=$pdo->query("select * from ".$elotag."_videok where videokod='".$_GET["videomod"]."'");
+		$videok=$pdo->query("select * from ".$elotag."_videok where videokod='".$_REQUEST["videomod"]."'");
 		$v=$videok->fetch();
 		echo "<h2>Videótár - módosítás</h2>
 		<form name='modvidi' method='POST' action='index.php?lng=".$webaktlang."&mod=y' enctype='multipart/form-data'>
-			<input type='hidden' name='videomodkod' value='".$_GET["videomod"]."'>
+			<input type='hidden' name='videomodkod' value='".$_REQUEST["videomod"]."'>
 			<font face='Verdana' size='2' color='#000000'><b>Videó címe:</b></font><br><input type='text' name='videocim' id='videocim' style='width:400px;' value='".$v["videocim"]."' placeholder='Videó címe'><br />
 			<font face='Verdana' size='2' color='#000000'><b>Videó linkje:</b></font><br><input type='text' name='vhiv' id='vhiv' style='width:400px;' value='".$v["vhiv"]."' placeholder='Videó LINK-je a böngésző címsorából'><br />
 			<font face='Verdana' size='2' color='#000000'><b>Videó leírása:</b></font><br><textarea name='vtext'style='width:400px;'>".$v["vtext"]."</textarea><br />
@@ -401,7 +433,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		<?php
 	}
 	//sitemap - oldaltérkép készitése
-	if(isset($_GET["createxml"]))
+	if(isset($_REQUEST["createxml"]))
 	{
 		echo "<form action='index.php?lng=".$webaktlang."&mod=y' method='POST'>";
 		echo "<h3>XML oldaltérkép készítése a keresőrobotok számára<br><small>(sitemap.xml készítése a főkönyvtárba, elérése: ".$absp."/sitemap.xml)</small></h3>";
@@ -410,7 +442,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		echo "</form>";
 	}
 	//google analytics készitése
-	if(isset($_GET["ganal"]))
+	if(isset($_REQUEST["ganal"]))
 	{
 		echo "<form action='index.php?lng=".$webaktlang."&mod=y' method='POST'>";
 		echo "<h3>Google Analytics</h3>";
@@ -419,7 +451,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		echo "</form>";
 	}
 	//paraméterek beállítása
-	if(isset($_GET["settings"]))
+	if(isset($_REQUEST["settings"]))
 	{
 		$betoltes=$pdo->query("select * from ".$elotag."_parameterek");
 		$beallitasok=$betoltes->fetch();
@@ -450,7 +482,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		echo "<br /><input type='submit' value='mentés' class='btn btn-large btn-secondary'></form><br>";
 	}
 	//root modulok telepítése
-	if(isset($_GET["rootmodul"]) AND $_SESSION["userlogged"]=="nimda")
+	if(isset($_REQUEST["rootmodul"]) AND $_SESSION["userlogged"]=="nimda")
 	{
 		echo "<form name='root-module' action='index.php?lng=".$webaktlang."&mod=y' method='POST'>";
 			echo '<input type="hidden" name="modulinstall" value="root">';
@@ -489,6 +521,20 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 				<select name='shopmodul' id='shopmodul' size='1'><option value='igen'>Telepítem</option><option value='nem'>nem kérem</option></select><br /><br />";
 			echo '<input type="submit" value="mentés" class="btn btn-large btn-secondary">';
 		echo "</form>";
+	}
+	//alaprendszer frissítése
+	if(isset($_REQUEST["sysupd"]))
+	{
+		if(file_exists("update.php"))
+		{
+			echo "<h3>A rendszer frissítések ellenőrzése és végrehajtása, kis türelmet!</h3><br><br>";
+			
+		}
+		else
+		{
+			echo "<h3>A rendszer a jelenlegi legfrissebb állapotban van!</h3><br><br>";
+			echo '<a href="/index.php?lng='.$webaktlang.' class="btn btn-large btn-secondary">Rendben</a>';
+		}
 	}
 }
 else { echo 'ERROR!'; }

@@ -255,10 +255,6 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		$datekeszit=mktime($datummost["hours"],$datummost["minutes"],$datummost["seconds"],$datummost["mon"],$datummost["mday"],$datummost["year"]);
 		$dazo=date("Ymdhms",$datekeszit);
 		
-		//hiperlink vizsgálat
-		if($_POST["hivatkozas"]!="" AND $_POST["hivatkozas"]!=" ") { $linkike=$_POST["hivatkozas"]; }
-		else { $linkike=""; }
-		
 		$ext = strtolower(substr(strrchr($_FILES["ujsliderkep"]["name"], "."), 1));
 		if($ext == "jpg" || $ext == "jpeg" || $ext == "png")
 		{
@@ -269,7 +265,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 				list($width, $height) = getimagesize("../slider/".$fajlnev);
 				if($width>="1")
 				{
-					$parancs="insert into ".$elotag."_slider(slidert,hiperlink,dumahozza) values('".$fajlnev."','".$linkike."','".$_POST["dumahozza"]."')";
+					$parancs="insert into ".$elotag."_slider(slidert,hiperlink,dumahozza,gomblink,slidersor) values('".$fajlnev."','".$_POST["hivatkozas"]."','".$_POST["dumahozza"]."','".$_POST["gomblink"]."','".$_POST["slidersor"]."')";
 					$hova="index.php?lng=".$webaktlang."&mod=y&sliderek=1";
 				}
 				else
@@ -288,6 +284,57 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		else
 		{
 			echo "<script> alert('Sikertelen művelet. :( A kép formátuma nem volt megfelelő, a feltölthető formátum: JPG, PNG.'); </script>";
+			$hova="index.php?lng=".$webaktlang."&mod=y&sliderek=1";
+		}
+	}
+	//SLIDER blokk szerkesztés mentése
+	if(isset($_POST["sliderkodmod"]) AND $_POST["sliderkodmod"]!="" AND $_POST["sliderkodmod"]!=" ")
+	{
+		if($_FILES["modsliderkep"]["name"]!="")
+		{
+			$SafeFile = $_FILES['modsliderkep']['name'];
+			$SafeFile = strtolower($SafeFile);
+			$SafeFile = str_replace($mirol, $mire, $SafeFile);
+
+			$datummost=getDate();
+			$datekeszit=mktime($datummost["hours"],$datummost["minutes"],$datummost["seconds"],$datummost["mon"],$datummost["mday"],$datummost["year"]);
+			$dazo=date("Ymdhms",$datekeszit);
+		
+			$ext = strtolower(substr(strrchr($_FILES["modsliderkep"]["name"], "."), 1));
+			if($ext == "jpg" || $ext == "jpeg" || $ext == "png")
+			{
+				$fajlnev=$dazo."_".$SafeFile;
+				
+				if(move_uploaded_file($_FILES['modsliderkep']['tmp_name'],"../slider/".$fajlnev))
+				{
+					list($width, $height) = getimagesize("../slider/".$fajlnev);
+					if($width>="1")
+					{
+						$parancs="update ".$elotag."_slider set slidert='".$fajlnev."',hiperlink='".$_POST["hivatkozas"]."',dumahozza='".$_POST["dumahozza"]."',gomblink='".$_POST["gomblink"]."',slidersor='".$_POST["slidersor"]."' where sliderkod='".$_POST["sliderkodmod"]."')";
+						$hova="index.php?lng=".$webaktlang."&mod=y&sliderek=1";
+					}
+					else
+					{
+						unlink("../slider/".$fajlnev);
+						echo "<script> alert('Fájl feltöltési hiba, ez nem kép!'); </script>";
+						$hova="index.php?lng=".$webaktlang."&mod=y&sliderek=1";
+					}
+				}
+				else
+				{
+					echo "<script> alert('Sikertelen művelet. :( A kép nem volt megfelelő.'); </script>";
+					$hova="index.php?lng=".$webaktlang."&mod=y&sliderek=1";
+				}
+			}
+			else
+			{
+				echo "<script> alert('Sikertelen művelet. :( A kép formátuma nem volt megfelelő, a feltölthető formátum: JPG, PNG.'); </script>";
+				$hova="index.php?lng=".$webaktlang."&mod=y&sliderek=1";
+			}
+		}
+		else
+		{
+			$parancs="update ".$elotag."_slider set hiperlink='".$_POST["hivatkozas"]."',dumahozza='".$_POST["dumahozza"]."',gomblink='".$_POST["gomblink"]."',slidersor='".$_POST["slidersor"]."' where sliderkod='".$_POST["sliderkodmod"]."')";
 			$hova="index.php?lng=".$webaktlang."&mod=y&sliderek=1";
 		}
 	}
@@ -332,6 +379,11 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 				$webegylang=$weblangok->fetch();
 				$webaktlang=$webegylang["langnev"];
 			$hova="index.php?lng=".$webaktlang."&page=saved";
+		}
+		else
+		{
+			echo "<script> alert('Sikertelen művelet. Az alapvető magyar nyelv NEM törölhető!'); </script>";
+			$hova="index.php?lng=".$webaktlang."";
 		}
 	}
 	//google analytics kód mentése
