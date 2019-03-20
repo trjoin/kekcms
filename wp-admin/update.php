@@ -3,8 +3,6 @@ session_start();
 if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION["userlogged"]!=" ")
 {
 	/*** LEGÚJABB FRISSITÉSEK HOZZÁADÁSA ***/
-	include_once("../connect.php");
-	
 	$frissit=$pdo->query("ALTER TABLE ".$elotag."_slider ADD gomblink TEXT AFTER hiperlink, ADD slidersor INT(5) AFTER dumahozza");
 	
 	if($frissit)

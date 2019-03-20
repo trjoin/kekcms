@@ -528,7 +528,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		if(file_exists("update.php"))
 		{
 			echo "<h3>A rendszer frissítések ellenőrzése és végrehajtása, kis türelmet!</h3><br><br>";
-			
+			include("update.php");
 		}
 		else
 		{
