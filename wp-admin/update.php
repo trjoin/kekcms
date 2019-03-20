@@ -4,6 +4,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 {
 	/*** LEGÚJABB FRISSITÉSEK HOZZÁADÁSA ***/
 	$frissit=$pdo->query("ALTER TABLE ".$elotag."_slider ADD gomblink TEXT AFTER hiperlink, ADD slidersor INT(5) AFTER dumahozza");
+	$frissit=$pdo->query("update ".$elotag."_social set socialsite='LinkedIn',sociallink='#' where socialsite like '%Google%'");
 	
 	if($frissit)
 	{
@@ -24,9 +25,9 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		echo "<script>				    
 					function atiranyit()
 					{
-						location.href = 'index.php?lng=".$webaktlang."';
+						location.href = 'index.php';
 					}
-					ID = window.setTimeout('atiranyit();', 1*150);
+					ID = window.setTimeout('atiranyit();', 1*1000);
 			   </script>";
 	}
 	else
@@ -47,9 +48,9 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		echo "<script>				    
 					function atiranyit()
 					{
-						location.href = 'index.php?lng=".$webaktlang."';
+						location.href = 'index.php';
 					}
-					ID = window.setTimeout('atiranyit();', 1*150);
+					ID = window.setTimeout('atiranyit();', 1*1000);
 			   </script>";
 	}
 }

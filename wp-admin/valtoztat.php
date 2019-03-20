@@ -189,7 +189,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		echo "<font face='Verdana' size='2' color='#000000'><b>Képváltó elem/gomb hivatkozása:</b><br><small>(ha a képváltó tartalmazza)</small></font><br />";
 		echo "<input type='text' name='gomblink' id='gomblink' style='width:280px;' placeholder='Teljes URL, link!' value=''><br /><br />";
 		echo "<font face='Verdana' size='2' color='#000000'><b>Képváltó elem sorszáma:</b></font><br />";
-		echo "<input type='number' name='slidersor' id='slidersor' style='width:280px;' value='".$lastslidid."'><br /><br />";
+		echo "<input type='number' name='slidersor' id='slidersor' style='width:280px;' value='".$lastslidid."' required><br /><br />";
 		echo "<input type=submit value='mentés' class='btn btn-large btn-secondary'></form>";
 	}
 	//új SLIDER bokk szerkesztése
@@ -200,17 +200,17 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		echo "<h3>Képváltó kezelése</h3>";
 		echo "<h4>Képváltó elem szerkesztése</h4>";
 		echo "<form action='index.php?lng=".$webaktlang."&mod=y' method='POST' enctype='multipart/form-data'>";
-		echo "<input type='hidden' name='sliderkodmod' id='sliderkodmod' value='".$data["sliderkod"]."'>";
+		echo "<input type='hidden' name='sliderkodmod' id='sliderkodmod' value='".$_REQUEST["slidermod"]."'>";
 		echo "<font face='Verdana' size='2' color='#000000'><b>Töltsön fel egy képet:</b><br><small>(ha a képváltó képét cserélni akarja)</small><br /></font><br />";
 		echo "<input type='file' name='modsliderkep' id='modsliderkep'><br /><br />";
 		echo "<font face='Verdana' size='2' color='#000000'><b>Képváltó első sora:</b><br><small>(ha a képváltó tartalmazza)</small></font><br />";
 		echo "<input type='text' name='dumahozza' id='dumahozza' style='width:280px;' placeholder='Egyszerű, rövid szöveg!' value='".$data["dumahozza"]."'><br /><br />";
 		echo "<font face='Verdana' size='2' color='#000000'><b>Képváltó második sora:</b><br><small>(ha a képváltó tartalmazza)</small></font><br />";
-		echo "<input type='text' name='hivatkozas' id='hivatkozas' style='width:280px;' placeholder='Egyszerű, rövid szöveg!' value='".$data["hivatkozas"]."'><br /><br />";
+		echo "<input type='text' name='hivatkozas' id='hivatkozas' style='width:280px;' placeholder='Egyszerű, rövid szöveg!' value='".$data["hiperlink"]."'><br /><br />";
 		echo "<font face='Verdana' size='2' color='#000000'><b>Képváltó elem/gomb hivatkozása:</b><br><small>(ha a képváltó tartalmazza)</small></font><br />";
 		echo "<input type='text' name='gomblink' id='gomblink' style='width:280px;' placeholder='Teljes URL, link!' value='".$data["gomblink"]."'><br /><br />";
 		echo "<font face='Verdana' size='2' color='#000000'><b>Képváltó elem sorszáma:</b></font><br />";
-		echo "<input type='number' name='slidersor' id='slidersor' style='width:280px;' value='".$data["slidersor"]."'><br /><br />";
+		echo "<input type='number' name='slidersor' id='slidersor' style='width:280px;' value='".$data["slidersor"]."' required><br /><br />";
 		echo "<input type=submit value='mentés' class='btn btn-large btn-secondary'></form>";
 	}
 	//SLIDER blokkok kezelése
@@ -224,7 +224,12 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		{
 			while($oldal=$lekerdez->fetch())
 			{
-				echo "<tr><td><a class='btn' href='index.php?lng=".$webaktlang."&mod=y&sliderdel=".$oldal["sliderkod"]."'>TÖRLÉS</a> &nbsp; <a class='btn' href='index.php?lng=".$webaktlang."&mod=y&slidermod=".$oldal["sliderkod"]."'>MÓDOSÍTÁS</a><br />Első sor szövege: ".($oldal["dumahozza"]!="" ? $oldal["dumahozza"] : "nincs megadva")."<br />Második sor szövege: ".($oldal["hiperlink"]!="" ? $oldal["hiperlink"] : "nincs megadva")."<br />Gomb/elem hivatkozása: ".($oldal["gomblink"]!="" ? $oldal["gomblink"] : "nincs megadva")."<br /><img src='../slider/".$oldal["slidert"]."' border='0' width='450'></td></tr><tr><td><hr></td></tr>";
+				echo "<tr><td><a class='btn' href='index.php?lng=".$webaktlang."&mod=y&sliderdel=".$oldal["sliderkod"]."'>TÖRLÉS</a> &nbsp; <a class='btn' href='index.php?lng=".$webaktlang."&mod=y&slidermod=".$oldal["sliderkod"]."'>MÓDOSÍTÁS</a><br /><br />
+					<b>Első sor szövege:</b> ".($oldal["dumahozza"]!="" ? $oldal["dumahozza"] : "nincs megadva")."<br />
+					<b>Második sor szövege:</b> ".($oldal["hiperlink"]!="" ? $oldal["hiperlink"] : "nincs megadva")."<br />
+					<b>Gomb/elem hivatkozása:</b> ".($oldal["gomblink"]!="" ? $oldal["gomblink"] : "nincs megadva")."<br />
+					<b>Képváltó adat sorszáma:</b> ".$oldal["slidersor"]."<br /><br />
+					<img src='../slider/".$oldal["slidert"]."' border='0' width='650' data-pin-nopin='true'></td></tr><tr><td><hr></td></tr>";
 			}
 		}
 		else
@@ -532,8 +537,8 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		}
 		else
 		{
-			echo "<h3>A rendszer a jelenlegi legfrissebb állapotban van!</h3><br><br>";
-			echo '<a href="/index.php?lng='.$webaktlang.' class="btn btn-large btn-secondary">Rendben</a>';
+			echo '<h3>A rendszer a jelenlegi legfrissebb állapotban van!</h3>';
+			echo '<a href="index.php?lng='.$webaktlang.'" class="btn btn-large btn-secondary">Rendben</a>';
 		}
 	}
 }

@@ -334,7 +334,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		}
 		else
 		{
-			$parancs="update ".$elotag."_slider set hiperlink='".$_POST["hivatkozas"]."',dumahozza='".$_POST["dumahozza"]."',gomblink='".$_POST["gomblink"]."',slidersor='".$_POST["slidersor"]."' where sliderkod='".$_POST["sliderkodmod"]."')";
+			$parancs="update ".$elotag."_slider set hiperlink='".$_POST["hivatkozas"]."',dumahozza='".$_POST["dumahozza"]."',gomblink='".$_POST["gomblink"]."',slidersor='".$_POST["slidersor"]."' where sliderkod='".$_POST["sliderkodmod"]."'";
 			$hova="index.php?lng=".$webaktlang."&mod=y&sliderek=1";
 		}
 	}

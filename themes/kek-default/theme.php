@@ -225,7 +225,7 @@ if(!isset($_REQUEST["furl"]))
 <?php
 /* slider megjelenitése */
 	$i=1;
-	$sliderblokk=$pdo->query("select * from ".$elotag."_slider order by sliderkod asc");
+	$sliderblokk=$pdo->query("select * from ".$elotag."_slider order by slidersor asc");
 	while($egy_sb=$sliderblokk->fetch())
 	{
 		echo '<div class="item item'.$i.' '.($i==1 ? "active" : "" ).'" style="background: linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)), url(slider/'.$egy_sb["slidert"].') center no-repeat; background-size:100%;">
@@ -260,14 +260,14 @@ if(!isset($_REQUEST["furl"]))
 /* menüpontok tartalmának megjelenitése */
 	if(isset($_REQUEST["furl"]) AND strpos($_REQUEST["furl"],"blog/")=== false AND strpos($_REQUEST["furl"],"galeria/")=== false)
 	{
-		$megjelenit=$pdo->query("select * from ".$elotag."_menu_".$webaktlang." where aktiv='1' furl='".$_REQUEST["furl"]."'");
+		$megjelenit=$pdo->query("select * from ".$elotag."_menu_".$webaktlang." where aktiv='1' AND furl='".$_REQUEST["furl"]."'");
 		if($megjelenit->rowCount()>0)
 		{
 			$oldal=$megjelenit->fetch();
 		}
 		else
 		{
-			$megjelenit=$pdo->query("select * from ".$elotag."_almenu_".$webaktlang." where aktiv='1' furl='".$_REQUEST["furl"]."'");
+			$megjelenit=$pdo->query("select * from ".$elotag."_almenu_".$webaktlang." where aktiv='1' AND furl='".$_REQUEST["furl"]."'");
 			$oldal=$megjelenit->fetch();
 		}
 		echo '<div class="tittle_head_w3layouts">
