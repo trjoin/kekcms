@@ -176,7 +176,16 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		{
 			array_push($foo, $sorszamok["slidersor"]);
 		}
-		$lastslidid=max($foo);
+		
+		if(empty($foo))
+		{
+			$lastslidid=1;
+		}
+		else
+		{
+			$lastslidid=max($foo);
+		}
+		
 		echo "<h3>Képváltó kezelése</h3>";
 		echo "<h4>Új képváltó hozzáadása</h4>";
 		echo "<form action='index.php?lng=".$webaktlang."&mod=y' method='POST' enctype='multipart/form-data'>";
