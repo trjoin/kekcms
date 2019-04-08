@@ -5,6 +5,8 @@ RewriteBase /
 
 ## FŐOLDAL ##
 RewriteRule ^/?$ index.php [NC,NE,L]
+## ADMIN ##
+RewriteRule ^wp-admin/?$ /wp-admin/index.php [NC,NE,L]
 ## MENÜ és ALMENÜ ##
 RewriteRule ^([A-Za-z0-9_-]+)/?$ index.php?furl=$1 [NC,NE,L]
 ## BLOG ##
