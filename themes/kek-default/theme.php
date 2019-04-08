@@ -278,6 +278,14 @@ if(!isset($_REQUEST["furl"]))
 					<div class="clearfix"> </div>
 				</div>';
 	}
+	elseif(strpos($_REQUEST["furl"],"blog/")!== false)
+	{
+		include("blog.php");
+	}
+	elseif(strpos($_REQUEST["furl"],"galeria/")!== false)
+	{
+		include("galeria.php");
+	}
 	else
 	{
 		$megjelenit=$pdo->query("select * from ".$elotag."_menu_".$webaktlang." where aktiv='1' order by sorszam asc");
