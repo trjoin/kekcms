@@ -233,6 +233,7 @@ if(!isset($_REQUEST["furl"]))
 					<div class="carousel-caption">
 						<h3>'.$egy_sb["dumahozza"].'</h3>
 						<p>'.$egy_sb["hiperlink"].'</p>
+						<p><a href="'.$egy_sb["gomblink"].'">GOMB</a></p>
 					</div>
 				</div>
 			</div>';
