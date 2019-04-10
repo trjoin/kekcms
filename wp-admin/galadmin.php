@@ -353,8 +353,8 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		else
 		{
 			echo "<h3>Albumok, galéria kezelése</h3>";
-			echo "<a class='btn' href='index.php?lng=".$webaktlang."&page=galeria&ujkep=1'>Új kép feltöltése &raquo;</a> 
-					<a class='btn' href='index.php?lng=".$webaktlang."&page=galeria&ujalbum=1'>Új album létrehozása &raquo;</a><br><br>";
+			echo "<a class='btn' href='index.php?lng=".$webaktlang."&page=galeria&ujkep=1'>+ Új kép feltöltése &raquo;</a> 
+					<a class='btn' href='index.php?lng=".$webaktlang."&page=galeria&ujalbum=1'>+ Új album létrehozása &raquo;</a><br><br>";
 			echo "<ul class='gallery-container'>";
 			$mappak=$pdo->query("select * from ".$elotag."_mappak");
 			if($mappak->rowCount()<=0)

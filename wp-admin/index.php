@@ -465,22 +465,22 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 							<div class="span12">';
 				if($oldal["aktiv"]=="1")
 				{
-					echo "<i class='fa fa-power-off'></i> <a href='index.php?lng=".$webaktlang."&mod=y&menustop=".$oldal["kod"]."'>kikapcsolás</a>&nbsp;|&nbsp;";
+					echo "<a href='index.php?lng=".$webaktlang."&mod=y&menustop=".$oldal["kod"]."' class='btn'><i class='fa fa-power-off'></i> kikapcsolás</a> ";
 				}
 				else
 				{
-					echo "<i class='fa fa-check-square-o'></i> <a href='index.php?lng=".$webaktlang."&mod=y&menustart=".$oldal["kod"]."'>aktiválás</a>&nbsp;|&nbsp;";
+					echo "<a href='index.php?lng=".$webaktlang."&mod=y&menustart=".$oldal["kod"]."' class='btn'><i class='fa fa-check-square-o'></i> aktiválás</a> ";
 				}
-				echo "<i class='icon-edit'></i> <a href='index.php?lng=".$webaktlang."&mod=edit&modosit=".$oldal["kod"]."'>szerkesztés</a>&nbsp;|&nbsp;";
+				echo "<a href='index.php?lng=".$webaktlang."&mod=edit&modosit=".$oldal["kod"]."' class='btn'><i class='icon-edit'></i> szerkesztés</a> ";
 				//van almenüje? mert ha igen nem engedjük törölni!
 				$almenu=$pdo->query("select * from ".$elotag."_almenu_".$webaktlang." where szulo='".$_REQUEST["page"]."'");
 				if($almenu->rowCount()>0)
 				{
-					echo "<i class='icon-trash'></i> <a href='javascript:alert(\"Ennek a menüpontnak van almenüje, előbb azt kell törölni!\");'>menüpont törlése</a><br /><br />";
+					echo "<a href='javascript:alert(\"Ennek a menüpontnak van almenüje, előbb azt kell törölni!\");'><i class='icon-trash'></i> menüpont törlése</a><br /><br />";
 				}
 				else
 				{
-					echo "<i class='icon-trash'></i> <a href='index.php?lng=".$webaktlang."&mod=y&torol=".$oldal["kod"]."' onclick=\"return confirm('Biztos törli a menüpontot a teljes tartalmával együtt?')\">menüpont törlése</a><br /><br />";
+					echo "<a href='index.php?lng=".$webaktlang."&mod=y&torol=".$oldal["kod"]."' class='btn' onclick=\"return confirm('Biztos törli a menüpontot a teljes tartalmával együtt?')\"><i class='icon-trash'></i> menüpont törlése</a><br /><br />";
 				}
 				print($oldal["tartalom"]);
 			echo '			</div>
@@ -503,14 +503,14 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 							<div class="span12">';
 			if($oldal["aktiv"]=="1")
 			{
-				echo "<i class='fa fa-power-off'></i> <a href='index.php?lng=".$webaktlang."&mod=y&almenustop=".$oldal["kod"]."'>kikapcsolás</a>&nbsp;|&nbsp;";
+				echo "<a href='index.php?lng=".$webaktlang."&mod=y&almenustop=".$oldal["kod"]."' class='btn'><i class='fa fa-power-off'></i> kikapcsolás</a> ";
 			}
 			else
 			{
-				echo "<i class='fa fa-check-square-o'></i> <a href='index.php?lng=".$webaktlang."&mod=y&almenustart=".$oldal["kod"]."'>aktiválás</a>&nbsp;|&nbsp;";
+				echo "<a href='index.php?lng=".$webaktlang."&mod=y&almenustart=".$oldal["kod"]."' class='btn'><i class='fa fa-check-square-o'></i> aktiválás</a> ";
 			}
-			echo "<i class='icon-edit'></i> <a href='index.php?lng=".$webaktlang."&mod=edit&almodosit=".$oldal["kod"]."'>szerkesztés</a>&nbsp;|
-				   <i class='icon-trash'></i> <a href='index.php?lng=".$webaktlang."&mod=y&altorol=".$oldal["kod"]."' onclick=\"return confirm('Biztos törli az almenüpontot a teljes tartalmával együtt?')\">almenüpont törlése</a><br /><br />";
+			echo "<a href='index.php?lng=".$webaktlang."&mod=edit&almodosit=".$oldal["kod"]."' class='btn'><i class='icon-edit'></i> szerkesztés</a> 
+				  <a href='index.php?lng=".$webaktlang."&mod=y&altorol=".$oldal["kod"]."' class='btn' onclick=\"return confirm('Biztos törli az almenüpontot a teljes tartalmával együtt?')\"><i class='icon-trash'></i> almenüpont törlése</a><br /><br />";
 			print($oldal["tartalom"]);
 		echo '			</div>
 					</div>

@@ -60,7 +60,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 	if($talalatok->rowCount()>0)
 	{
 		echo "<h3>Bejegyzések kezelése</h3>";
-		echo "<a class='btn' href='index.php?lng=".$webaktlang."&mod=y&ujcikk=1'>új bejegyzés létrehozása</a><br><br>";
+		echo "<a class='btn' href='index.php?lng=".$webaktlang."&mod=y&ujcikk=1'>+ új bejegyzés létrehozása &raquo;</a><br><br>";
 		$hirszamol=0;
 		while($egyhir=$talalatok->fetch())
 		{

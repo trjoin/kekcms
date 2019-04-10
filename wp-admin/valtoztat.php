@@ -201,7 +201,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		echo "<input type='number' name='slidersor' id='slidersor' style='width:280px;' value='".$lastslidid."' required><br /><br />";
 		echo "<input type=submit value='mentés' class='btn btn-large btn-secondary'></form>";
 	}
-	//új SLIDER bokk szerkesztése
+	//SLIDER bokk szerkesztése
 	if(isset($_REQUEST["slidermod"]))
 	{
 		$lekerdez=$pdo->query("select * from ".$elotag."_slider where sliderkod='".$_REQUEST["slidermod"]."'");
@@ -233,7 +233,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		{
 			while($oldal=$lekerdez->fetch())
 			{
-				echo "<tr><td><a class='btn' href='index.php?lng=".$webaktlang."&mod=y&sliderdel=".$oldal["sliderkod"]."'>TÖRLÉS</a> &nbsp; <a class='btn' href='index.php?lng=".$webaktlang."&mod=y&slidermod=".$oldal["sliderkod"]."'>MÓDOSÍTÁS</a><br /><br />
+				echo "<tr><td><a class='btn' href='index.php?lng=".$webaktlang."&mod=y&sliderdel=".$oldal["sliderkod"]."'><i class='icon-trash'></i> TÖRLÉS</a> &nbsp; <a class='btn' href='index.php?lng=".$webaktlang."&mod=y&slidermod=".$oldal["sliderkod"]."'><i class='icon-edit'></i> MÓDOSÍTÁS</a><br /><br />
 					<b>Első sor szövege:</b> ".($oldal["dumahozza"]!="" ? $oldal["dumahozza"] : "nincs megadva")."<br />
 					<b>Második sor szövege:</b> ".($oldal["hiperlink"]!="" ? $oldal["hiperlink"] : "nincs megadva")."<br />
 					<b>Gomb/elem hivatkozása:</b> ".($oldal["gomblink"]!="" ? $oldal["gomblink"] : "nincs megadva")."<br />
@@ -358,7 +358,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		$lekerdez=$pdo->query("select * from ".$elotag."_letoltesek");
 		echo "<section id='tables'>";
 		echo "<h3>Letöltések kezelése</h3>";
-		echo "<a href='index.php?lng=".$webaktlang."&mod=y&ujdown=1' class='btn'>új fájl hozzáadása &raquo;</a><br><br>";
+		echo "<a href='index.php?lng=".$webaktlang."&mod=y&ujdown=1' class='btn'>+ új fájl hozzáadása &raquo;</a><br><br>";
 		if($lekerdez->rowCount()>0)
 		{
 			echo "<table class='table table-bordered table-striped table-highlight'>
