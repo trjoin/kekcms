@@ -257,15 +257,15 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 									  </ul>
 									</li>';
 		}
-		$modhirekbe=$pdo->query("select bekapcsolva from ".$elotag."_modulok where modulnev='hirek'");
+		$modhirekbe=$pdo->query("select bekapcsolva from ".$elotag."_modulok where modulnev='blog'");
 		$hirmod=$modhirekbe->fetch();
 		if($hirmod["bekapcsolva"]=="igen")
 		{
 			echo '					<li class="dropdown-submenu">
 									  <a tabindex="-1" href="#">Bejegyzések</a>
 									  <ul class="dropdown-menu">
-										<li><a tabindex="-2" href="index.php?lng='.$webaktlang.'&page=hirek">&raquo; Megtekintés és kezelés</a></li>
-										<li><a tabindex="-2" href="index.php?lng='.$webaktlang.'&mod=y&ujcikk=1">&plus; Új hozzáadása</a></li>
+										<li><a tabindex="-2" href="index.php?lng='.$webaktlang.'&page=blog">&raquo; Megtekintés és kezelés</a></li>
+										<li><a tabindex="-2" href="index.php?lng='.$webaktlang.'&mod=y&ujcikk=1">&plus; Új cikk hozzáadása</a></li>
 									  </ul>
 									</li>';
 		}
@@ -358,7 +358,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 // BELTARTALOM AMI LINKENKÉNT VÁLTOZIK //
 	if(isset($_REQUEST["page"]))
 	{
-		if($_REQUEST["page"]=="hirek")
+		if($_REQUEST["page"]=="blog")
 		{
 			echo '<div class="widget stacked">
 					<div class="widget-header">

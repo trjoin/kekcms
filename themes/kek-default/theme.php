@@ -27,16 +27,16 @@
 <html lang="hu-HU" xml:lang="hu" dir="ltr">
 <head>
 <?php
-	if(isset($_REQUEST["furl"]) AND strpos($_REQUEST["furl"],"blog/")=== false AND strpos($_REQUEST["furl"],"galeria/")=== false)
+	if(isset($_REQUEST["furl"]) AND strpos($_REQUEST["furl"],"blog/")=== false AND strpos($_REQUEST["furl"],"galeria/")=== false AND strpos($_REQUEST["furl"],"video/")=== false)
 	{
-		$megjelenit=$pdo->query("select * from ".$elotag."_menu_".$webaktlang." where furl='".$_REQUEST["furl"]."'");
+		$megjelenit=$pdo->query("select * from ".$elotag."_menu_".$webaktlang." where furl='".$_REQUEST["furl"]."' and aktiv='1'");
 		if($megjelenit->rowCount()>0)
 		{
 			$ad=$megjelenit->fetch();
 		}
 		else
 		{
-			$megjelenit=$pdo->query("select * from ".$elotag."_almenu_".$webaktlang." where furl='".$_REQUEST["furl"]."'");
+			$megjelenit=$pdo->query("select * from ".$elotag."_almenu_".$webaktlang." where furl='".$_REQUEST["furl"]."' and aktiv='1'");
 			$ad=$megjelenit->fetch();
 		}
 		$title=$ad["metatitle"];
@@ -49,7 +49,7 @@
 	}
 	elseif(isset($_REQUEST["hir"]))
 	{
-		$megjelenit=$pdo->query("select * from ".$elotag."_hirkezelo_".$webaktlang." where furl='".$_REQUEST["hir"]."'");
+		$megjelenit=$pdo->query("select * from ".$elotag."_hirkezelo_".$webaktlang." where furl='".$_REQUEST["hir"]."' and aktiv='1'");
 		$ad=$megjelenit->fetch();
 		$title=$ad["metatitle"];
 		$keywords=$ad["metakeywords"];
@@ -231,9 +231,9 @@ if(!isset($_REQUEST["furl"]))
 		echo '<div class="item item'.$i.' '.($i==1 ? "active" : "" ).'" style="background: linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)), url(slider/'.$egy_sb["slidert"].') center no-repeat; background-size:100%;">
 				<div class="container">
 					<div class="carousel-caption">
-						<h3>'.$egy_sb["dumahozza"].'</h3>
-						<p>'.$egy_sb["hiperlink"].'</p>
-						<p><a href="'.$egy_sb["gomblink"].'">GOMB</a></p>
+						'.($egy_sb["dumahozza"]!="" ? '<h3>'.$egy_sb["dumahozza"].'</h3>' : '').'
+						'.($egy_sb["hiperlink"]!="" ? '<p>'.$egy_sb["hiperlink"].'</p>' : '').'
+						'.($egy_sb["gomblink"]!="" ? '<p><a href="'.$egy_sb["gomblink"].'">GOMB</a></p>' : '').'
 					</div>
 				</div>
 			</div>';
@@ -259,7 +259,7 @@ if(!isset($_REQUEST["furl"]))
 		<div class="container">
 <?php
 /* menüpontok tartalmának megjelenitése */
-	if(isset($_REQUEST["furl"]) AND strpos($_REQUEST["furl"],"blog/")=== false AND strpos($_REQUEST["furl"],"galeria/")=== false)
+	if(isset($_REQUEST["furl"]))
 	{
 		$megjelenit=$pdo->query("select * from ".$elotag."_menu_".$webaktlang." where aktiv='1' AND furl='".$_REQUEST["furl"]."'");
 		if($megjelenit->rowCount()>0)
@@ -275,28 +275,32 @@ if(!isset($_REQUEST["furl"]))
 					<h3 class="tittle main">'.$oldal["nev"].'</span></h3>
 				</div>
 				<div class="inner_sec_info_agileits_w3">
-					'.$oldal["tartalom"].'
-					<div class="clearfix"> </div>
+					'.$oldal["tartalom"];
+				
+				if($oldal["tomodul"]!="")
+				{
+					include($oldal["tomodul"].".php");
+				}
+				
+		echo '		<div class="clearfix"> </div>
 				</div>';
-	}
-	elseif(strpos($_REQUEST["furl"],"blog/")!== false)
-	{
-		include("blog.php");
-	}
-	elseif(strpos($_REQUEST["furl"],"galeria/")!== false)
-	{
-		include("galeria.php");
 	}
 	else
 	{
 		$megjelenit=$pdo->query("select * from ".$elotag."_menu_".$webaktlang." where aktiv='1' order by sorszam asc");
 		$oldal=$megjelenit->fetch();
 		echo '<div class="tittle_head_w3layouts">
-					<h3 class="tittle main">Üdvözöljük weboldalunkon, ez  K.E.K. DEMO</span></h3>
+					<h3 class="tittle main">Üdvözöljük weboldalunkon, ez  K.E.K. CMS DEMO</span></h3>
 				</div>
 				<div class="inner_sec_info_agileits_w3">
-					'.$oldal["tartalom"].'
-					<div class="clearfix"> </div>
+					'.$oldal["tartalom"];
+				
+				if($oldal["tomodul"]!="")
+				{
+					include($oldal["tomodul"].".php");
+				}
+				
+		echo '	<div class="clearfix"> </div>
 				</div>';
 	}
 	
@@ -312,7 +316,7 @@ if(!isset($_REQUEST["furl"]))
 		AND strpos($_REQUEST["furl"],"blog/")!== false AND strpos($_REQUEST["furl"],"galeria/")=== false)
 		*/
 		
-		$modhirekbe=$pdo->query("select * from ".$elotag."_modulok where modulnev='hirek'");
+		$modhirekbe=$pdo->query("select * from ".$elotag."_modulok where modulnev='blog'");
 		$hirmod=$modhirekbe->fetch();
 		if($hirmod["bekapcsolva"]=="igen")
 		{

@@ -9,6 +9,8 @@ RewriteRule ^/?$ index.php [NC,NE,L]
 RewriteRule ^wp-admin/?$ /wp-admin/index.php [NC,NE,L]
 ## MENÜ és ALMENÜ ##
 RewriteRule ^([A-Za-z0-9_-]+)/?$ index.php?furl=$1 [NC,NE,L]
+## MODUL LAPOZÓ ##
+RewriteRule ^([A-Za-z0-9_-]+)/o/([0-9_-]+)/?$ index.php?furl=$1&oldal=$2 [NC,NE,L]
 ## BLOG ##
 RewriteRule ^blog/([A-Za-z0-9_-]+)/?$ index.php?hir=$1 [NC,NE,L]
 ## GALÉRIA ##

@@ -86,7 +86,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 				  </div>
 				</div>';
 		}
-		echo  foot_linkek("index.php?lng=".$webaktlang."&page=hirek&", $db["db"],$egy_oldal_max, ($limit+1), $oldal );
+		echo  foot_linkek("index.php?lng=".$webaktlang."&page=blog&", $db["db"],$egy_oldal_max, ($limit+1), $oldal );
 	}
 	else
 	{

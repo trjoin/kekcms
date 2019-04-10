@@ -3,8 +3,8 @@ session_start();
 if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION["userlogged"]!=" ")
 {
 	/*** LEGÚJABB FRISSITÉSEK HOZZÁADÁSA ***/
-	$frissit=$pdo->query("ALTER TABLE ".$elotag."_slider ADD gomblink TEXT AFTER hiperlink, ADD slidersor INT(5) AFTER dumahozza");
-	$frissit=$pdo->query("update ".$elotag."_social set socialsite='LinkedIn',sociallink='#' where socialsite like '%Google%'");
+	//$frissit=$pdo->query("ALTER TABLE ".$elotag."_slider ADD gomblink TEXT AFTER hiperlink, ADD slidersor INT(5) AFTER dumahozza");
+	//$frissit=$pdo->query("update ".$elotag."_social set socialsite='LinkedIn',sociallink='#' where socialsite like '%Google%'");
 	
 	if($frissit)
 	{

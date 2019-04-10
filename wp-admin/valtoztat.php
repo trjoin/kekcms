@@ -513,9 +513,9 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 			$md3=$bt3->fetch();
 			echo "<label for='videomodul'>Videók: (".($md3["bekapcsolva"]=="igen" ? "már telepítve" : "nincs telepítve").")</label>
 				<select name='videomodul' id='videomodul' size='1'><option value='igen'>Telepítem</option><option value='nem'>nem kérem</option></select><br />";
-			$bt4=$pdo->query("select * from ".$elotag."_modulok where modulnev='hirek'");
+			$bt4=$pdo->query("select * from ".$elotag."_modulok where modulnev='blog'");
 			$md4=$bt4->fetch();
-			echo "<label for='hirekmodul'>Hírek: (".($md4["bekapcsolva"]=="igen" ? "már telepítve" : "nincs telepítve").")</label>
+			echo "<label for='hirekmodul'>Blog: (".($md4["bekapcsolva"]=="igen" ? "már telepítve" : "nincs telepítve").")</label>
 				<select name='hirekmodul' id='hirekmodul' size='1'><option value='igen'>Telepítem</option><option value='nem'>nem kérem</option></select><br />";
 			$bt5=$pdo->query("select * from ".$elotag."_modulok where modulnev='social'");
 			$md5=$bt5->fetch();

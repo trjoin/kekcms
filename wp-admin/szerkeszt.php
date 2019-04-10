@@ -19,7 +19,16 @@ if(isset($_GET["modosit"]))
 	echo "<p align='left'><big><b><u>Meta TITLE:</u></b></big><br><input type='text' name='metatitle' value='".$oldal["metatitle"]."'></p>";
 	echo "<p align='left'><big><b><u>Meta KEYWORDS:</u></b></big><br><input type='text' name='metakeywords' value='".$oldal["metakeywords"]."'></p>";
 	echo "<p align='left'><big><b><u>Meta DESCRIPTION:</u></b></big><br><input type='text' name='metadesc' value='".$oldal["metadesc"]."'></p>";
-	echo "<p align='left'><big><b><u>Külső hivatkozás (ha van):</u></b></big><br><input type='text' name='tolink' value='".$oldal["tolink"]."'></p><br />";
+	echo "<p align='left'><big><b><u>Külső hivatkozás (ha van):</u></b></big><br><input type='text' name='tolink' value='".$oldal["tolink"]."'></p>";
+	echo "<p align='left'><big><b><u>Modul hozzárendelése (ha telepítve van):</u></b></big><br>";
+	echo "<select name='tomodul'>
+		<option value='".$oldal["tomodul"]."' selected>".$oldal["tomodul"]."</option";
+		$bt1=$pdo->query("select * from ".$elotag."_modulok where bekapcsolva='igen' and integ='1'");
+		while($md1=$bt1->fetch())
+		{
+			echo '<option value="'.$md1["modulnev"].'">'.$md1["modulnev"].'</option>';
+		}
+	echo "</select></p><br /><br />";
 }
 if(isset($_GET["almodosit"]))
 {
@@ -29,7 +38,16 @@ if(isset($_GET["almodosit"]))
 	echo "<p align='left'><big><b><u>Meta TITLE:</u></b></big><br><input type='text' name='metatitle' value='".$oldal["metatitle"]."'></p>";
 	echo "<p align='left'><big><b><u>Meta KEYWORDS:</u></b></big><br><input type='text' name='metakeywords' value='".$oldal["metakeywords"]."'></p>";
 	echo "<p align='left'><big><b><u>Meta DESCRIPTION:</u></b></big><br><input type='text' name='metadesc' value='".$oldal["metadesc"]."'></p>";
-	echo "<p align='left'><big><b><u>Külső hivatkozás (ha van):</u></b></big><br><input type='text' name='tolink' value='".$oldal["tolink"]."'></p><br />";
+	echo "<p align='left'><big><b><u>Külső hivatkozás (ha van):</u></b></big><br><input type='text' name='tolink' value='".$oldal["tolink"]."'></p>";
+	echo "<p align='left'><big><b><u>Modul hozzárendelése (ha telepítve van):</u></b></big><br>";
+	echo "<select name='tomodul'>
+		<option value='".$oldal["tomodul"]."' selected>".$oldal["tomodul"]."</option";
+		$bt1=$pdo->query("select * from ".$elotag."_modulok where bekapcsolva='igen' and integ='1'");
+		while($md1=$bt1->fetch())
+		{
+			echo '<option value="'.$md1["modulnev"].'">'.$md1["modulnev"].'</option>';
+		}
+	echo "</select></p><br /><br />";
 }
 if(isset($_GET["blokkszerk"]))
 {

@@ -158,7 +158,7 @@ if(file_exists("connect.php") AND isset($_POST["lepes2"]) AND $_POST["lepes2"]==
 			<select name='galeriamodul' id='galeriamodul' size='1'><option value='igen' selected>bekapcsolom</option><option value='nem'>nem kérem</option></select><br />");
 		print("<label for='videomodul'>Videók:</label>
 			<select name='videomodul' id='videomodul' size='1'><option value='igen' selected>bekapcsolom</option><option value='nem'>nem kérem</option></select><br />");
-		print("<label for='hirekmodul'>Hírek:</label>
+		print("<label for='hirekmodul'>Blog:</label>
 			<select name='hirekmodul' id='hirekmodul' size='1'><option value='igen' selected>bekapcsolom</option><option value='nem'>nem kérem</option></select><br />");
 		print("<label for='nyelvmodul'>Nyelv-váltó:</label>
 			<select name='nyelvmodul' id='nyelvmodul' size='1'><option value='igen' selected>bekapcsolom</option><option value='nem'>nem kérem</option></select><br />");
@@ -194,8 +194,8 @@ if(isset($_POST["lepes3"]) AND $_POST["lepes3"]=="igen")
 	//nyelvesített alaptáblák létrehozása
 		foreach($_POST["langok"] as $val)
 		{
-			$letrehoza=$pdo->query("CREATE TABLE ".$elotag."_menu_".$val." (kod INT(10) auto_increment, furl TEXT, tolink TEXT, aktiv INT(2), nev VARCHAR(50), tartalom TEXT, metatitle TEXT, metakeywords TEXT, metadesc TEXT, sorszam VARCHAR(2), datum DATETIME DEFAULT '0000-00-00 00:00:00', PRIMARY KEY(kod)) DEFAULT CHARSET=utf8");
-			$letrehozb=$pdo->query("CREATE TABLE ".$elotag."_almenu_".$val." (kod INT(10) auto_increment, furl TEXT, tolink TEXT, aktiv INT(2), nev VARCHAR(50), szulo int(20), tartalom TEXT, metatitle TEXT, metakeywords TEXT, metadesc TEXT, datum DATETIME DEFAULT '0000-00-00 00:00:00', PRIMARY KEY(kod)) DEFAULT CHARSET=utf8");
+			$letrehoza=$pdo->query("CREATE TABLE ".$elotag."_menu_".$val." (kod INT(10) auto_increment, furl TEXT, tolink TEXT, tomodul TEXT, aktiv INT(2), nev VARCHAR(50), tartalom TEXT, metatitle TEXT, metakeywords TEXT, metadesc TEXT, sorszam VARCHAR(2), datum DATETIME DEFAULT '0000-00-00 00:00:00', PRIMARY KEY(kod)) DEFAULT CHARSET=utf8");
+			$letrehozb=$pdo->query("CREATE TABLE ".$elotag."_almenu_".$val." (kod INT(10) auto_increment, furl TEXT, tolink TEXT, tomodul TEXT, aktiv INT(2), nev VARCHAR(50), szulo int(20), tartalom TEXT, metatitle TEXT, metakeywords TEXT, metadesc TEXT, datum DATETIME DEFAULT '0000-00-00 00:00:00', PRIMARY KEY(kod)) DEFAULT CHARSET=utf8");
 			$letrehozc=$pdo->query("CREATE TABLE ".$elotag."_oldalsav_".$val." (kod INT(10) auto_increment, cim VARCHAR(200), aktiv INT(2), szoveg TEXT, sorszam VARCHAR(2), PRIMARY KEY(kod)) DEFAULT CHARSET=utf8");
 			if(!$letrehoza AND !$letrehozb AND !$letrehozc) { $hibak_l++; $hibauzenet=$hibauzenet."- Nyelvi tábla (".$val.") nem készült el!<br>"; }
 		}
@@ -203,7 +203,7 @@ if(isset($_POST["lepes3"]) AND $_POST["lepes3"]=="igen")
 	//alap táblák létrehozása
 	$letrehoz_admin=$pdo->query("CREATE TABLE ".$elotag."_admin (kod INT(10) auto_increment, nev VARCHAR(250), jelszo VARCHAR(250), email VARCHAR(250), PRIMARY KEY(kod)) DEFAULT CHARSET=utf8");
 	$letrehoz_param=$pdo->query("CREATE TABLE ".$elotag."_parameterek (title VARCHAR(250), keywords VARCHAR(250), description VARCHAR(250), sitename VARCHAR(250), siteslogen VARCHAR(250), copyright VARCHAR(250), sablon VARCHAR(25), defaultlink TEXT, breakoff INT(2), ogimage TEXT, PRIMARY KEY(title)) DEFAULT CHARSET=utf8");
-	$letrehoz_modul=$pdo->query("CREATE TABLE ".$elotag."_modulok (mid INT(10) auto_increment, modulnev TEXT, bekapcsolva ENUM('igen','nem') DEFAULT 'igen', PRIMARY KEY (mid)) DEFAULT CHARSET=utf8");
+	$letrehoz_modul=$pdo->query("CREATE TABLE ".$elotag."_modulok (mid INT(10) auto_increment, modulnev TEXT, integ INT(0) DEFAULT '0', bekapcsolva ENUM('igen','nem') DEFAULT 'igen', PRIMARY KEY (mid)) DEFAULT CHARSET=utf8");
 	$letrehoz_nyelv=$pdo->query("CREATE TABLE ".$elotag."_nyelvek (langkod INT(10) AUTO_INCREMENT, langnev TEXT, PRIMARY KEY (langkod)) DEFAULT CHARSET=utf8");
 /*** modulos táblák létrehozása és feltöltése ***/
 	//hírkezelő tábla
@@ -302,28 +302,28 @@ if(isset($_POST["lepes3"]) AND $_POST["lepes3"]=="igen")
 
 		if($_POST["slidermodul"]=="igen")
 		{
-			$feltolt_mod_slider=$pdo->query("insert into ".$elotag."_modulok (modulnev,bekapcsolva) values('slider','".$_POST["slidermodul"]."')");
-				if(!$feltolt_mod_slider){ $hibak_f++; $hibamsg=$hibamsg."A modulok táblába a slider-t nem sikerült feltölteni!<br>"; }
+			$feltolt_mod_slider=$pdo->query("insert into ".$elotag."_modulok (modulnev,integ,bekapcsolva) values('slider','0','".$_POST["slidermodul"]."')");
+				if(!$feltolt_mod_slider){ $hibak_f++; $hibamsg=$hibamsg."A modulok táblába a KÉPVÁLTÓ modult nem sikerült feltölteni!<br>"; }
 		}
 		if($_POST["galeriamodul"]=="igen")
 		{
-			$feltolt_mod_galeria=$pdo->query("insert into ".$elotag."_modulok (modulnev,bekapcsolva) values('galeria','".$_POST["galeriamodul"]."')");
-				if(!$feltolt_mod_galeria){ $hibak_f++; $hibamsg=$hibamsg."A modulok táblába a galeria-t nem sikerült feltölteni!<br>"; }
+			$feltolt_mod_galeria=$pdo->query("insert into ".$elotag."_modulok (modulnev,integ,bekapcsolva) values('galeria','1','".$_POST["galeriamodul"]."')");
+				if(!$feltolt_mod_galeria){ $hibak_f++; $hibamsg=$hibamsg."A modulok táblába a GALÉRIA modult nem sikerült feltölteni!<br>"; }
 		}
 		if($_POST["videomodul"]=="igen")
 		{
-			$feltolt_mod_video=$pdo->query("insert into ".$elotag."_modulok (modulnev,bekapcsolva) values('video','".$_POST["videomodul"]."')");
-				if(!$feltolt_mod_video){ $hibak_f++; $hibamsg=$hibamsg."A modulok táblába a video-t nem sikerült feltölteni!<br>"; }
+			$feltolt_mod_video=$pdo->query("insert into ".$elotag."_modulok (modulnev,integ,bekapcsolva) values('video','1','".$_POST["videomodul"]."')");
+				if(!$feltolt_mod_video){ $hibak_f++; $hibamsg=$hibamsg."A modulok táblába a VIDEO modult nem sikerült feltölteni!<br>"; }
 		}
 		if($_POST["hirekmodul"]=="igen")
 		{	
-			$feltolt_mod_hirek=$pdo->query("insert into ".$elotag."_modulok (modulnev,bekapcsolva) values('hirek','".$_POST["hirekmodul"]."')");
-				if(!$feltolt_mod_hirek){ $hibak_f++; $hibamsg=$hibamsg."A modulok táblába a hirek-t nem sikerült feltölteni!<br>"; }
+			$feltolt_mod_hirek=$pdo->query("insert into ".$elotag."_modulok (modulnev,integ,bekapcsolva) values('blog','1','".$_POST["hirekmodul"]."')");
+				if(!$feltolt_mod_hirek){ $hibak_f++; $hibamsg=$hibamsg."A modulok táblába a BLOG modult nem sikerült feltölteni!<br>"; }
 		}
 		if($_POST["socialmod"]=="igen")
 		{
-			$feltolt_mod_social=$pdo->query("insert into ".$elotag."_modulok (modulnev,bekapcsolva) values('social','".$_POST["socialmod"]."')");
-				if(!$feltolt_mod_social){ $hibak_f++; $hibamsg=$hibamsg."A modulok táblába a közösségi portálok-t nem sikerült feltölteni!<br>"; }
+			$feltolt_mod_social=$pdo->query("insert into ".$elotag."_modulok (modulnev,integ,bekapcsolva) values('social','0','".$_POST["socialmod"]."')");
+				if(!$feltolt_mod_social){ $hibak_f++; $hibamsg=$hibamsg."A modulok táblába a KÖZÖSSÉGI PORTÁLOK modult nem sikerült feltölteni!<br>"; }
 				else
 				{
 					$pdo->query("insert into ".$elotag."_social (socialsite,sociallink) values('Facebook','#')");
@@ -336,23 +336,23 @@ if(isset($_POST["lepes3"]) AND $_POST["lepes3"]=="igen")
 		}
 		if($_POST["gmaps"]=="igen")
 		{
-			$feltolt_mod_hirek=$pdo->query("insert into ".$elotag."_modulok (modulnev,bekapcsolva) values('gmaps','".$_POST["gmaps"]."')");
-				if(!$feltolt_mod_hirek){ $hibak_f++; $hibamsg=$hibamsg."A modulok táblába a google térkép-t nem sikerült feltölteni!<br>"; }
+			$feltolt_mod_hirek=$pdo->query("insert into ".$elotag."_modulok (modulnev,integ,bekapcsolva) values('gmaps','1','".$_POST["gmaps"]."')");
+				if(!$feltolt_mod_hirek){ $hibak_f++; $hibamsg=$hibamsg."A modulok táblába a GOOGLE TÉRKÉP modult nem sikerült feltölteni!<br>"; }
 		}
 		if($_POST["nyelvmodul"]=="igen")
 		{
-			$feltolt_mod_nyelv=$pdo->query("insert into ".$elotag."_modulok (modulnev,bekapcsolva) values('nyelv','".$_POST["nyelvmodul"]."')");
-				if(!$feltolt_mod_nyelv){ $hibak_f++; $hibamsg=$hibamsg."A modulok táblába a nyelv-t nem sikerült feltölteni!<br>"; }
+			$feltolt_mod_nyelv=$pdo->query("insert into ".$elotag."_modulok (modulnev,integ,bekapcsolva) values('nyelv','0','".$_POST["nyelvmodul"]."')");
+				if(!$feltolt_mod_nyelv){ $hibak_f++; $hibamsg=$hibamsg."A modulok táblába a NYELV modult nem sikerült feltölteni!<br>"; }
 		}
 		if($_POST["downmodul"]=="igen")
 		{
-			$feltolt_mod_down=$pdo->query("insert into ".$elotag."_modulok (modulnev,bekapcsolva) values('letoltes','".$_POST["downmodul"]."')");
-				if(!$feltolt_mod_down){ $hibak_f++; $hibamsg=$hibamsg."A modulok táblába a letöltéskezelő-t nem sikerült feltölteni!<br>"; }
+			$feltolt_mod_down=$pdo->query("insert into ".$elotag."_modulok (modulnev,integ,bekapcsolva) values('letoltes','1','".$_POST["downmodul"]."')");
+				if(!$feltolt_mod_down){ $hibak_f++; $hibamsg=$hibamsg."A modulok táblába a LETÖLTÉSKEZELŐ modult nem sikerült feltölteni!<br>"; }
 		}
 		if($_POST["shopmodul"]=="igen")
 		{
-			$feltolt_mod_shop=$pdo->query("insert into ".$elotag."_modulok (modulnev,bekapcsolva) values('shop','".$_POST["shopmodul"]."')");
-				if(!$feltolt_mod_shop){ $hibak_f++; $hibamsg=$hibamsg."A modulok táblába a shop-t nem sikerült feltölteni!<br>"; }
+			$feltolt_mod_shop=$pdo->query("insert into ".$elotag."_modulok (modulnev,integ,bekapcsolva) values('shop','1','".$_POST["shopmodul"]."')");
+				if(!$feltolt_mod_shop){ $hibak_f++; $hibamsg=$hibamsg."A modulok táblába a WEBÁRUHÁZ modult nem sikerült feltölteni!<br>"; }
 		}
 
 		if($hibak_f=="0" AND $hibamsg=="")
