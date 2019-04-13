@@ -299,6 +299,9 @@ if(isset($_POST["lepes3"]) AND $_POST["lepes3"]=="igen")
 		$defaultlink=(isset($_SERVER['HTTPS']) ? "https" : "http") . "://".$_SERVER["HTTP_HOST"];
 		$feltolt_param=$pdo->query("insert into ".$elotag."_parameterek (title,keywords,description,sitename,siteslogen,copyright,sablon,defaultlink,breakoff) values ('".$_POST["title"]."','".$_POST["keywords"]."','".$_POST["leiras"]."','".$_POST["sitename"]."','".$_POST["siteslogen"]."','".$_POST["copyright"]."','".$_POST["sablon"]."','".$defaultlink."','0')");
 			if(!$feltolt_param){ $hibak_f++; $hibamsg=$hibamsg."A paraméterek táblát nem sikerült feltölteni!<br>"; }
+			
+		//alap modulok bementése
+		$pdo->query("insert into ".$elotag."_modulok (modulnev,integ,bekapcsolva) values('kapcsolat','1','igen')");
 
 		if($_POST["slidermodul"]=="igen")
 		{
