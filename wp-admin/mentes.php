@@ -389,8 +389,16 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 	//google analytics kód mentése
 	if(isset($_POST["ganalkey"]))
 	{
-		$analment=$pdo->query("insert into ".$elotag."_ganal (ganalkey) values ('".$_POST["ganalkey"]."')");
-		$hova="index.php?lng=".$webaktlang."&page=saved";
+		$leker=$pdo->query("select * from ".$elotag."_ganal");
+		if($leker->rowCount()>0)
+		{
+			$parancs="update ".$elotag."_ganal set ganalkey='".$_POST["ganalkey"]."'";
+		}
+		else
+		{
+			$parancs="insert into ".$elotag."_ganal (ganalkey) values ('".$_POST["ganalkey"]."')";
+		}
+		$hova="index.php?lng=".$webaktlang."&mod=y&ganal=1";
 	}
 	//sitemap.xml készítés
 	if(isset($_POST["xmlsitemap"]))

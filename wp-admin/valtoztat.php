@@ -458,9 +458,11 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 	//google analytics készitése
 	if(isset($_REQUEST["ganal"]))
 	{
+		$leker=$pdo->query("select * from ".$elotag."_ganal");
+		$gl=$leker->fetch();
 		echo "<form action='index.php?lng=".$webaktlang."&mod=y' method='POST'>";
 		echo "<h3>Google Analytics</h3>";
-		echo "<font face='Verdana' size='2' color='#000000'><b>A követőkód megadása:</b></font><br><input type='text' name='ganalkey' id='ganalkey' style='width:400px;' placeholder='UA-1234567-8'><br />";
+		echo "<font face='Verdana' size='2' color='#000000'><b>A követőkód megadása:</b></font><br><input type='text' name='ganalkey' id='ganalkey' style='width:400px;' placeholder='UA-1234567-8' value='".$gl["ganalkey"]."'><br />";
 		echo "<input type='submit' value='MENTÉS' class='btn btn-large btn-secondary'>";
 		echo "</form>";
 	}
