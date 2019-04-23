@@ -1,6 +1,7 @@
 <?php
 session_start();
 include_once("../connect.php");
+include_once("functions.php");
 $baseurl=$_SERVER["SERVER_NAME"];
 $url=explode(".",$baseurl);
 $absp=(isset($_SERVER['HTTPS']) ? "https" : "http") . "://".$_SERVER["HTTP_HOST"];
