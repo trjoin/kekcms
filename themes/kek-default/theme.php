@@ -233,7 +233,7 @@ if(!isset($_REQUEST["furl"]))
 					<div class="carousel-caption">
 						'.($egy_sb["dumahozza"]!="" ? '<h3>'.$egy_sb["dumahozza"].'</h3>' : '').'
 						'.($egy_sb["hiperlink"]!="" ? '<p>'.$egy_sb["hiperlink"].'</p>' : '').'
-						'.($egy_sb["gomblink"]!="" ? '<p><a href="'.$egy_sb["gomblink"].'">GOMB</a></p>' : '').'
+						'.($egy_sb["gomblink"]!="" ? '<p><a href="'.$egy_sb["gomblink"].'">'.$egy_sb["gombnev"].'</a></p>' : '').'
 					</div>
 				</div>
 			</div>';
@@ -358,7 +358,6 @@ if(!isset($_REQUEST["furl"]))
 					</div>';
 		}
 	}
-	
 ?>	
 		</div>
 	</div>
@@ -424,7 +423,7 @@ if(!isset($_REQUEST["furl"]))
 									{
 										if($fajl!="." and $fajl!="..")
 										{
-											echo '<div class="col-md-4"><a href="galeria/'.$mem["mappaut"].'/'.$fajl.'" class="fancybox" rel="galeria"><img src="galeria/'.$mem["mappaut"].'/'.$fajl.'" class="img-responsive" alt="'.$title.'"></a></div>';
+											echo '<div class="col-md-4"><a href="galeria/'.$mem["mappaut"].'/'.$fajl.'" class="fancybox" rel="galeria"><img src="galeria/'.$mem["mappaut"].'/'.$fajl.'" class="img-responsive" alt="'.$title.'"><br>'.$title.'</a></div>';
 											$ig++;
 											if($ig%3==0)
 											{

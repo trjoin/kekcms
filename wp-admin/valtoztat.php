@@ -195,13 +195,15 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		echo "<input type='text' name='dumahozza' id='dumahozza' style='width:280px;' placeholder='Egyszerű, rövid szöveg!' value=''><br /><br />";
 		echo "<font face='Verdana' size='2' color='#000000'><b>Képváltó második sora:</b><br><small>(ha a képváltó tartalmazza)</small></font><br />";
 		echo "<input type='text' name='hivatkozas' id='hivatkozas' style='width:280px;' placeholder='Egyszerű, rövid szöveg!' value=''><br /><br />";
+		echo "<font face='Verdana' size='2' color='#000000'><b>Képváltó elem/gomb neve:</b><br><small>(ha a képváltó tartalmazza)</small></font><br />";
+		echo "<input type='text' name='gombnev' id='gombnev' style='width:280px;' placeholder='pl: MEGNYITÁS'><br /><br />";
 		echo "<font face='Verdana' size='2' color='#000000'><b>Képváltó elem/gomb hivatkozása:</b><br><small>(ha a képváltó tartalmazza)</small></font><br />";
 		echo "<input type='text' name='gomblink' id='gomblink' style='width:280px;' placeholder='Teljes URL, link!' value=''><br /><br />";
 		echo "<font face='Verdana' size='2' color='#000000'><b>Képváltó elem sorszáma:</b></font><br />";
 		echo "<input type='number' name='slidersor' id='slidersor' style='width:280px;' value='".$lastslidid."' required><br /><br />";
 		echo "<input type=submit value='mentés' class='btn btn-large btn-secondary'></form>";
 	}
-	//SLIDER bokk szerkesztése
+	//SLIDER blokk szerkesztése
 	if(isset($_REQUEST["slidermod"]))
 	{
 		$lekerdez=$pdo->query("select * from ".$elotag."_slider where sliderkod='".$_REQUEST["slidermod"]."'");
@@ -216,6 +218,8 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		echo "<input type='text' name='dumahozza' id='dumahozza' style='width:280px;' placeholder='Egyszerű, rövid szöveg!' value='".$data["dumahozza"]."'><br /><br />";
 		echo "<font face='Verdana' size='2' color='#000000'><b>Képváltó második sora:</b><br><small>(ha a képváltó tartalmazza)</small></font><br />";
 		echo "<input type='text' name='hivatkozas' id='hivatkozas' style='width:280px;' placeholder='Egyszerű, rövid szöveg!' value='".$data["hiperlink"]."'><br /><br />";
+		echo "<font face='Verdana' size='2' color='#000000'><b>Képváltó elem/gomb neve:</b><br><small>(ha a képváltó tartalmazza)</small></font><br />";
+		echo "<input type='text' name='gombnev' id='gombnev' style='width:280px;' placeholder='pl: MEGNYITÁS' value='".$data["gombnev"]."'><br /><br />";
 		echo "<font face='Verdana' size='2' color='#000000'><b>Képváltó elem/gomb hivatkozása:</b><br><small>(ha a képváltó tartalmazza)</small></font><br />";
 		echo "<input type='text' name='gomblink' id='gomblink' style='width:280px;' placeholder='Teljes URL, link!' value='".$data["gomblink"]."'><br /><br />";
 		echo "<font face='Verdana' size='2' color='#000000'><b>Képváltó elem sorszáma:</b></font><br />";
@@ -233,9 +237,10 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		{
 			while($oldal=$lekerdez->fetch())
 			{
-				echo "<tr><td><a class='btn' href='index.php?lng=".$webaktlang."&mod=y&sliderdel=".$oldal["sliderkod"]."'><i class='icon-trash'></i> TÖRLÉS</a> &nbsp; <a class='btn' href='index.php?lng=".$webaktlang."&mod=y&slidermod=".$oldal["sliderkod"]."'><i class='icon-edit'></i> MÓDOSÍTÁS</a><br /><br />
+				echo "<tr><td><a class='btn' href='index.php?lng=".$webaktlang."&mod=y&sliderdel=".$oldal["sliderkod"]."' onclick=\"return confirm('Biztos törlöd a mappát?')\"><i class='icon-trash'></i> TÖRLÉS</a> &nbsp; <a class='btn' href='index.php?lng=".$webaktlang."&mod=y&slidermod=".$oldal["sliderkod"]."'><i class='icon-edit'></i> MÓDOSÍTÁS</a><br /><br />
 					<b>Első sor szövege:</b> ".($oldal["dumahozza"]!="" ? $oldal["dumahozza"] : "nincs megadva")."<br />
 					<b>Második sor szövege:</b> ".($oldal["hiperlink"]!="" ? $oldal["hiperlink"] : "nincs megadva")."<br />
+					<b>Gomb/elem neve:</b> ".($oldal["gombnev"]!="" ? $oldal["gombnev"] : "nincs megadva")."<br />
 					<b>Gomb/elem hivatkozása:</b> ".($oldal["gomblink"]!="" ? $oldal["gomblink"] : "nincs megadva")."<br />
 					<b>Képváltó adat sorszáma:</b> ".$oldal["slidersor"]."<br /><br />
 					<img src='../slider/".$oldal["slidert"]."' border='0' width='650' data-pin-nopin='true'></td></tr><tr><td><hr></td></tr>";

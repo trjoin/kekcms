@@ -11,7 +11,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 	if(isset($_POST["modosit"]))
 	{
 		$furl=str_replace($mirol, $mire, strtolower($_POST["mfnev"]));
-		$parancs="update ".$elotag."_menu_".$webaktlang." set furl='".$furl."',tolink='".$_POST["tolink"]."',nev='".$_POST["mfnev"]."',tartalom='".trim($_POST["tartalom"])."',metatitle='".trim($_POST["metatitle"])."',metakeywords='".trim($_POST["metakeywords"])."',metadesc='".trim($_POST["metadesc"])."',datum=now() where kod='".$_POST["modosit"]."'";
+		$parancs="update ".$elotag."_menu_".$webaktlang." set furl='".$furl."',tolink='".$_POST["tolink"]."',tomodul='".$_POST["tomodul"]."',nev='".$_POST["mfnev"]."',tartalom='".trim($_POST["tartalom"])."',metatitle='".trim($_POST["metatitle"])."',metakeywords='".trim($_POST["metakeywords"])."',metadesc='".trim($_POST["metadesc"])."',datum=now() where kod='".$_POST["modosit"]."'";
 		$hova="index.php?lng=".$webaktlang."&page=".$_POST["modosit"];
 	}
 	//új menüpont és tartalom mentése
@@ -76,7 +76,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 	if(isset($_POST["almodosit"]))
 	{
 		$furl=str_replace($mirol, $mire, strtolower($_POST["manev"]));
-		$parancs="update ".$elotag."_almenu_".$webaktlang." set furl='".$furl."',tolink='".$_POST["tolink"]."',nev='".$_POST["manev"]."',tartalom='".trim($_POST["tartalom"])."',metatitle='".trim($_POST["metatitle"])."',metakeywords='".trim($_POST["metakeywords"])."',metadesc='".trim($_POST["metadesc"])."',datum=now() where kod='".$_POST["almodosit"]."'";
+		$parancs="update ".$elotag."_almenu_".$webaktlang." set furl='".$furl."',tolink='".$_POST["tolink"]."',tomodul='".$_POST["tomodul"]."',nev='".$_POST["manev"]."',tartalom='".trim($_POST["tartalom"])."',metatitle='".trim($_POST["metatitle"])."',metakeywords='".trim($_POST["metakeywords"])."',metadesc='".trim($_POST["metadesc"])."',datum=now() where kod='".$_POST["almodosit"]."'";
 		$hova="index.php?lng=".$webaktlang."&alpage=".$_POST["almodosit"];
 	}
 	//új almenüpont és tartalom mentése
@@ -265,7 +265,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 				list($width, $height) = getimagesize("../slider/".$fajlnev);
 				if($width>="1")
 				{
-					$parancs="insert into ".$elotag."_slider(slidert,hiperlink,dumahozza,gomblink,slidersor) values('".$fajlnev."','".$_POST["hivatkozas"]."','".$_POST["dumahozza"]."','".$_POST["gomblink"]."','".$_POST["slidersor"]."')";
+					$parancs="insert into ".$elotag."_slider(slidert,hiperlink,dumahozza,gombnev,gomblink,slidersor) values('".$fajlnev."','".$_POST["hivatkozas"]."','".$_POST["dumahozza"]."','".$_POST["gombnev"]."','".$_POST["gomblink"]."','".$_POST["slidersor"]."')";
 					$hova="index.php?lng=".$webaktlang."&mod=y&sliderek=1";
 				}
 				else
@@ -310,7 +310,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 					list($width, $height) = getimagesize("../slider/".$fajlnev);
 					if($width>="1")
 					{
-						$parancs="update ".$elotag."_slider set slidert='".$fajlnev."',hiperlink='".$_POST["hivatkozas"]."',dumahozza='".$_POST["dumahozza"]."',gomblink='".$_POST["gomblink"]."',slidersor='".$_POST["slidersor"]."' where sliderkod='".$_POST["sliderkodmod"]."')";
+						$parancs="update ".$elotag."_slider set slidert='".$fajlnev."',hiperlink='".$_POST["hivatkozas"]."',dumahozza='".$_POST["dumahozza"]."',gombnev='".$_POST["gombnev"]."',gomblink='".$_POST["gomblink"]."',slidersor='".$_POST["slidersor"]."' where sliderkod='".$_POST["sliderkodmod"]."')";
 						$hova="index.php?lng=".$webaktlang."&mod=y&sliderek=1";
 					}
 					else
@@ -334,7 +334,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		}
 		else
 		{
-			$parancs="update ".$elotag."_slider set hiperlink='".$_POST["hivatkozas"]."',dumahozza='".$_POST["dumahozza"]."',gomblink='".$_POST["gomblink"]."',slidersor='".$_POST["slidersor"]."' where sliderkod='".$_POST["sliderkodmod"]."'";
+			$parancs="update ".$elotag."_slider set hiperlink='".$_POST["hivatkozas"]."',dumahozza='".$_POST["dumahozza"]."',gombnev='".$_POST["gombnev"]."',gomblink='".$_POST["gomblink"]."',slidersor='".$_POST["slidersor"]."' where sliderkod='".$_POST["sliderkodmod"]."'";
 			$hova="index.php?lng=".$webaktlang."&mod=y&sliderek=1";
 		}
 	}

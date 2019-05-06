@@ -287,6 +287,115 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 					</script>";
 		}
 	}
+	//mappa szerkesztésének mentése
+	if(isset($_POST["mappanevedt"]) AND isset($_POST["diredt"]))
+	{
+		$furl=str_replace($mirol, $mire, strtolower($_POST["mappanevedt"]));
+		//mappanév feldolgozás
+		$SafeFile=$_POST["mappanevedt"];
+		$SafeFile = strtolower($SafeFile);
+		$SafeFile = str_replace($mirol, $mire, $SafeFile);
+		
+		if($_FILES["mappakepedt"]["name"]!="")
+		{
+			//mappakép feldolgozás
+			$MapFile=$_FILES["mappakepedt"]["name"];
+			$MapFile = strtolower($MapFile);
+			$MapFile = str_replace($mirol, $mire, $MapFile);
+				
+			$datummost=getDate();
+			$datekeszit=mktime($datummost["hours"],$datummost["minutes"],$datummost["seconds"],$datummost["mon"],$datummost["mday"],$datummost["year"]);
+			$dazo=date("Ymdhms",$datekeszit);
+			$mappakep="../galeria/".$dazo."_".$MapFile;
+			$mappakepnev=$dazo."_".$MapFile;
+		
+			//végrehajtás
+			if(move_uploaded_file($_FILES["mappakepedt"]["tmp_name"],$mappakep))
+			{
+				list($width, $height) = getimagesize("../galeria/".$mappakepnev);
+				if($width>="1")
+				{
+					$ment=$pdo->query("update ".$elotag."_mappak set furl='".$furl."',mappanev='".$_POST["mappanevedt"]."',mappakep='".$mappakepnev."' where mappakod='".$_POST["diredt"]."'");
+					if(!$ment)
+					{
+						echo "<script type='text/javascript'>
+								$(document).ready(function() {
+									$.msgGrowl({
+										type: 'error',
+										title: 'Üzenet',
+										text: 'Sikertelen album módosítás, SQL hiba történt!'
+									});
+								});
+								</script>";
+					}
+					else
+					{
+						echo "<script type='text/javascript'>
+								$(document).ready(function() {
+									$.msgGrowl({
+										type: 'success',
+										title: 'Üzenet',
+										text: 'Sikeres album módosítás!'
+									});
+								});
+								</script>";
+					}
+				}
+				else
+				{
+					echo "<script type='text/javascript'>
+							$(document).ready(function() {
+								$.msgGrowl({
+									type: 'error',
+									title: 'Üzenet',
+									text: 'Sikertelen album módosítás, a boritókép nem kép!'
+								});
+							});
+							</script>";
+				}
+			}
+			else
+			{
+				echo "<script type='text/javascript'>
+						$(document).ready(function() {
+							$.msgGrowl({
+								type: 'error',
+								title: 'Üzenet',
+								text: 'Sikertelen album módosítás, a mappa borítóképét nem sikerült feltölteni!'
+							});
+						});
+						</script>";
+			}
+		}
+		else
+		{
+			$ment=$pdo->query("update ".$elotag."_mappak set furl='".$furl."',mappanev='".$_POST["mappanevedt"]."' where mappakod='".$_POST["diredt"]."'");
+			if(!$ment)
+			{
+				echo "<script type='text/javascript'>
+						$(document).ready(function() {
+							$.msgGrowl({
+								type: 'error',
+								title: 'Üzenet',
+								text: 'Sikertelen album módosítás, SQL hiba történt!'
+							});
+						});
+						</script>";
+			}
+			else
+			{
+				echo "<script type='text/javascript'>
+						$(document).ready(function() {
+							$.msgGrowl({
+								type: 'success',
+								title: 'Üzenet',
+								text: 'Sikeres album módosítás!'
+							});
+						});
+						</script>";
+			}
+		}
+	}
 /*** admin megjelentítése ***/
 	if(isset($_GET["ujkep"]))
 	{
@@ -322,6 +431,21 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		echo "<form enctype='multipart/form-data' action='index.php?lng=".$webaktlang."&page=galeria&open=1' method='POST'>";
 		echo "<font face='arial' size='2' color='#190210'>Írja be az új album nevét:</font><br>&nbsp;&nbsp; <input type='text' name='mappanev' id='mappanev'><br />";
 		echo "<font face='arial' size='2' color='#190210'>Adja meg az album borítóképét:</font><br>&nbsp;&nbsp; <input type='file' name='mappakep' id='mappakep'><br /><br />";
+		echo "<input type=submit value='ALBUM MENTÉSE' class='btn btn-large btn-secondary'>";
+		echo "</form>";
+	}
+	if(isset($_GET["diredit"]))
+	{
+		$mappabe=$pdo->query("select * from ".$elotag."_mappak where mappakod='".$_GET["diredit"]."'");
+		$azut=$mappabe->fetch();
+		//mappa szerkesztés
+		echo "<h4>ALBUM SZERKESZTÉSE A GALÉRIÁBA:</h4>";
+		echo "<form enctype='multipart/form-data' action='index.php?lng=".$webaktlang."&page=galeria&open=1' method='POST'>";
+		echo "<input type='hidden' name='diredt' value='".$_GET["diredit"]."'>";
+		echo "<font face='arial' size='2' color='#190210'>Írja be az <b>új</b> album nevét:</font><br>&nbsp;&nbsp; 
+				<input type='text' name='mappanevedt' id='mappanevedt' value='".$azut["mappanev"]."'><br />";
+		echo "<font face='arial' size='2' color='#190210'>Adja meg az <b>új</b> album borítóképét<br><small>(nem kötelező, maradhat a régi is)</small>:</font><br>&nbsp;&nbsp; 
+				<input type='file' name='mappakepedt' id='mappakepedt'><br /><br />";
 		echo "<input type=submit value='ALBUM MENTÉSE' class='btn btn-large btn-secondary'>";
 		echo "</form>";
 	}
@@ -367,6 +491,8 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 				{
 					echo "<li>
 								<a href='index.php?lng=".$webaktlang."&page=galeria&open=1&megnyit=".$mem["mappakod"]."'><img src='../galeria/".$mem["mappakep"]."' border='0'><br /><b>".$mem["mappanev"]."</b><br>album megnyitás</a>
+								<br />
+								<a href='index.php?lng=".$webaktlang."&page=galeria&diredit=".$mem["mappakod"]."' style='color:#009900;'>&laquo; album szerkesztés &raquo;</a>
 								<br />
 								<a href='index.php?lng=".$webaktlang."&page=galeria&open=1&dirtorol=".$mem["mappakod"]."' style='color:#ff0000;' onclick=\"return confirm('Biztos törlöd a mappát?')\">&laquo; album törlés &raquo;</a>
 							</li>";
