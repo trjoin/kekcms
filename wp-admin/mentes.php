@@ -172,7 +172,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 	{
 		$furl=str_replace($mirol, $mire, strtolower($_POST["hircim"]));
 		$parancs="insert into ".$elotag."_hirkezelo_".$webaktlang."(furl,cim,szoveg,metatitle,metakeywords,metadesc,datum) values('".$furl."','".trim($_POST["hircim"])."','".trim($_POST["szoveg"])."','".trim($_POST["metatitle"])."','".trim($_POST["metakeywords"])."','".trim($_POST["metadesc"])."',now())";
-		$hova="index.php?lng=".$webaktlang."&page=hirek";
+		$hova="index.php?lng=".$webaktlang."&page=blog";
 	}
 	//hír szerkesztése
 	if(isset($_POST["cikkmod"]))
@@ -199,50 +199,50 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 					if($width>="1")
 					{
 						$parancs="update ".$elotag."_hirkezelo_".$webaktlang." set furl='".$furl."',cim='".$_POST["ccim"]."',bevezeto='".$_POST["bevezeto"]."',tags='".$_POST["tags"]."',szoveg='".$_POST["tartalom"]."',kiskep='".$fajlnev."',metatitle='".$_POST["metatitle"]."',metakeywords='".$_POST["metakeywords"]."',metadesc='".$_POST["metadesc"]."',datum=now() where hirkod='".$_POST["cikkmod"]."'";
-						$hova="index.php?lng=".$webaktlang."&page=hirek";
+						$hova="index.php?lng=".$webaktlang."&page=blog";
 					}
 					else
 					{
 						unlink("../blog/".$fajlnev);
 						echo "<script> alert('Fájl feltöltési hiba, ez nem kép!'); </script>";
-						$hova="index.php?lng=".$webaktlang."&page=hirek";
+						$hova="index.php?lng=".$webaktlang."&page=blog";
 					}
 				}
 				else
 				{
 					echo "<script> alert('Sikertelen művelet. :( A kép nem volt megfelelő és nem sikerült feltölteni.'); </script>";
-					$hova="index.php?lng=".$webaktlang."&page=hirek";
+					$hova="index.php?lng=".$webaktlang."&page=blog";
 				}
 			}
 			else
 			{
 				echo "<script> alert('Sikertelen művelet. :( A kép formátuma nem volt megfelelő, a feltölthető formátum: JPG, PNG.'); </script>";
-				$hova="index.php?lng=".$webaktlang."&page=hirek";
+				$hova="index.php?lng=".$webaktlang."&page=blog";
 			}
 		}
 		else
 		{
 			$parancs="update ".$elotag."_hirkezelo_".$webaktlang." set furl='".$furl."',cim='".$_POST["ccim"]."',bevezeto='".$_POST["bevezeto"]."',tags='".$_POST["tags"]."',szoveg='".$_POST["tartalom"]."',metatitle='".$_POST["metatitle"]."',metakeywords='".$_POST["metakeywords"]."',metadesc='".$_POST["metadesc"]."',datum=now() where hirkod='".$_POST["cikkmod"]."'";
-			$hova="index.php?lng=".$webaktlang."&page=hirek";
+			$hova="index.php?lng=".$webaktlang."&page=blog";
 		}
 	}
 	//hír aktiválás
 	if(isset($_GET["hirstart"]))
 	{
 		$parancs="update ".$elotag."_hirkezelo_".$webaktlang." set aktiv='1' where hirkod='".$_GET["hirstart"]."'";
-		$hova="index.php?lng=".$webaktlang."&page=hirek";
+		$hova="index.php?lng=".$webaktlang."&page=blog";
 	}
 	//hír inaktiválás
 	if(isset($_GET["hirstop"]))
 	{
 		$parancs="update ".$elotag."_hirkezelo_".$webaktlang." set aktiv='0' where hirkod='".$_GET["hirstop"]."'";
-		$hova="index.php?lng=".$webaktlang."&page=hirek";
+		$hova="index.php?lng=".$webaktlang."&page=blog";
 	}
 	//hír törlése
 	if(isset($_GET["cikktorol"]))
 	{
 		$parancs="delete from ".$elotag."_hirkezelo_".$webaktlang." where hirkod='".$_GET["cikktorol"]."'";
-		$hova="index.php?lng=".$webaktlang."&page=hirek";
+		$hova="index.php?lng=".$webaktlang."&page=blog";
 	}
 	//SLIDER blokk hozzáadása
 	if(isset($_FILES['ujsliderkep']) AND $_FILES['ujsliderkep']['name']!="")
@@ -360,7 +360,13 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		$letrehoz_almenu_most=$pdo->query("CREATE TABLE ".$elotag."_almenu_".$_POST["ujnyelv"]." (kod INT(10) auto_increment, furl TEXT, tolink TEXT, aktiv INT(2), nev VARCHAR(50), szulo int(20), tartalom TEXT, metatitle TEXT, metakeywords TEXT, metadesc TEXT, datum DATETIME DEFAULT '0000-00-00 00:00:00', PRIMARY KEY(kod)) DEFAULT CHARSET=utf8");
 		//oldalsáv és tartalma létrehozása
 		$letrehoz_oldalsav_most=$pdo->query("CREATE TABLE ".$elotag."_oldalsav_".$_POST["ujnyelv"]." (kod INT(10) auto_increment, cim VARCHAR(200), aktiv INT(2), szoveg TEXT, sorszam VARCHAR(2), PRIMARY KEY(kod)) DEFAULT CHARSET=utf8");
-		$feltolt_oldalsav_most=$pdo->query("insert into ".$elotag."_oldalsav_".$_POST["ujnyelv"]." (cim,szoveg,sorszam) values ('Oldalsáv','Ide blokkokat helyezhet el, szerkesztheti őket, illetve törölni is tudja, ha nem kellenek! Mindezt az adminon való bejelentkezés után tudja megtenni! Az adminisztrátori bejelentkezéshez a telepítés során adta meg a hozzáférést!','1')");
+		$feltolt_oldalsav_most=$pdo->query("insert into ".$elotag."_oldalsav_".$_POST["ujnyelv"]." (cim,szoveg,sorszam) values ('Doboz','Ide blokkokat helyezhet el, szerkesztheti őket, illetve törölni is tudja, ha nem kellenek! Mindezt az adminon való bejelentkezés után tudja megtenni! Az adminisztrátori bejelentkezéshez a telepítés során adta meg a hozzáférést!','1')");
+		//blog létrehozása (ha van!)
+		$vanblog=$pdo->query("select * from ".$elotag."_modulok where modulnev='blog'");
+		if($vanblog->rowCount()>0)
+		{
+			$letrehoz_hir=$pdo->query("CREATE TABLE ".$elotag."_hirkezelo_".$_POST["ujnyelv"]." (hirkod INT(20) auto_increment, furl TEXT, aktiv INT(2), cim VARCHAR(200), bevezeto VARCHAR(200), tags VARCHAR(200), szoveg TEXT, kiskep TEXT, metatitle TEXT, metakeywords TEXT, metadesc TEXT, datum DATETIME DEFAULT '0000-00-00 00:00:00', PRIMARY KEY (hirkod)) DEFAULT CHARSET=utf8");
+		}
 		
 		$parancs="insert into ".$elotag."_nyelvek (langnev) values ('".$_POST["ujnyelv"]."')";
 		$hova="index.php?lng=".$webaktlang."&page=saved";
@@ -503,7 +509,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 				else
 				{
 					echo "<script> alert('Sikertelen művelet. :( A képet nem sikerült feltölteni.'); </script>";
-					$hova="index.php?lng=".$webaktlang."&page=hirek";
+					$hova="index.php?lng=".$webaktlang."&page=blog";
 				}
 				
 			}
@@ -683,14 +689,14 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		{	
 			if($_POST["hirekmodul"]=="igen")
 			{
-				$modules=$pdo->query("select * from ".$elotag."_modulok where modulnev='hirek'");
+				$modules=$pdo->query("select * from ".$elotag."_modulok where modulnev='blog'");
 				if($modules->rowCount()>0)
 				{
-					$save_mod=$pdo->query("update ".$elotag."_modulok set bekapcsolva='".$_POST["hirekmodul"]."' where modulnev='hirek'");
+					$save_mod=$pdo->query("update ".$elotag."_modulok set bekapcsolva='".$_POST["hirekmodul"]."' where modulnev='blog'");
 				}
 				else
 				{
-					$save_mod=$pdo->query("insert into ".$elotag."_modulok (modulnev,bekapcsolva) values('hirek','".$_POST["hirekmodul"]."')");
+					$save_mod=$pdo->query("insert into ".$elotag."_modulok (modulnev,bekapcsolva) values('blog','".$_POST["hirekmodul"]."')");
 					$nyelvek=$pdo->query("select * from ".$elotag."_nyelvek");
 					while($egynyelv=$nyelvek->fetch())
 					{
@@ -708,7 +714,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 			}
 			else
 			{
-				$save_mod=$pdo->query("update ".$elotag."_modulok set bekapcsolva='".$_POST["hirekmodul"]."' where modulnev='hirek'");
+				$save_mod=$pdo->query("update ".$elotag."_modulok set bekapcsolva='".$_POST["hirekmodul"]."' where modulnev='blog'");
 			}
 		}
 		if(isset($_POST["socialmod"]))

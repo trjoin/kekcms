@@ -24,11 +24,11 @@
 						$szam=$szam+1;
 						if($szam == $act_oldal)
 						{
-							$kimenet .="<li><a href='#' disabled>".$szam."</a></li>";
+							$kimenet .='<li><a href="#" class="page-link" disabled>'.$szam.'</a></li>';
 						}
 						else
 						{
-							$kimenet .= '<li><a href="'.$link.'o/'.$szam.'" style="text-decoration: none;">'.$szam.' </a></li>';
+							$kimenet .= '<li><a href="'.$link.'o/'.$szam.'" class="page-link">'.$szam.' </a></li>';
 						}
 					}
 				}

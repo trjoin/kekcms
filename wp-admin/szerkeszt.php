@@ -63,7 +63,7 @@ if(isset($_GET["blokkszerk"]))
 {
 	$lekerdez=$pdo->query("select * from ".$elotag."_oldalsav_".$webaktlang." where kod='".$_GET["blokkszerk"]."'");
 	$blokk=$lekerdez->fetch();
-	echo "<p align='left'><big><b><u>Blokk címe:</u></b></big><br><input type='text' name='bcim' value='".$blokk["cim"]."'></p><br />";
+	echo "<p align='left'><big><b><u>Doboz címe:</u></b></big><br><input type='text' name='bcim' value='".$blokk["cim"]."'></p><br />";
 }
 if(isset($_GET["cikkmod"]))
 {

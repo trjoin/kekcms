@@ -1333,8 +1333,6 @@ function PDFetismod(f)
 		});
 	</script>
 <?php
-/*** WEBSHOP ADMIN FEJLÉC ***/
-		echo "<a href='index.php?lng=".$webaktlang."&page=shop'><b>[ termékek kezelése ]</b></a>&nbsp;<a href='index.php?lng=".$webaktlang."&page=shop&kategoriak=y'><b>[ kategóriák kezelése ]</b></a>&nbsp;<a href='index.php?lng=".$webaktlang."&page=shop&gyartok=y'><b>[ gyártók kezelése ]</b></a>&nbsp;<a href='index.php?lng=".$webaktlang."&page=shop&rendelesek=y'><b>[ megrendelések kezelése ]</b></a>";
 /*** MENÜNEK MEGFELELŐ TÁBLA BETÖLTÉSE ***/
 		if(isset($_GET["rendelesek"])) //megrendelések
 		{
@@ -1362,19 +1360,29 @@ function PDFetismod(f)
 		}
 		elseif(isset($_GET["kategoriak"])) //kategóriák
 		{
-			$kateg1=$pdo->query("select * from ".$elotag."_shop_kategoriak");
-			echo "<h3>KATEGÓRIA LISTA</h3>";
-			echo "<table align='left' width='100%' cellpadding='5' cellspacing='5' border='0'>
-					<tr>
-						<td width='25%' valign='top'>
-							<b>Kategórák:</b> <a href='index.php?lng=".$webaktlang."&page=shop&ujkategoria=1'> + hozzáadás </a><br />";
-									while($ek1=$kateg1->fetch())
-									{
-										echo "<a href='index.php?lng=".$webaktlang."&page=shop&ksz=1&kategoriamod=".$ek1["shop_kategoriaid"]."'>".$ek1["shop_kategorianev"]."</a>&nbsp;<a href='index.php?lng=".$webaktlang."&page=shop&ksz=1&kategoriatorol=".$ek1["shop_kategoriaid"]."' style='color:#f00;' onclick='return confirm(\"Biztosan törlöd ezt a kategóriát?\")'><b>X</b></a> &nbsp;|&nbsp; ";
-									}
-				echo "</td>
-					</tr>
-				   </table>";
+			$osszes=$pdo->query("select * from ".$elotag."_shop_kategoriak");
+			echo "<h3>KATEGÓRIA LISTA</h3>
+					<a href='index.php?lng=".$webaktlang."&page=shop&ujkategoria=1' class='btn'>+ hozzáadás &raquo;</a>
+					<br /><br />
+					<table id='datatables' class='display'>
+						<thead>
+							<tr>
+								<th>Kategória ID</th>
+								<th>Kategória név</th>
+								<th>Művelet</th>
+							</tr>
+						</thead><tbody>";
+			while($row = $osszes->fetch())
+			{
+				echo "<tr>
+							<td align='right'>".$row['shop_kategoriaid']."</td>
+							<td>".$row['shop_kategorianev']."</td>
+							<td align='center'><a href='index.php?lng=".$webaktlang."&page=shop&ksz=1&kategoriamod=".$ek1["shop_kategoriaid"]."' class='btn'>módosít</a> 
+								<a href='index.php?lng=".$webaktlang."&page=shop&ksz=1&kategoriatorol=".$ek1["shop_kategoriaid"]."' class='btn' onclick='return confirm(\"Biztosan törlöd ezt a kategóriát?\")'>töröl</a></td>
+					   </tr>";
+			}
+			echo "</tbody>
+				</table>";
 		}
 		elseif(isset($_GET["rendelles"])) //megrendelések
 		{
@@ -1389,8 +1397,8 @@ function PDFetismod(f)
 		elseif(isset($_GET["gyartok"])) //gyártók
 		{
 			$osszes=$pdo->query("select * from ".$elotag."_shop_gyartok");
-			echo "<h3>GYÁRTÓ LISTA</h3>
-					<a href='index.php?lng=".$webaktlang."&page=shop&ujgyarto=y'> új gyártó felvétele &raquo;</a>
+			echo "<h3>GYÁRTÓK LISTA</h3>
+					<a href='index.php?lng=".$webaktlang."&page=shop&ujgyarto=y' class='btn'> + új gyártó felvétele &raquo;</a>
 					<br /><br />
 					<table id='datatables' class='display'>
 						<thead>
@@ -1415,15 +1423,15 @@ function PDFetismod(f)
 		{
 			$osszes=$pdo->query("select * from ".$elotag."_shop_termek");
 			echo "<h3>TERMÉK LISTA</h3>
-					<a href='index.php?lng=".$webaktlang."&page=shop&ujtermek=y' class='btn'>új termék felvétele &raquo;</a><br>
+					<a href='index.php?lng=".$webaktlang."&page=shop&ujtermek=y' class='btn'>+ új termék felvétele &raquo;</a><br>
 					<br />
 					<table id='datatables' class='display'>
 						<thead>
 							<tr>
 								<th>Gyártó</th>
 								<th>Termék név</th>
+								<th>Termék kategória</th>
 								<th>Termék ár</th>
-								<th>Főkép</th>
 								<th>Művelet</th>
 							</tr>
 						</thead><tbody>";
@@ -1432,8 +1440,8 @@ function PDFetismod(f)
 				echo "<tr>
 							<td>".$row['t_gyarto']."</td>
 							<td>".$row['t_nev']."</td>
+							<td>".$row['t_kategoria']."</td>
 							<td>".$row['t_ar']." Ft</td>
-							<td><a href='../shop/".$row['t_fkep']."' rel='clearbox'><img src='../shop/".$row['t_fkep']."' width='50' height='50' border='0'></a></td>
 							<td align='center'><a href='index.php?lng=".$webaktlang."&page=shop&termekmod=".$row["t_id"]."' title='Termék módosítása'><b>M</b></a>&nbsp;|&nbsp;<a href='index.php?lng=".$webaktlang."&page=shop&termektorol=".$row["t_id"]."' title='Termék törlése' onclick='return confirm(\"Biztosan törlöd ezt a terméket?\")' style='color:#f00;'><b>X</b></a></td>
 					   </tr>";
 			}
@@ -1442,7 +1450,7 @@ function PDFetismod(f)
 						<tr>
 							<th align='left'><input type='text' name='search_t_gyarto' class='search_init' style='width:100px;' /></th>
 							<th align='left'><input type='text' name='search_t_nev' class='search_init' style='width:300px;' /></th>
-							<th align='left'><input type='text' style='display:none;' /></th>
+							<th align='left'><input type='text' name='search_t_kategoria' class='search_init' style='width:300px;' /></th>
 							<th align='left'><input type='text' style='display:none;' /></th>
 							<th align='left'><input type='text' style='display:none;' /></th>
 						</tr>

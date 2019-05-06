@@ -288,7 +288,7 @@ if(isset($_POST["lepes3"]) AND $_POST["lepes3"]=="igen")
 			foreach($_POST['langok'] as $val_fel)
 			{
 				$feltolt_menu=$pdo->query("insert into ".$elotag."_menu_".$val_fel." (nev,tartalom,metatitle,metakeywords,metadesc,sorszam,aktiv) values ('Start','<br /><font face=Verdana size=3 color=#3333DD><b>Sikeresen feltelepítette a K.E.K. CMS programot!</b></font><br /><br /><font face=Verdana size=2 color=#000000>Mostmár használatba veheted a CMS motort! Az adminisztráció linkre kattintva tud bejelentkezni, majd login után szerkeszteni ezt a szöveget is, illetve minden mást a rendszeren belül! Sikeres felhasználást kívánok!</font>','Sikeres telepítés - K.E.K. CMS rendszer','kek cms, trswebdesign, tartalom kezelő rendszer','Üdvözöljük az egyszerűen kezelhető adminisztrációs felületek világában, amelyet a KEK teremtett meg!','1','1')");
-				$feltolt_oldasav=$pdo->query("insert into ".$elotag."_oldalsav_".$val_fel." (cim,szoveg,sorszam) values ('Oldalsáv','Ide blokkokat helyezhet el, szerkesztheti őket, illetve törölni is tudja, ha nem kellenek! Mindezt az adminon való bejelentkezés után tudja megtenni! Az adminisztrátori bejelentkezéshez a telepítés során adta meg a hozzáférést!','1')");
+				$feltolt_oldasav=$pdo->query("insert into ".$elotag."_oldalsav_".$val_fel." (cim,szoveg,sorszam) values ('Doboz','Ide blokkokat helyezhet el, szerkesztheti őket, illetve törölni is tudja, ha nem kellenek! Mindezt az adminon való bejelentkezés után tudja megtenni! Az adminisztrátori bejelentkezéshez a telepítés során adta meg a hozzáférést!','1')");
 				$feltolt_lang=$pdo->query("insert into ".$elotag."_nyelvek (langnev) values ('".$val_fel."')");
 				if(!$feltolt_menu AND !$feltolt_oldasav AND !$feltolt_lang) { $hibak_f++; }
 			}

@@ -271,7 +271,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 									</li>';
 		}
 		echo '						<li class="dropdown-submenu">
-									  <a tabindex="-1" href="#">Oldalsáv</a>
+									  <a tabindex="-1" href="#">Dobozok</a>
 									  <ul class="dropdown-menu">
 										<li><a tabindex="-2" href="index.php?lng='.$webaktlang.'&mod=y&blokkok=1">&raquo; Megtekintés és kezelés</a></li>
 										<li><a tabindex="-2" href="index.php?lng='.$webaktlang.'&mod=y&blokksormod=1">&raquo; Sorrend módosítása</a></li>
