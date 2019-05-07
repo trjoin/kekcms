@@ -205,6 +205,8 @@
 		}
 	}
 ?>
+								<li><a href="/n/hun">HU</a></li>
+								<li><a href="/n/eng">EN</a></li>
 							</ul>
 						</nav>
 					</div>
