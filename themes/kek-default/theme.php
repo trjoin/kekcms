@@ -131,10 +131,10 @@
 </head>
 <body>
 <?php
-	if($webadatok["breakoff"]=="1")
+	if($webadatok["breakoff"]=="1" AND !isset($_SESSION["userlogged"]))
 	{
 		echo '<div class="col-md-3 hidden-xs"> </div>';
-		echo '<div class="col-md-6 text-center"><br><br><br><br><h1>The website is under construction!<br>Please be patient.</h1><br><br>&nbsp;</div>';
+		echo '<div class="col-md-6 text-center"><br><br><br><br><h1>Weboldalunk karbantartás alatt áll!<br>Kérjük szíves türelmét.</h1><br><br>&nbsp;</div>';
 		echo '<div class="col-md-3 hidden-xs"> </div>';
 		echo '<div class="clearfix"> </div>';
 	}
