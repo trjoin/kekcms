@@ -1377,8 +1377,8 @@ function PDFetismod(f)
 				echo "<tr>
 							<td align='right'>".$row['shop_kategoriaid']."</td>
 							<td>".$row['shop_kategorianev']."</td>
-							<td align='center'><a href='index.php?lng=".$webaktlang."&page=shop&ksz=1&kategoriamod=".$ek1["shop_kategoriaid"]."' class='btn'>módosít</a> 
-								<a href='index.php?lng=".$webaktlang."&page=shop&ksz=1&kategoriatorol=".$ek1["shop_kategoriaid"]."' class='btn' onclick='return confirm(\"Biztosan törlöd ezt a kategóriát?\")'>töröl</a></td>
+							<td align='center'><a href='index.php?lng=".$webaktlang."&page=shop&ksz=1&kategoriamod=".$row["shop_kategoriaid"]."' class='btn'>módosít</a> 
+								<a href='index.php?lng=".$webaktlang."&page=shop&ksz=1&kategoriatorol=".$row["shop_kategoriaid"]."' class='btn' onclick='return confirm(\"Biztosan törlöd ezt a kategóriát?\")'>töröl</a></td>
 					   </tr>";
 			}
 			echo "</tbody>
