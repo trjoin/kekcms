@@ -477,7 +477,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 				$almenu=$pdo->query("select * from ".$elotag."_almenu_".$webaktlang." where szulo='".$_REQUEST["page"]."'");
 				if($almenu->rowCount()>0)
 				{
-					echo "<a href='javascript:alert(\"Ennek a menüpontnak van almenüje, előbb azt kell törölni!\");'><i class='icon-trash'></i> menüpont törlése</a><br /><br />";
+					echo "<a href='javascript:alert(\"Ennek a menüpontnak van almenüje, előbb azt kell törölni!\");' class='btn'><i class='icon-trash'></i> menüpont törlése</a><br /><br />";
 				}
 				else
 				{
