@@ -187,7 +187,7 @@
 					<ul class="dropdown-menu">';
 					while($eamp=$almenu->fetch())
 					{
-						echo '<li><a href="'.($eamp["tolink"]!="" ? $eamp["tolink"] : "/".$eamp["furl"]).'">'.$eamp["nev"].'</a></li>';
+						echo '<li><a href="'.($eamp["tolink"]!="" ? $eamp["tolink"] : "/".$eamp["furl"]).'" '.($eamp["tolink"]!="" ? "target='_blank'" : "").'>'.$eamp["nev"].'</a></li>';
 					}
 			echo '	</ul>
 				  </li>';
@@ -196,11 +196,11 @@
 		{
 			if($emu["kod"]=="1")
 			{
-				echo '<li><a href="'.($emu["tolink"]!="" ? $emu["tolink"] : "/").'">'.$emu["nev"].'</a></li>';
+				echo '<li><a href="'.($emu["tolink"]!="" ? $emu["tolink"] : "/").'" '.($eamp["tolink"]!="" ? "target='_blank'" : "").'>'.$emu["nev"].'</a></li>';
 			}
 			else
 			{
-				echo '<li><a href="'.($emu["tolink"]!="" ? $emu["tolink"] : "/".$emu["furl"]).'">'.$emu["nev"].'</a></li>';
+				echo '<li><a href="'.($emu["tolink"]!="" ? $emu["tolink"] : "/".$emu["furl"]).'" '.($eamp["tolink"]!="" ? "target='_blank'" : "").'>'.$emu["nev"].'</a></li>';
 			}
 		}
 	}
