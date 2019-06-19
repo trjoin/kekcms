@@ -25,13 +25,11 @@ if(isset($_GET["modosit"]))
 	{
 		echo "<p align='left'><big><b><u>Modul hozzárendelése (ha telepítve van):</u></b></big><br>";
 		echo "<select name='tomodul'>
-			".($oldal["tomodul"]!="" ? "<option value='".$oldal["tomodul"]."' selected>".$oldal["tomodul"]."</option>" : "")."";
-		echo "<option value='kapcsolat'>kapcsolat űrlap</option>";
+			".($oldal["tomodul"]!="" ? "<option value='".$oldal["tomodul"]."' selected>".$oldal["tomodul"]."</option>" : "<option value='' selected>SEMMI/KIKAPCSOL</option>")."";
 			while($md1=$bt1->fetch())
 			{
 				echo '<option value="'.$md1["modulnev"].'">'.$md1["modulnev"].'</option>';
 			}
-		echo "<option value=''>SEMMI/KIKAPCSOL</option>";
 		echo "</select></p><br /><br />";
 	}
 }
