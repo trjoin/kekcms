@@ -1,5 +1,12 @@
 <?php
-	session_start();
+session_start();
+if($webadatok["breakoff"]=="1" AND !isset($_SESSION["userlogged"]))
+{
+	header("Location: under.html");
+	exit;
+}
+else
+{
 	$absp=(isset($_SERVER['HTTPS']) ? "https" : "http") . "://".$_SERVER["HTTP_HOST"];
 	$fullurl=$absp.$_SERVER["REQUEST_URI"];
 	$mirol=array("í","é","á","ű","ú","ő","ó","ü","ö","Í","É","Á","Ű","Ú","Ő","Ó","Ü","Ö","_","+",":",",","?","=","(",")","[","]","{","}","&","#","@","<",">","$","'","!","/"," ");
@@ -131,15 +138,6 @@
 </head>
 <body>
 <?php
-	if($webadatok["breakoff"]=="1" AND !isset($_SESSION["userlogged"]))
-	{
-		echo '<div class="col-md-3 hidden-xs"> </div>';
-		echo '<div class="col-md-6 text-center"><br><br><br><br><h1>Weboldalunk karbantartás alatt áll!<br>Kérjük szíves türelmét.</h1><br><br>&nbsp;</div>';
-		echo '<div class="col-md-3 hidden-xs"> </div>';
-		echo '<div class="clearfix"> </div>';
-	}
-	else
-	{
 		/*** ANALYTICS KÓD HA VAN ***/
 		$ganal=$pdo->query("select * from ".$elotag."_ganal");
 		$analitika=$ganal->fetch();
@@ -643,7 +641,7 @@ if(!isset($_REQUEST["furl"]))
 	<script src="themes/<?php print($webadatok["sablon"]); ?>/js/jquery.waypoints.min.js"></script>
 	<script type="text/javascript" src="themes/<?php print($webadatok["sablon"]); ?>/js/bootstrap.js"></script>
 <?php
-	}
+} //breakoff vége
 ?>
 </body>
 </html>
