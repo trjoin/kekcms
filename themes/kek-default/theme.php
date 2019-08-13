@@ -194,11 +194,11 @@ else
 		{
 			if($emu["kod"]=="1")
 			{
-				echo '<li><a href="'.($emu["tolink"]!="" ? $emu["tolink"] : "/").'" '.($eamp["tolink"]!="" ? "target='_blank'" : "").'>'.$emu["nev"].'</a></li>';
+				echo '<li><a href="'.($emu["tolink"]!="" ? $emu["tolink"] : "/").'" '.($emu["tolink"]!="" ? "target='_blank'" : "").'>'.$emu["nev"].'</a></li>';
 			}
 			else
 			{
-				echo '<li><a href="'.($emu["tolink"]!="" ? $emu["tolink"] : "/".$emu["furl"]).'" '.($eamp["tolink"]!="" ? "target='_blank'" : "").'>'.$emu["nev"].'</a></li>';
+				echo '<li><a href="'.($emu["tolink"]!="" ? $emu["tolink"] : "/".$emu["furl"]).'" '.($emu["tolink"]!="" ? "target='_blank'" : "").'>'.$emu["nev"].'</a></li>';
 			}
 		}
 	}
@@ -640,8 +640,8 @@ if(!isset($_REQUEST["furl"]))
 	</script>
 	<script src="themes/<?php print($webadatok["sablon"]); ?>/js/jquery.waypoints.min.js"></script>
 	<script type="text/javascript" src="themes/<?php print($webadatok["sablon"]); ?>/js/bootstrap.js"></script>
+</body>
+</html>
 <?php
 } //breakoff vége
 ?>
-</body>
-</html>
