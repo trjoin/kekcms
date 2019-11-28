@@ -650,11 +650,11 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 				$modules=$pdo->query("select * from ".$elotag."_modulok where modulnev='galeria'");
 				if($modules->rowCount()>0)
 				{
-					$save_mod=$pdo->query("update ".$elotag."_modulok set bekapcsolva='".$_POST["galeriamodul"]."' where modulnev='galeria'");
+					$save_mod=$pdo->query("update ".$elotag."_modulok set bekapcsolva='".$_POST["galeriamodul"]."',integ='1' where modulnev='galeria'");
 				}
 				else
 				{
-					$save_mod=$pdo->query("insert into ".$elotag."_modulok (modulnev,bekapcsolva) values('galeria','".$_POST["galeriamodul"]."')");
+					$save_mod=$pdo->query("insert into ".$elotag."_modulok (modulnev,bekapcsolva,integ) values('galeria','".$_POST["galeriamodul"]."','1')");
 					$letrehoz_galeria=$pdo->query("CREATE TABLE ".$elotag."_mappak (mappakod INT(10) AUTO_INCREMENT, furl TEXT, mappanev TEXT, mappaut TEXT, mappakep TEXT, PRIMARY KEY (mappakod)) DEFAULT CHARSET=utf8");
 					mkdir("../galeria", 0777, true);
 					mkdir("../leirasok", 0777, true);
@@ -672,11 +672,11 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 				$modules=$pdo->query("select * from ".$elotag."_modulok where modulnev='video'");
 				if($modules->rowCount()>0)
 				{
-					$save_mod=$pdo->query("update ".$elotag."_modulok set bekapcsolva='".$_POST["videomodul"]."' where modulnev='video'");
+					$save_mod=$pdo->query("update ".$elotag."_modulok set bekapcsolva='".$_POST["videomodul"]."',integ='1' where modulnev='video'");
 				}
 				else
 				{
-					$save_mod=$pdo->query("insert into ".$elotag."_modulok (modulnev,bekapcsolva) values('video','".$_POST["videomodul"]."')");
+					$save_mod=$pdo->query("insert into ".$elotag."_modulok (modulnev,bekapcsolva,integ) values('video','".$_POST["videomodul"]."','1')");
 					$letrehoz_video=$pdo->query("CREATE TABLE ".$elotag."_videok (videokod INT(10) AUTO_INCREMENT, videocim TEXT, vhiv TEXT, PRIMARY KEY (videokod)) DEFAULT CHARSET=utf8");
 				}
 			}
@@ -692,11 +692,11 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 				$modules=$pdo->query("select * from ".$elotag."_modulok where modulnev='blog'");
 				if($modules->rowCount()>0)
 				{
-					$save_mod=$pdo->query("update ".$elotag."_modulok set bekapcsolva='".$_POST["hirekmodul"]."' where modulnev='blog'");
+					$save_mod=$pdo->query("update ".$elotag."_modulok set bekapcsolva='".$_POST["hirekmodul"]."',integ='1' where modulnev='blog'");
 				}
 				else
 				{
-					$save_mod=$pdo->query("insert into ".$elotag."_modulok (modulnev,bekapcsolva) values('blog','".$_POST["hirekmodul"]."')");
+					$save_mod=$pdo->query("insert into ".$elotag."_modulok (modulnev,bekapcsolva,integ) values('blog','".$_POST["hirekmodul"]."','1')");
 					$nyelvek=$pdo->query("select * from ".$elotag."_nyelvek");
 					while($egynyelv=$nyelvek->fetch())
 					{
@@ -752,11 +752,11 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 				$modules=$pdo->query("select * from ".$elotag."_modulok where modulnev='gmaps'");
 				if($modules->rowCount()>0)
 				{
-					$save_mod=$pdo->query("update ".$elotag."_modulok set bekapcsolva='".$_POST["gmaps"]."' where modulnev='gmaps'");
+					$save_mod=$pdo->query("update ".$elotag."_modulok set bekapcsolva='".$_POST["gmaps"]."',integ='1' where modulnev='gmaps'");
 				}
 				else
 				{
-					$save_mod=$pdo->query("insert into ".$elotag."_modulok (modulnev,bekapcsolva) values('gmaps','".$_POST["gmaps"]."')");
+					$save_mod=$pdo->query("insert into ".$elotag."_modulok (modulnev,bekapcsolva,integ) values('gmaps','".$_POST["gmaps"]."','1')");
 					$letrehoz_gmaps=$pdo->query("CREATE TABLE ".$elotag."_gmaps (gmkod INT(2) auto_increment, gmapskey TEXT, PRIMARY KEY(gmkod)) DEFAULT CHARSET=utf8");
 				}
 			}
@@ -772,11 +772,11 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 				$modules=$pdo->query("select * from ".$elotag."_modulok where modulnev='letoltes'");
 				if($modules->rowCount()>0)
 				{
-					$save_mod=$pdo->query("update ".$elotag."_modulok set bekapcsolva='".$_POST["downmodul"]."' where modulnev='letoltes'");
+					$save_mod=$pdo->query("update ".$elotag."_modulok set bekapcsolva='".$_POST["downmodul"]."',integ='1' where modulnev='letoltes'");
 				}
 				else
 				{
-					$save_mod=$pdo->query("insert into ".$elotag."_modulok (modulnev,bekapcsolva) values('letoltes','".$_POST["downmodul"]."')");
+					$save_mod=$pdo->query("insert into ".$elotag."_modulok (modulnev,bekapcsolva,integ) values('letoltes','".$_POST["downmodul"]."','1')");
 					$letrehoz_down=$pdo->query("CREATE TABLE ".$elotag."_letoltesek (lekod INT(20) auto_increment, lelink VARCHAR(200), lenev TEXT, leleiras TEXT, PRIMARY KEY (lekod)) DEFAULT CHARSET=utf8");
 					mkdir("../letoltesek", 0777, true);
 				}
@@ -793,11 +793,11 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 				$modules=$pdo->query("select * from ".$elotag."_modulok where modulnev='shop'");
 				if($modules->rowCount()>0)
 				{
-					$save_mod=$pdo->query("update ".$elotag."_modulok set bekapcsolva='".$_POST["shopmodul"]."' where modulnev='shop'");
+					$save_mod=$pdo->query("update ".$elotag."_modulok set bekapcsolva='".$_POST["shopmodul"]."',integ='1' where modulnev='shop'");
 				}
 				else
 				{
-					$save_mod=$pdo->query("insert into ".$elotag."_modulok (modulnev,bekapcsolva) values('shop','".$_POST["shopmodul"]."')");
+					$save_mod=$pdo->query("insert into ".$elotag."_modulok (modulnev,bekapcsolva,integ) values('shop','".$_POST["shopmodul"]."','1')");
 					$letrehoz_shop=$pdo->query("CREATE TABLE ".$elotag."_shop_termek (t_id int(20) NOT NULL AUTO_INCREMENT, t_gyarto varchar(200) NOT NULL, t_nev text NOT NULL, t_ar varchar(200) NOT NULL, t_kategoria varchar(200) NOT NULL, t_fkep text NOT NULL, t_kepek text NOT NULL, t_kleiras varchar(200) NOT NULL, t_nleiras text NOT NULL, t_datum date NOT NULL DEFAULT '0000-00-00', t_pdf text NOT NULL, PRIMARY KEY (t_id)) DEFAULT CHARSET=utf8");
 					$letrehoz_gyartok=$pdo->query("CREATE TABLE ".$elotag."_shop_gyartok (shop_gyartoid int(20) NOT NULL AUTO_INCREMENT, shop_gyartonev varchar(200) NOT NULL, PRIMARY KEY (shop_gyartoid)) DEFAULT CHARSET=utf8");
 					$letrehoz_kategok=$pdo->query("CREATE TABLE ".$elotag."_shop_kategoriak (shop_kategoriaid int(20) NOT NULL AUTO_INCREMENT, shop_kategkep text NOT NULL, shop_kategorianev varchar(200) NOT NULL, PRIMARY KEY (shop_kategoriaid)) DEFAULT CHARSET=utf8");
