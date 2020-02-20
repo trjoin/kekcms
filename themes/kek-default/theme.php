@@ -34,42 +34,71 @@ else
 <html lang="hu-HU" xml:lang="hu" dir="ltr">
 <head>
 <?php
-	if(isset($_REQUEST["furl"]) AND strpos($_REQUEST["furl"],"blog/")=== false AND strpos($_REQUEST["furl"],"galeria/")=== false AND strpos($_REQUEST["furl"],"video/")=== false)
+	if(isset($_REQUEST["furl"]) AND $_REQUEST["furl"]!="" AND $_REQUEST["furl"]!=" ")
 	{
-		$megjelenit=$pdo->query("select * from ".$elotag."_menu_".$webaktlang." where furl='".$_REQUEST["furl"]."' and aktiv='1'");
-		if($megjelenit->rowCount()>0)
+		//ha főmenüpont
+		$megjelenitf=$pdo->query("select * from ".$elotag."_menu_".$webaktlang." where aktiv='1' AND furl='".$_REQUEST["furl"]."'");
+		//ha almenüpont
+		$megjelenita=$pdo->query("select * from ".$elotag."_almenu_".$webaktlang." where aktiv='1' AND furl='".$_REQUEST["furl"]."'");
+		//ha hírcikk
+		$megjelenite=$pdo->query("select * from ".$elotag."_hirkezelo2_".$webaktlang." where aktiv='1' AND furl='".$_REQUEST["furl"]."'");
+		//hiba esetén visszaadjuk az alap paramétereket
+		$megjelenit=$pdo->query("select * from ".$elotag."_parameterek");
+		
+		if($megjelenitf->rowCount()>0)
 		{
-			$ad=$megjelenit->fetch();
+			$ad=$megjelenitf->fetch();
+			
+			$title=$ad["metatitle"];
+			$keywords=$ad["metakeywords"];
+			$description=$ad["metadesc"];
+			$sitename=$ad["metatitle"];
+			$siteslogen="";
+			$ogimage=$ad["ogimage"];
+			$ogimagealt=$ad["metadesc"];
+		}
+		elseif($megjelenite->rowCount()>0)
+		{
+			$ad=$megjelenite->fetch();
+			
+			$title=$ad["metatitle"];
+			$keywords=$ad["metakeywords"];
+			$description=$ad["metadesc"];
+			$sitename=$ad["metatitle"];
+			$siteslogen="";
+			$ogimage="/blog/".$ad["kiskep"];
+			$ogimagealt=$ad["bevezeto"];
+		}
+		elseif($megjelenita->rowCount()>0)
+		{
+			$ad=$megjelenita->fetch();
+			
+			$title=$ad["metatitle"];
+			$keywords=$ad["metakeywords"];
+			$description=$ad["metadesc"];
+			$sitename=$ad["metatitle"];
+			$siteslogen="";
+			$ogimage=$ad["ogimage"];
+			$ogimagealt=$ad["metadesc"];
 		}
 		else
 		{
-			$megjelenit=$pdo->query("select * from ".$elotag."_almenu_".$webaktlang." where furl='".$_REQUEST["furl"]."' and aktiv='1'");
 			$ad=$megjelenit->fetch();
+			
+			$title=$ad["metatitle"];
+			$keywords=$ad["metakeywords"];
+			$description=$ad["metadesc"];
+			$sitename=$ad["metatitle"];
+			$siteslogen="";
+			$ogimage="/blog/".$ad["kiskep"];
+			$ogimagealt=$ad["bevezeto"];
 		}
-		$title=$ad["metatitle"];
-		$keywords=$ad["metakeywords"];
-		$description=$ad["metadesc"];
-		$sitename=$ad["metatitle"];
-		$siteslogen="";
-		$ogimage=$ad["ogimage"];
-		$ogimagealt=$ad["metadesc"];
-	}
-	elseif(isset($_REQUEST["hir"]))
-	{
-		$megjelenit=$pdo->query("select * from ".$elotag."_hirkezelo_".$webaktlang." where furl='".$_REQUEST["hir"]."' and aktiv='1'");
-		$ad=$megjelenit->fetch();
-		$title=$ad["metatitle"];
-		$keywords=$ad["metakeywords"];
-		$description=$ad["metadesc"];
-		$sitename=$ad["metatitle"];
-		$siteslogen="";
-		$ogimage="/blog/".$ad["kiskep"];
-		$ogimagealt=$ad["bevezeto"];
 	}
 	else
 	{
 		$megjelenit=$pdo->query("select * from ".$elotag."_parameterek");
 		$ad=$megjelenit->fetch();
+		
 		$title=$ad["title"];
 		$keywords=$ad["keywords"];
 		$description=$ad["description"];
@@ -78,7 +107,6 @@ else
 		$ogimage=$ad["ogimage"];
 		$ogimagealt=$sitename." ".$siteslogen;
 	}
-	
 ?>
 	<title><?php echo $title; ?></title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
