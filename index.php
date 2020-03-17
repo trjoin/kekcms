@@ -41,7 +41,7 @@ elseif(file_exists("install.php"))
 }
 else
 {
-	include("connect.php");
+	include("./connect.php");
 	$webosszetevok=$pdo->query("select * from ".$elotag."_parameterek");
 		$webadatok=$webosszetevok->fetch();
 

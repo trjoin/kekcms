@@ -6,8 +6,16 @@ $baseurl=$_SERVER["SERVER_NAME"];
 $url=explode(".",$baseurl);
 $absp=(isset($_SERVER['HTTPS']) ? "https" : "http") . "://".$_SERVER["HTTP_HOST"];
 $fullurl=$absp.$_SERVER["REQUEST_URI"];
+$error="";
 $webosszetevok=$pdo->query("select * from ".$elotag."_parameterek");
 $webadatok=$webosszetevok->fetch();
+/*** DEBUGGER FIGYELÉSE ***/
+if($webadatok["debugmod"]==1)
+{
+	ini_set('display_errors', 1);
+	ini_set('display_startup_errors', 1);
+	error_reporting(E_ALL);
+}
 /*** használati nyelv letárolás ***/
 if(!isset($_GET["lng"]))
 {
@@ -33,27 +41,27 @@ if(isset($_POST["username"]) AND $_POST["username"]!="" AND $_POST["username"]!=
 		if(file_exists("../supportend.php"))
 		{
 			include("../supportend.php");
-			$datumt = strtotime($support);
-			$finale = date("Y-m-d", strtotime("+24 month", $datumt));
-			if($finale>=$ma)
+			$datumt = strtotime($support); //telepítési idő
+			$finale = date("Y-m-d", strtotime("+24 month", $datumt)); //telepítéstől számított +24 hónap - azaz a lejárat napja!
+			$ma = strtotime(date("Y-m-d"));
+			if($finale<=$ma)
 			{
 				$egy_sor=$login->fetch(\PDO::FETCH_ASSOC);
 				$_SESSION["userlogged"]=$egy_sor["nev"];
+				$error="";
 			}
 			else
 			{
-				/*** $error="<span style='color:#f00;'>Az Ön terméktámogatása (24 hónap) lejárt, kérjük a szoftver használatának meghosszabbításához keressen minket elérhetőségeinken!</span><br>"; ***/
 				$egy_sor=$login->fetch(\PDO::FETCH_ASSOC);
 				$_SESSION["userlogged"]=$egy_sor["nev"];
-				echo '<script> alert(\'Az Ön szoftverének terméktámogatása lejárt, a további zavartalan használhatoz kérjük keressen fel bennünket elérhetőségeinken.\'); </script>';
+				$error="<span style='color:#f00;'>Az Ön szoftverének terméktámogatása (24 hónap) lejárt, a további zavartalan használhatoz kérjük keressen minket elérhetőségeinken!</span><br>";
+				echo '<script> alert(\'Az Ön szoftverének terméktámogatása (24 hónap) lejárt, a további zavartalan használhatoz kérjük keressen fel bennünket elérhetőségeinken.\'); </script>';
 			}
 		}
 		else
 		{
-			/*** $error="<span style='color:#f00;'>Az Ön terméktámogatása (24 hónap) lejárt, kérjük a szoftver használatának meghosszabbításához keressen minket elérhetőségeinken!</span><br>"; ***/
-			$egy_sor=$login->fetch(\PDO::FETCH_ASSOC);
-			$_SESSION["userlogged"]=$egy_sor["nev"];
-			echo '<script> alert(\'Az Ön szoftverének terméktámogatása lejárt, a további zavartalan használhatoz kérjük keressen fel bennünket elérhetőségeinken.\'); </script>';
+			$error="<span style='color:#f00;'>Az Ön terméktámogatásának ellenőrzése sikertelen volt. kérjük keressen minket elérhetőségeinken!</span><br>";
+			echo '<script> alert(\'Az Ön terméktámogatásának ellenőrzése sikertelen volt. kérjük keressen minket elérhetőségeinken!\'); </script>';
 		}
 	}
 	else
@@ -118,6 +126,8 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 							if($_SESSION["userlogged"]=="nimda")
 							{
 								echo '<li><a href="index.php?lng='.$webaktlang.'&mod=y&rootmodul=1">Modulok kezelése</a></li>
+										<li class="divider"></li>';
+								echo '<li><a href="index.php?lng='.$webaktlang.'&mod=y&debugger='.($webadatok["debugmod"]==1 ? '0' : '1').'">Debug mód '.($webadatok["debugmod"]==1 ? 'ki' : 'be').'kapcsolása</a></li>
 										<li class="divider"></li>';
 								echo '<li><a href="index.php?lng='.$webaktlang.'&mod=y&sysupd=1">Rendszer frissítés</a></li>
 										<li class="divider"></li>';
@@ -593,6 +603,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 				<div class="widget-content">
 					<div class="pricing-header">
 						<h1>Rendben, sikeresen bejelentkezett!</h1>
+						'.($webadatok["debugmod"]==1 ? '<h2 style="color:#f00;font-weight:700;">FIGYELEM, A DEBUG MÓD AKTÍV!</h2>' : '').'
 						<h2>Válassza ki a fenti menüből a kívánt tartalmat, vagy a tevékenységet!</h2>
 						<a href="index.php?lng='.$webaktlang.'&mod=y&breakoff='.($webadatok["breakoff"]=="1" ? "0" : "1").'" class="btn btn-large btn-secondary"><h4>KARBANTARTÁS MÓD '.($webadatok["breakoff"]=="1" ? "KI" : "BE").'KAPCSOLÁSA</h4></a>
 					</div>

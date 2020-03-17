@@ -1224,20 +1224,24 @@ function PDFetismod(f)
 	{
 		//jQ_Datatables script
 ?>
-	<script src='./js/libs/jquery-migrate-1.1.1.min.js'></script>
-	<link href="https://cdn.datatables.net/1.10.18/css/dataTables.jqueryui.min.css" rel="stylesheet" type="text/css" />
-	<script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
-	<script src="https://cdn.datatables.net/1.10.18/js/dataTables.jqueryui.min.js"></script>
-	<script src='https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js'></script>
-	<script src='https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js'></script>
-	<script src='https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js'></script>	
-	<script src='https://cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js'></script>	
-	<script src='https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js'></script>
-	<script src='https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js'></script>
-	<script src='https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js'></script>
-	<link href="https://cdn.datatables.net/responsive/2.2.2/css/responsive.semanticui.min.css" rel="stylesheet" type="text/css" />
-	<script src='https://cdn.datatables.net/responsive/2.2.2/js/dataTables.responsive.min.js'></script>
-	<script src='https://cdn.datatables.net/responsive/2.2.2/js/responsive.semanticui.min.js'></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" rel="stylesheet" type="text/css" />
+	<link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+	<link href="https://cdn.datatables.net/1.10.20/css/dataTables.jqueryui.min.css" rel="stylesheet" type="text/css" />
+	<link href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css" />
+	<link href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.jqueryui.min.css" rel="stylesheet" type="text/css" />
+	<link href="https://cdn.datatables.net/select/1.3.1/css/select.jqueryui.min.css" rel="stylesheet" type="text/css" />
+	<link href="https://cdn.datatables.net/searchpanes/1.0.1/css/searchPanes.jqueryui.min.css" rel="stylesheet" type="text/css" />
+	<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.20/js/dataTables.jqueryui.min.js"></script>
+	<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+	<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+	<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>	
+	<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js"></script>	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+	<script src="https://cdn.datatables.net/responsive/2.2.2/js/dataTables.responsive.min.js"></script>
+	<script src="https://cdn.datatables.net/responsive/2.2.2/js/responsive.semanticui.min.js"></script>
 	<style>
 		input[type="text"] {
 			max-width: 150px !important;

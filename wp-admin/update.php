@@ -3,7 +3,9 @@ session_start();
 if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION["userlogged"]!=" ")
 {
 	/*** LEGÚJABB FRISSITÉSEK HOZZÁADÁSA ***/
-	$frissit=$pdo->query("ALTER TABLE `".$elotag."_parameterek` ADD `gdpr` TEXT NOT NULL AFTER `ogimage`;");
+	$frissit=$pdo->query("ALTER TABLE `".$elotag."_parameterek` ADD `gdpr` TEXT NOT NULL AFTER `ogimage`");
+	$frissit=$pdo->query("ALTER TABLE `".$elotag."_parameterek` ADD `favicon` TEXT NOT NULL AFTER `ogimage`");
+	$frissit=$pdo->query("ALTER TABLE `".$elotag."_parameterek` ADD `debugmod` INT(2) NOT NULL DEFAULT '0' AFTER `breakoff`");
 	
 	if($frissit)
 	{

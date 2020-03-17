@@ -9,8 +9,6 @@ else
 {
 	$absp=(isset($_SERVER['HTTPS']) ? "https" : "http") . "://".$_SERVER["HTTP_HOST"];
 	$fullurl=$absp.$_SERVER["REQUEST_URI"];
-	$mirol=array("í","é","á","ű","ú","ő","ó","ü","ö","Í","É","Á","Ű","Ú","Ő","Ó","Ü","Ö","_","+",":",",","?","=","(",")","[","]","{","}","&","#","@","<",">","$","'","!","/"," ");
-	$mire=array("i","e","a","u","u","o","o","u","o","i","e","a","u","u","o","o","u","o","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-");
 	/*** NYELVVÁLTÁS, MUNKAMENETTEL, BÁRMELYIK ÉS BÁRMENNYI NYELVHEZ JÓ! ***/
 	if(isset($_REQUEST["lng"]))
 	{
@@ -160,7 +158,7 @@ else
 		});
 	</script>
 	<script type="text/javascript">
-		window.cookieconsent_options = {"message":"Ez a weboldal sütiket (cookie-kat) használ a jobb felhasználói élmény érdekében.","dismiss":"Rendben","learnMore":"További infó","link":"index.php","theme":"dark-bottom"};
+		window.cookieconsent_options = {"message":"Ez a weboldal sütiket (cookie-kat) használ a jobb felhasználói élmény érdekében.","dismiss":"Rendben","learnMore":"További infó","link":"<?php echo $absp.'/'.$webadatok['gdpr']; ?>","theme":"dark-bottom"};
 	</script>
 	<script async src="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/1.0.10/cookieconsent.min.js"></script>
 </head>

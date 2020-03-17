@@ -1,5 +1,4 @@
 <?php
-session_start();
 if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION["userlogged"]!=" ")
 {
 	//új menüpont hozzáadása
@@ -505,8 +504,13 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		{
 			echo '<img src="/'.$beallitasok["ogimage"].'" class="img-responsive" style="max-width:250px !important;"><br>';
 		}
-		echo "Copyright:<br />&nbsp;&nbsp;&nbsp;<input type='text' name='copyright' value='".$beallitasok["copyright"]."' style='width:200px;' required><br />";
-		echo "Téma:<br />&nbsp;&nbsp;&nbsp;<select name='sablon' size='1' style='width:200px;'>";
+		echo "<br>Copyright:<br />&nbsp;&nbsp;&nbsp;<input type='text' name='copyright' value='".$beallitasok["copyright"]."' style='width:200px;' required><br />";
+		echo "FAV ikon:<br />&nbsp;&nbsp;&nbsp;<input type='file' name='favicon' style='width:200px;'><br />";
+		if($beallitasok["favicon"]!="")
+		{
+			echo '<img src="/'.$beallitasok["favicon"].'" class="img-responsive" style="max-width:250px !important;"><br>';
+		}
+		echo "<br>Téma:<br />&nbsp;&nbsp;&nbsp;<select name='sablon' size='1' style='width:200px;'>";
 			$themes=opendir("../themes");
 			while($fajl=readdir($themes))
 			{

@@ -1,5 +1,4 @@
 <?php
-session_start();
 include("../connect.php");
 $webaktlang=$_GET["lng"];
 if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION["userlogged"]!=" ")
@@ -541,15 +540,14 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 	//weboldal paraméterek módosítása
 	if(isset($_POST["title"]))
 	{
+		$ogimage="";
+		$favicon="";
+		
 		if(isset($_FILES['ogimage']) AND $_FILES['ogimage']['name']!="")
 		{
 			$SafeFile = $_FILES['ogimage']['name'];
 			$SafeFile = strtolower($SafeFile);
 			$SafeFile = str_replace($mirol, $mire, $SafeFile);
-			
-			$datummost=getDate();
-			$datekeszit=mktime($datummost["hours"],$datummost["minutes"],$datummost["seconds"],$datummost["mon"],$datummost["mday"],$datummost["year"]);
-			$dazo=date("Ymdhms",$datekeszit);
 			$fajlnev=$SafeFile;
 			
 			$ext = strtolower(substr(strrchr($_FILES["ogimage"]["name"], "."), 1));
@@ -560,41 +558,73 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 					list($width, $height) = getimagesize("../".$fajlnev);
 					if($width>="1")
 					{
-						$ogimage=$fajlnev;
-						$parancs="update ".$elotag."_parameterek set title='".$_POST["title"]."',keywords='".$_POST["keywords"]."',description='".$_POST["description"]."',sitename='".$_POST["sitename"]."',siteslogen='".$_POST["siteslogen"]."',copyright='".$_POST["copyright"]."',sablon='".$_POST["sablon"]."',ogimage='".$ogimage."'";
-						$hova="index.php?lng=".$webaktlang."&mod=y&settings=1";
+						$ogimage=",ogimage='".$fajlnev."'";
 					}
 					else
 					{
+						$ogimage="";
 						unlink("../".$fajlnev);
 						echo "<script> alert('Fájl feltöltési hiba, ez nem kép!'); </script>";
-						$hova="index.php?lng=".$webaktlang."&mod=y&settings=1";
 					}
 				}
 				else
 				{
+					$ogimage="";
 					echo "<script> alert('Sikertelen művelet. :( A képet nem sikerült feltölteni.'); </script>";
-					$hova="index.php?lng=".$webaktlang."&page=blog";
 				}
 				
 			}
 			else
 			{
+				$ogimage="";
 				echo "<script> alert('Sikertelen művelet. :( A kép formátuma nem volt megfelelő, a feltölthető formátum: JPG, PNG.'); </script>";
-				$hova="index.php?lng=".$webaktlang."&mod=y&settings=1";
 			}
 		}
-		else
+		
+		if(isset($_FILES['favicon']) AND $_FILES['favicon']['name']!="")
 		{
-			$parancs="update ".$elotag."_parameterek set title='".$_POST["title"]."',keywords='".$_POST["keywords"]."',description='".$_POST["description"]."',sitename='".$_POST["sitename"]."',siteslogen='".$_POST["siteslogen"]."',copyright='".$_POST["copyright"]."',sablon='".$_POST["sablon"]."'";
-			$hova="index.php?lng=".$webaktlang."&mod=y&settings=1";
+			$ext = strtolower(substr(strrchr($_FILES["favicon"]["name"], "."), 1));
+			if($ext == "png" || $ext == "ico")
+			{
+				$fajlnev="favicon.".$ext;
+				
+				if(move_uploaded_file($_FILES['favicon']['tmp_name'],"../".$fajlnev))
+				{
+					list($width, $height) = getimagesize("../".$fajlnev);
+					if($width>="1")
+					{
+						$favicon=",favicon='".$fajlnev."'";
+					}
+					else
+					{
+						$favicon="";
+						unlink("../".$fajlnev);
+						echo "<script> alert('Fájl feltöltési hiba, ez nem kép!'); </script>";
+					}
+				}
+				else
+				{
+					$favicon="";
+					echo "<script> alert('Sikertelen művelet. :( A képet nem sikerült feltölteni.'); </script>";
+				}
+				
+			}
+			else
+			{
+				$favicon="";
+				echo "<script> alert('Sikertelen művelet. :( A kép formátuma nem volt megfelelő, a feltölthető formátum: JPG, PNG.'); </script>";
+			}
 		}
+		
+		//mester parancs ami mindent feldolgoz!
+		$parancs="update ".$elotag."_parameterek set title='".$_POST["title"]."',keywords='".$_POST["keywords"]."',description='".$_POST["description"]."',sitename='".$_POST["sitename"]."',siteslogen='".$_POST["siteslogen"]."',copyright='".$_POST["copyright"]."',sablon='".$_POST["sablon"]."' ".$ogimage." ".$favicon."";
+		$hova="index.php?lng=".$webaktlang."&mod=y&settings=1";
 	}
 	//karbantartás mód bekapcsolása
 	if(isset($_GET["breakoff"]))
 	{
 		$parancs="update ".$elotag."_parameterek set breakoff='".$_GET["breakoff"]."'";
-		$hova="index.php";
+		$hova="index.php?lng=".$webaktlang."";
 	}
 	//social linkek mentése
 	if(isset($_POST["socialsite"]))
@@ -682,6 +712,12 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 	if(isset($_POST["newadminnev"]))
 	{
 		$parancs="insert into ".$elotag."_admin (nev,email,jelszo) values('".$_POST["newadminnev"]."','".$_POST["newemailcim"]."','".md5($_POST["newadminpass"])."')";
+		$hova="index.php?lng=".$webaktlang."";
+	}
+	//debug mód bekapcsolása
+	if(isset($_REQUEST["debugger"]))
+	{
+		$parancs="update ".$elotag."_parameterek set debugmod='".$_REQUEST["debugger"]."'";
 		$hova="index.php?lng=".$webaktlang."";
 	}
 	//modulok telepítése

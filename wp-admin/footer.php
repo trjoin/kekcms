@@ -24,9 +24,10 @@
 	if(file_exists("../supportend.php"))
 	{
 		include("../supportend.php");
-		$datumt = strtotime($support);
-		$finale = date("Y-m-d", strtotime("+24 month", $datumt));
-		if($finale>=$ma)
+		$datumt = strtotime($support); //telepítési idő
+		$finale = date("Y-m-d", strtotime("+24 month", $datumt)); //telepítéstől számított +24 hónap - azaz a lejárat napja!
+		$ma = strtotime(date("Y-m-d"));
+		if($finale<=$ma)
 		{
 			echo '<li>Az Ön terméktámogatása <b>'.str_replace("-",".",$finale).'.</b> jár le, hosszabbításért kérjük keressen minket.</li>';
 		}
@@ -34,6 +35,10 @@
 		{
 			echo '<li><span style="color: #f00;font-size: 16px;">Az Ön terméktámogatása <b>'.str_replace("-",".",$finale).'.</b> lejárt, hosszabbításért kérjük keressen minket.</span></li>';
 		}
+	}
+	else
+	{
+		echo '<li><span style="color:#f00;">Az Ön terméktámogatásának ellenőrzése sikertelen volt. kérjük keressen minket elérhetőségeinken!</span></li';
 	}
 ?>
 					<li><a href="https://trswebdesign.hu/#contact" target="_blank" rel="nofollow">Ügyfélszolgálat &raquo;</a></li>
