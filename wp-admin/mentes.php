@@ -406,6 +406,71 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		}
 		$hova="index.php?lng=".$webaktlang."&mod=y&ganal=1";
 	}
+	//GDPR dokumentáció felöltése, mentése
+	if(isset($_FILES['gdprdok']) AND $_FILES['gdprdok']['name']!="")
+	{
+		$SafeFile = $_FILES['gdprdok']['name'];
+		$SafeFile = strtolower($SafeFile);
+		$SafeFile = str_replace($mirol, $mire, $SafeFile);
+		$fajlnev=$SafeFile;
+		
+		$ext = strtolower(substr(strrchr($_FILES["gdprdok"]["name"], "."), 1));
+		if($ext == "pdf")
+		{
+			if(move_uploaded_file($_FILES['gdprdok']['tmp_name'],"../".$fajlnev))
+			{
+				$gdprdok=$fajlnev;
+				$parancs="update ".$elotag."_parameterek set gdpr='".$gdprdok."'";
+				$hova="index.php?lng=".$webaktlang."";
+			}
+			else
+			{
+				echo "<script> alert('Sikertelen művelet. :( A feltöltés nem sikerült.'); </script>";
+				echo "<script>				    
+						function atiranyit()
+						{
+							location.href = 'index.php?lng=".$webaktlang."&mod=y&gdpr=1';
+						}
+						ID = window.setTimeout('atiranyit();', 1*1);
+				   </script>";
+			}
+			
+		}
+		else
+		{
+			echo "<script> alert('Sikertelen művelet. :( A dokumentum formátuma nem volt megfelelő, a feltölthető formátum: PDF !'); </script>";
+			echo "<script>				    
+						function atiranyit()
+						{
+							location.href = 'index.php?lng=".$webaktlang."&mod=y&gdpr=1';
+						}
+						ID = window.setTimeout('atiranyit();', 1*1);
+				   </script>";
+		}
+	}
+	//GDPR doksi törlése
+	if(isset($_REQUEST["delgdpr"]))
+	{
+		$gdprdok=$pdo->query("select * from ".$elotag."_parameterek");
+		if($gdprdok->rowCount()>0)
+		{
+			$g=$gdprdok->fetch();
+			unlink("../".$g["gdpr"]);
+			$parancs="update ".$elotag."_parameterek set gdpr=''";
+			$hova="index.php?lng=".$webaktlang."&mod=y&gdpr=1";
+		}
+		else
+		{
+			echo "<script> alert('Sikertelen művelet. :( Nincs még feltöltött GDPR dokumentáció!'); </script>";
+			echo "<script>				    
+						function atiranyit()
+						{
+							location.href = 'index.php?lng=".$webaktlang."&mod=y&gdpr=1';
+						}
+						ID = window.setTimeout('atiranyit();', 1*1);
+				   </script>";
+		}
+	}
 	//sitemap.xml készítés
 	if(isset($_POST["xmlsitemap"]))
 	{

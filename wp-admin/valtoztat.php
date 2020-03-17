@@ -461,6 +461,21 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		echo "<input type='submit' value='készítés' class='btn btn-large btn-secondary'>";
 		echo "</form>";
 	}
+	//GDPR dokumentáció feltöltése
+	if(isset($_REQUEST["gdpr"]))
+	{
+		echo "<form action='index.php?lng=".$webaktlang."&mod=y' method='POST' enctype='multipart/form-data'>";
+		echo "<h3>GDPR adatvédelmi tájékoztató feltöltése<br><small>(Kizárólag PDF állomány tölthető fel!)</small></h3>";
+		$gdprdok=$pdo->query("select * from ".$elotag."_parameterek");
+		$g=$gdprdok->fetch();
+		if($g["gdpr"]!="")
+		{
+			echo "<p><small>Jelenlegi adatvédelmi tájékoztató elérhető itt: <a href='".$absp."/".$g["gdpr"]."' target='_blank'><i class='fa fa-eye'> </i> megtekintés</a> | <a href='index.php?lng=".$webaktlang."&mod=y&delgdpr=1' onclick=\"return confirm('Biztos törli az eddig feltöltött GDPR dokumentációt?')\"><i class='fa fa-trash'> </i> törlés</a></small></p><br>";
+		}
+		echo "<font face='Verdana' size='2' color='#000000'><b>Tallózza be a PDF fájlt:</b></font> <input type='file' name='gdprdok'><br><br>";
+		echo "<input type='submit' value='feltöltés' class='btn btn-large btn-secondary'>";
+		echo "</form>";
+	}
 	//google analytics készitése
 	if(isset($_REQUEST["ganal"]))
 	{

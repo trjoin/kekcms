@@ -336,13 +336,14 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		echo '				<li class="dropdown">					
 								<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
 									<i class="icon-check"></i>
-									<span>SEO Adatok</span>
+									<span>Beállítások</span>
 									<b class="caret"></b>
 								</a>	
 							
 								<ul class="dropdown-menu">
 									<li><a href="index.php?lng='.$webaktlang.'&mod=y&settings=1">Weboldal beállításai</a></li>
 									<li><a href="index.php?lng='.$webaktlang.'&mod=y&createxml=1">Oldaltérkép készítése</a></li>
+									<li><a href="index.php?lng='.$webaktlang.'&mod=y&gdpr=1">GDPR kezelése</a></li>
 									<li><a href="index.php?lng='.$webaktlang.'&mod=y&ganal=1">Google Analytics</a></li>
 								</ul>    				
 							</li>';
