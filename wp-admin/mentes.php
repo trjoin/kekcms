@@ -1,4 +1,5 @@
 <?php
+session_start();
 include("../connect.php");
 $webaktlang=$_GET["lng"];
 if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION["userlogged"]!=" ")
