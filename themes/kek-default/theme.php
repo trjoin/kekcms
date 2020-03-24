@@ -157,10 +157,17 @@ else
 			$('.fancybox').fancybox();
 		});
 	</script>
+	<?php
+		if($webadatok["gdpr"]!="")
+		{
+	?>
 	<script type="text/javascript">
 		window.cookieconsent_options = {"message":"Ez a weboldal sütiket (cookie-kat) használ a jobb felhasználói élmény érdekében.","dismiss":"Rendben","learnMore":"További infó","link":"<?php echo $absp.'/'.$webadatok['gdpr']; ?>","theme":"dark-bottom"};
 	</script>
 	<script async src="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/1.0.10/cookieconsent.min.js"></script>
+	<?php
+		}
+	?>
 </head>
 <body>
 <?php
