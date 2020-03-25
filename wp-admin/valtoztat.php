@@ -550,8 +550,8 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 				<select name='socialmod' id='socialmod' size='1'><option value='igen'>Telepítem</option><option value='nem'>nem kérem</option></select><br />";
 			$bt6=$pdo->query("select * from ".$elotag."_modulok where modulnev='gmaps'");
 			$md6=$bt6->fetch();
-			echo "<label for='gmaps'>Google térkép: (".($md6["bekapcsolva"]=="igen" ? "már telepítve" : "nincs telepítve").")</label>
-				<select name='gmaps' id='gmaps' size='1'><option value='igen'>Telepítem</option><option value='nem'>nem kérem</option></select><br />";
+			echo "<label for='maps'>Google térkép: (".($md6["bekapcsolva"]=="igen" ? "már telepítve" : "nincs telepítve").")</label>
+				<select name='maps' id='maps' size='1'><option value='igen'>Telepítem</option><option value='nem'>nem kérem</option></select><br />";
 			$bt7=$pdo->query("select * from ".$elotag."_modulok where modulnev='letoltes'");
 			$md7=$bt7->fetch();
 			echo "<label for='downmodul'>Letöltések modul: (".($md7["bekapcsolva"]=="igen" ? "már telepítve" : "nincs telepítve").")</label>

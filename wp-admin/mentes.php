@@ -847,24 +847,24 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 				$save_mod=$pdo->query("update ".$elotag."_modulok set bekapcsolva='".$_POST["socialmod"]."' where modulnev='social'");
 			}
 		}
-		if(isset($_POST["gmaps"]))
+		if(isset($_POST["maps"]))
 		{
-			if($_POST["gmaps"]=="igen")
+			if($_POST["maps"]=="igen")
 			{
 				$modules=$pdo->query("select * from ".$elotag."_modulok where modulnev='gmaps'");
 				if($modules->rowCount()>0)
 				{
-					$save_mod=$pdo->query("update ".$elotag."_modulok set bekapcsolva='".$_POST["gmaps"]."',integ='1' where modulnev='gmaps'");
+					$save_mod=$pdo->query("update ".$elotag."_modulok set bekapcsolva='".$_POST["maps"]."',integ='1' where modulnev='gmaps'");
 				}
 				else
 				{
-					$save_mod=$pdo->query("insert into ".$elotag."_modulok (modulnev,bekapcsolva,integ) values('gmaps','".$_POST["gmaps"]."','1')");
+					$save_mod=$pdo->query("insert into ".$elotag."_modulok (modulnev,bekapcsolva,integ) values('gmaps','".$_POST["maps"]."','1')");
 					$letrehoz_gmaps=$pdo->query("CREATE TABLE ".$elotag."_gmaps (gmkod INT(2) auto_increment, gmapskey TEXT, PRIMARY KEY(gmkod)) DEFAULT CHARSET=utf8");
 				}
 			}
 			else
 			{
-				$save_mod=$pdo->query("update ".$elotag."_modulok set bekapcsolva='".$_POST["gmaps"]."' where modulnev='gmaps'");
+				$save_mod=$pdo->query("update ".$elotag."_modulok set bekapcsolva='".$_POST["maps"]."' where modulnev='gmaps'");
 			}
 		}
 		if(isset($_POST["downmodul"]))
