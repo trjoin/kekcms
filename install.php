@@ -240,7 +240,7 @@ if(isset($_POST["lepes3"]) AND $_POST["lepes3"]=="igen")
 	//videók tábla
 		if($_POST["videomodul"]=="igen")
 		{
-			$letrehoz_video=$pdo->query("CREATE TABLE ".$elotag."_videok (videokod INT(10) AUTO_INCREMENT, videocim TEXT, vhiv TEXT, PRIMARY KEY (videokod)) DEFAULT CHARSET=utf8");
+			$letrehoz_video=$pdo->query("CREATE TABLE ".$elotag."_videok (videokod INT(10) AUTO_INCREMENT, videocim TEXT, vhiv TEXT, vtext TEXT, PRIMARY KEY (videokod)) DEFAULT CHARSET=utf8");
 			if(!$letrehoz_video){ $hibak_l++; $hibauzenet=$hibauzenet."- VIDEÓ-kezelő tábla létrehozása sikertelen!<br>"; }
 		}
 	//social tábla

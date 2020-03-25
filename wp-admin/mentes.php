@@ -779,7 +779,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 				else
 				{
 					$save_mod=$pdo->query("insert into ".$elotag."_modulok (modulnev,bekapcsolva,integ) values('video','".$_POST["videomodul"]."','1')");
-					$letrehoz_video=$pdo->query("CREATE TABLE ".$elotag."_videok (videokod INT(10) AUTO_INCREMENT, videocim TEXT, vhiv TEXT, PRIMARY KEY (videokod)) DEFAULT CHARSET=utf8");
+					$letrehoz_video=$pdo->query("CREATE TABLE ".$elotag."_videok (videokod INT(10) AUTO_INCREMENT, videocim TEXT, vhiv TEXT, vtext TEXT, PRIMARY KEY (videokod)) DEFAULT CHARSET=utf8");
 				}
 			}
 			else
