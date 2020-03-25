@@ -919,15 +919,18 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		$hova="index.php?lng=".$webaktlang."";
 	}
 	//parancsok lefuttatása
-	if($pdo->query($parancs))
+	if(isset($parancs) AND $parancs!="")
 	{
-		echo "<script>				    
-					function atiranyit()
-					{
-						location.href = 'index.php?lng=".$webaktlang."&page=saved&url=".urlencode($hova)."';
-					}
-					ID = window.setTimeout('atiranyit();', 1*1);
-			   </script>";
+		if($pdo->query($parancs))
+		{
+			echo "<script>				    
+						function atiranyit()
+						{
+							location.href = 'index.php?lng=".$webaktlang."&page=saved&url=".urlencode($hova)."';
+						}
+						ID = window.setTimeout('atiranyit();', 1*1);
+				   </script>";
+		}
 	}
 }
 else { echo 'ERROR!'; }
