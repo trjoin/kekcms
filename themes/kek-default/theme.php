@@ -671,8 +671,8 @@ if(!isset($_REQUEST["furl"]))
 			$(this).find('.dropdown-menu').stop(true, true).delay(200).fadeOut(500);
 		});
 	</script>
-	<script src="themes/<?php print($webadatok["sablon"]); ?>/js/jquery.waypoints.min.js"></script>
-	<script type="text/javascript" src="themes/<?php print($webadatok["sablon"]); ?>/js/bootstrap.js"></script>
+	<script src="<?php echo $absp; ?>/themes/<?php print($webadatok["sablon"]); ?>/js/jquery.waypoints.min.js"></script>
+	<script type="text/javascript" src="<?php echo $absp; ?>/themes/<?php print($webadatok["sablon"]); ?>/js/bootstrap.js"></script>
 </body>
 </html>
 <?php
