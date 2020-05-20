@@ -110,11 +110,6 @@ if(isset($_POST["host"]) AND $_POST["host"]!="" AND $_POST["host"]!=" ")
 //lépés 2 űrlapja
 if(file_exists("connect.php") AND isset($_POST["lepes2"]) AND $_POST["lepes2"]=="igen")
 {
-	$hibak_l="0";
-	$hibauzenet="";
-	$hibak_f="0";
-	$hibamsg="";
-	
 	print("<form action='install.php' name='beallitasok' method='POST'>");
 		print("<h4>ADMIN felhasználó létrehozása:</h4>");
 		print("<input type='hidden' name='lepes3' id='lepes3' value='igen'>");
@@ -147,9 +142,7 @@ if(file_exists("connect.php") AND isset($_POST["lepes2"]) AND $_POST["lepes2"]==
 			print("<option value='spa'>Spanyol</option>");
 			print("<option value='srb'>Szerb</option>");
 			print("<option value='slo'>Szlovák</option>");
-			print("<option value='tur'>Török</option>");
 			print("<option value='ukr'>Ukrán</option>");
-			print("<option value='rus'>Orosz</option>");
 		print("</select><br /><br />");
 		print("<h4>Weboldal MODULOK beállítása:</h4>");
 		print("<label for='slidermodul'>Slider:</label>
@@ -197,14 +190,14 @@ if(isset($_POST["lepes3"]) AND $_POST["lepes3"]=="igen")
 			$letrehoza=$pdo->query("CREATE TABLE ".$elotag."_menu_".$val." (kod INT(10) auto_increment, furl TEXT, tolink TEXT, tomodul TEXT, aktiv INT(2), nev VARCHAR(50), tartalom TEXT, metatitle TEXT, metakeywords TEXT, metadesc TEXT, sorszam VARCHAR(2), datum DATETIME DEFAULT '0000-00-00 00:00:00', PRIMARY KEY(kod)) DEFAULT CHARSET=utf8");
 			$letrehozb=$pdo->query("CREATE TABLE ".$elotag."_almenu_".$val." (kod INT(10) auto_increment, furl TEXT, tolink TEXT, tomodul TEXT, aktiv INT(2), nev VARCHAR(50), szulo int(20), tartalom TEXT, metatitle TEXT, metakeywords TEXT, metadesc TEXT, datum DATETIME DEFAULT '0000-00-00 00:00:00', PRIMARY KEY(kod)) DEFAULT CHARSET=utf8");
 			$letrehozc=$pdo->query("CREATE TABLE ".$elotag."_oldalsav_".$val." (kod INT(10) auto_increment, cim VARCHAR(200), aktiv INT(2), szoveg TEXT, sorszam VARCHAR(2), PRIMARY KEY(kod)) DEFAULT CHARSET=utf8");
-			if(!$letrehoza AND !$letrehozb AND !$letrehozc) { $hibak_l++; $hibauzenet=$hibauzenet."- Nyelvi tábla (".$val.") nem készült el!<br>"; }
+			if(!$letrehoza OR !$letrehozb OR !$letrehozc) { $hibak_l++; $hibauzenet=$hibauzenet."- Nyelvi tábla (".$val.") nem készült el!<br>"; }
 		}
 	
 	//alap táblák létrehozása
 	$letrehoz_admin=$pdo->query("CREATE TABLE ".$elotag."_admin (kod INT(10) auto_increment, nev VARCHAR(250), jelszo VARCHAR(250), email VARCHAR(250), PRIMARY KEY(kod)) DEFAULT CHARSET=utf8");
 	$letrehoz_param=$pdo->query("CREATE TABLE ".$elotag."_parameterek (title VARCHAR(250), keywords VARCHAR(250), description VARCHAR(250), sitename VARCHAR(250), siteslogen VARCHAR(250), copyright VARCHAR(250), sablon VARCHAR(25), defaultlink TEXT, breakoff INT(2), debugmod INT(2) DEFAULT '0', ogimage TEXT, favicon TEXT, gdpr TEXT, PRIMARY KEY(title)) DEFAULT CHARSET=utf8");
 	$letrehoz_modul=$pdo->query("CREATE TABLE ".$elotag."_modulok (mid INT(10) auto_increment, modulnev TEXT, integ INT(0) DEFAULT '0', bekapcsolva ENUM('igen','nem') DEFAULT 'igen', PRIMARY KEY (mid)) DEFAULT CHARSET=utf8");
-	$letrehoz_nyelv=$pdo->query("CREATE TABLE ".$elotag."_nyelvek (langkod INT(10) AUTO_INCREMENT, langnev TEXT, PRIMARY KEY (langkod)) DEFAULT CHARSET=utf8");
+	$letrehoz_nyelv=$pdo->query("CREATE TABLE ".$elotag."_nyelvek (langkod INT(10) AUTO_INCREMENT, langnev TEXT, megjeleno TEXT, PRIMARY KEY (langkod)) DEFAULT CHARSET=utf8");
 /*** modulos táblák létrehozása és feltöltése ***/
 	//hírkezelő tábla
 		if($_POST["hirekmodul"]=="igen")
@@ -257,6 +250,7 @@ if(isset($_POST["lepes3"]) AND $_POST["lepes3"]=="igen")
 		}
 	//google analytics tábla létrehozása
 		$letrehoz_ganal=$pdo->query("CREATE TABLE ".$elotag."_ganal (gakod INT(2) auto_increment, ganalkey TEXT, PRIMARY KEY(gakod)) DEFAULT CHARSET=utf8");
+			if(!$letrehoz_ganal){ $hibak_l++; $hibauzenet=$hibauzenet."- Google Analytics tábla létrehozása sikertelen!<br>"; }
 	//letöltések tábla
 		if($_POST["downmodul"]=="igen")
 		{
@@ -274,7 +268,7 @@ if(isset($_POST["lepes3"]) AND $_POST["lepes3"]=="igen")
 			mkdir("./shop", 0777, true);
 			mkdir("./shop/kepek", 0777, true);
 			mkdir("./shop/kateg", 0777, true);
-			if(!$letrehoz_shop AND !$letrehoz_gyartok AND !$letrehoz_kategok AND !$letrehoz_rendelesek){ $hibak_l++; $hibauzenet=$hibauzenet."- WEBSHOP-kezelő tábla létrehozása sikertelen!<br>"; }
+			if(!$letrehoz_shop OR !$letrehoz_gyartok OR !$letrehoz_kategok OR !$letrehoz_rendelesek){ $hibak_l++; $hibauzenet=$hibauzenet."- WEBSHOP-kezelő tábla létrehozása sikertelen!<br>"; }
 		}
 
 	if($hibak_l=="0" AND $hibauzenet=="")
@@ -284,13 +278,14 @@ if(isset($_POST["lepes3"]) AND $_POST["lepes3"]=="igen")
 		
 			$hibak_f="0";
 			$hibamsg="";
-			//nyelv-függő táblák feltöltése
+			
+			$langokneve=array("hun"=>"Magyar","ger"=>"Német","eng"=>"Angol","fra"=>"Francia","dan"=>"Dán","cze"=>"Cseh","ned"=>"Holland","hor"=>"Horvát","len"=>"Lengyel","nor"=>"Norvég","ita"=>"Olasz","por"=>"Portugál","rom"=>"Román","sve"=>"Svéd","spa"=>"Spanyol","srb"=>"Szerb","slo"=>"Szlovák","ukr"=>"Ukrán");
 			foreach($_POST['langok'] as $val_fel)
 			{
 				$feltolt_menu=$pdo->query("insert into ".$elotag."_menu_".$val_fel." (nev,tartalom,metatitle,metakeywords,metadesc,sorszam,aktiv) values ('Start','<br /><font face=Verdana size=3 color=#3333DD><b>Sikeresen feltelepítette a K.E.K. CMS programot!</b></font><br /><br /><font face=Verdana size=2 color=#000000>Mostmár használatba veheted a CMS motort! Az adminisztráció linkre kattintva tud bejelentkezni, majd login után szerkeszteni ezt a szöveget is, illetve minden mást a rendszeren belül! Sikeres felhasználást kívánok!</font>','Sikeres telepítés - K.E.K. CMS rendszer','kek cms, trswebdesign, tartalom kezelő rendszer','Üdvözöljük az egyszerűen kezelhető adminisztrációs felületek világában, amelyet a KEK teremtett meg!','1','1')");
 				$feltolt_oldasav=$pdo->query("insert into ".$elotag."_oldalsav_".$val_fel." (cim,szoveg,sorszam) values ('Doboz','Ide blokkokat helyezhet el, szerkesztheti őket, illetve törölni is tudja, ha nem kellenek! Mindezt az adminon való bejelentkezés után tudja megtenni! Az adminisztrátori bejelentkezéshez a telepítés során adta meg a hozzáférést!','1')");
-				$feltolt_lang=$pdo->query("insert into ".$elotag."_nyelvek (langnev) values ('".$val_fel."')");
-				if(!$feltolt_menu AND !$feltolt_oldasav AND !$feltolt_lang) { $hibak_f++; }
+				$feltolt_lang=$pdo->query("insert into ".$elotag."_nyelvek (langnev,megjeleno) values ('".$val_fel."','".$langokneve[$val_fel]."')");
+				if(!$feltolt_menu OR !$feltolt_oldasav OR !$feltolt_lang) { $hibak_f++; }
 			}
 		//alap táblák feltöltése
 		$feltolt_admin=$pdo->query("insert into ".$elotag."_admin (nev,jelszo,email) values('".$_POST["adminnev"]."','".md5($_POST["adminpass"])."','".$_POST["email"]."')");

@@ -351,8 +351,9 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		$hova="index.php?lng=".$webaktlang."&mod=y&sliderek=1";
 	}
 	//új nyelv hozzáadásának mentése
-	if(isset($_POST["ujnyelv"]))
+	if(isset($_POST["ujnyelv"]) AND $_POST["ujnyelv"]!="" AND $_POST["ujnyelv"]!=" ")
 	{
+		$langokneve=array("hun"=>"Magyar","ger"=>"Német","eng"=>"Angol","fra"=>"Francia","dan"=>"Dán","cze"=>"Cseh","ned"=>"Holland","hor"=>"Horvát","len"=>"Lengyel","nor"=>"Norvég","ita"=>"Olasz","por"=>"Portugál","rom"=>"Román","sve"=>"Svéd","spa"=>"Spanyol","srb"=>"Szerb","slo"=>"Szlovák","ukr"=>"Ukrán");
 		//menüpont és oldalak létrehozása
 		$letrehoz_menu_most=$pdo->query("CREATE TABLE ".$elotag."_menu_".$_POST["ujnyelv"]." (kod INT(10) auto_increment, furl TEXT, tolink TEXT, aktiv INT(2), nev VARCHAR(50), tartalom TEXT, metatitle TEXT, metakeywords TEXT, metadesc TEXT, sorszam VARCHAR(2), datum DATETIME DEFAULT '0000-00-00 00:00:00', PRIMARY KEY(kod)) DEFAULT CHARSET=utf8");
 		$feltolt_menu_most=$pdo->query("insert into ".$elotag."_menu_".$_POST["ujnyelv"]." (furl,nev,tartalom,sorszam,aktiv) values ('/','Üdvözlet a K.E.K.-ben!','<br /><font face=Verdana size=3 color=#3333DD><b>Sikeresen feltelepítette a K.E.K. CMS programot!</b></font><br /><br /><font face=Verdana size=2 color=#000000>Mostmár használatba veheti a CMS motort! Az adminisztráció linkre kattintva tud bejelentkezni, majd login után szerkeszteni ezt a szöveget is, illetve minden mást a rendszeren belül! Sikeres felhasználást kívánok!</font>','1','1')");
@@ -368,7 +369,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 			$letrehoz_hir=$pdo->query("CREATE TABLE ".$elotag."_hirkezelo_".$_POST["ujnyelv"]." (hirkod INT(20) auto_increment, furl TEXT, aktiv INT(2), cim VARCHAR(200), bevezeto VARCHAR(200), tags VARCHAR(200), szoveg TEXT, kiskep TEXT, metatitle TEXT, metakeywords TEXT, metadesc TEXT, datum DATETIME DEFAULT '0000-00-00 00:00:00', PRIMARY KEY (hirkod)) DEFAULT CHARSET=utf8");
 		}
 		
-		$parancs="insert into ".$elotag."_nyelvek (langnev) values ('".$_POST["ujnyelv"]."')";
+		$parancs="insert into ".$elotag."_nyelvek (langnev,megjeleno) values ('".$_POST["ujnyelv"]."','".$langokneve[$_POST["ujnyelv"]]."')";
 		$hova="index.php?lng=".$webaktlang."&page=saved";
 	}
 	//nyelv törlése
@@ -912,6 +913,25 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 			else
 			{
 				$save_mod=$pdo->query("update ".$elotag."_modulok set bekapcsolva='".$_POST["shopmodul"]."' where modulnev='shop'");
+			}
+		}
+		if(isset($_POST["nyelvmodul"]))
+		{
+			if($_POST["nyelvmodul"]=="igen")
+			{
+				$modules=$pdo->query("select * from ".$elotag."_modulok where modulnev='nyelv'");
+				if($modules->rowCount()>0)
+				{
+					$save_mod=$pdo->query("update ".$elotag."_modulok set bekapcsolva='".$_POST["nyelvmodul"]."',integ='0' where modulnev='nyelv'");
+				}
+				else
+				{
+					$save_mod=$pdo->query("insert into ".$elotag."_modulok (modulnev,bekapcsolva,integ) values('nyelv','".$_POST["nyelvmodul"]."','0')");
+				}
+			}
+			else
+			{
+				$save_mod=$pdo->query("update ".$elotag."_modulok set bekapcsolva='".$_POST["nyelvmodul"]."' where modulnev='nyelv'");
 			}
 		}
 		

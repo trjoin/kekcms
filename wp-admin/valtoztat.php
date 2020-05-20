@@ -560,6 +560,10 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 			$md8=$bt8->fetch();
 			echo "<label for='shopmodul'>WEBSHOP: (".($md8["bekapcsolva"]=="igen" ? "már telepítve" : "nincs telepítve").")</label>
 				<select name='shopmodul' id='shopmodul' size='1'><option value='igen'>Telepítem</option><option value='nem'>nem kérem</option></select><br /><br />";
+			$bt9=$pdo->query("select * from ".$elotag."_modulok where modulnev='nyelv'");
+			$md9=$bt9->fetch();
+			echo "<label for='nyelvmodul'>NYELV KEZELÉS: (".($md9["bekapcsolva"]=="igen" ? "már telepítve" : "nincs telepítve").")</label>
+				<select name='nyelvmodul' id='nyelvmodul' size='1'><option value='igen'>Telepítem</option><option value='nem'>nem kérem</option></select><br /><br />";
 			echo '<input type="submit" value="mentés" class="btn btn-large btn-secondary">';
 		echo "</form>";
 	}

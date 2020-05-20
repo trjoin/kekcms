@@ -235,9 +235,13 @@ else
 			}
 		}
 	}
+		//nyelvek felolvasása
+		$egylang=$pdo->query("select * from ".$elotag."_nyelvek");
+		while($el=$egylang->fetch())
+		{
+			echo '<li><a href="/n/'.$el["langnev"].'">'.$el["megjeleno"].'</a></li>';
+		}
 ?>
-								<li><a href="/n/hun">HU</a></li>
-								<li><a href="/n/eng">EN</a></li>
 							</ul>
 						</nav>
 					</div>
