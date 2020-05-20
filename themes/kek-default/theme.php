@@ -239,7 +239,7 @@ else
 		$egylang=$pdo->query("select * from ".$elotag."_nyelvek");
 		while($el=$egylang->fetch())
 		{
-			echo '<li><a href="/n/'.$el["langnev"].'">'.$el["megjeleno"].'</a></li>';
+			echo '<li><a href="/n/'.$el["langnev"].'">'.$el["megjeleno"].' <img src="'.$absp.'/themes/'.$webadatok["sablon"].'/images/f_'.$el["langnev"].'.gif" alt="'.$el["megjeleno"].'"></a></li>';
 		}
 ?>
 							</ul>
