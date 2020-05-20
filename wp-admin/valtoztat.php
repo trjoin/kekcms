@@ -170,7 +170,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 	if(isset($_REQUEST["ujslider"]))
 	{
 		$foo=array();
-		$lekerdez=$pdo->query("select slidersor from ".$elotag."_slider");
+		$lekerdez=$pdo->query("select slidersor from ".$elotag."_slider_".$webaktlang."");
 		while($sorszamok=$lekerdez->fetch())
 		{
 			array_push($foo, $sorszamok["slidersor"]);
@@ -206,7 +206,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 	//SLIDER blokk szerkesztése
 	if(isset($_REQUEST["slidermod"]))
 	{
-		$lekerdez=$pdo->query("select * from ".$elotag."_slider where sliderkod='".$_REQUEST["slidermod"]."'");
+		$lekerdez=$pdo->query("select * from ".$elotag."_slider_".$webaktlang." where sliderkod='".$_REQUEST["slidermod"]."'");
 		$data=$lekerdez->fetch();
 		echo "<h3>Képváltó kezelése</h3>";
 		echo "<h4>Képváltó elem szerkesztése</h4>";
@@ -232,7 +232,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		echo "<h3>Képváltó kezelése</h3>";
 		echo "<a href='index.php?lng=".$webaktlang."&mod=y&ujslider=1' class='btn'>+ Új hozzáadása</a><br><br>";
 		echo "<table border='0'>";
-		$lekerdez=$pdo->query("select * from ".$elotag."_slider");
+		$lekerdez=$pdo->query("select * from ".$elotag."_slider_".$webaktlang."");
 		if($lekerdez->rowCount()>0)
 		{
 			while($oldal=$lekerdez->fetch())

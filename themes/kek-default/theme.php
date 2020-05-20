@@ -262,7 +262,7 @@ if(!isset($_REQUEST["furl"]))
 <?php
 /* slider megjelenitése */
 	$i=1;
-	$sliderblokk=$pdo->query("select * from ".$elotag."_slider order by slidersor asc");
+	$sliderblokk=$pdo->query("select * from ".$elotag."_slider_".$webaktlang." order by slidersor asc");
 	while($egy_sb=$sliderblokk->fetch())
 	{
 		echo '<div class="item item'.$i.' '.($i==1 ? "active" : "" ).'" style="background: linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)), url(slider/'.$egy_sb["slidert"].') center no-repeat; background-size:100%;">

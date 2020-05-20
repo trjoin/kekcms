@@ -258,14 +258,14 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		$ext = strtolower(substr(strrchr($_FILES["ujsliderkep"]["name"], "."), 1));
 		if($ext == "jpg" || $ext == "jpeg" || $ext == "png")
 		{
-			$fajlnev=$dazo."_".$SafeFile;
+			$fajlnev=$dazo."_".$webaktlang."_".$SafeFile;
 			
 			if(move_uploaded_file($_FILES['ujsliderkep']['tmp_name'],"../slider/".$fajlnev))
 			{
 				list($width, $height) = getimagesize("../slider/".$fajlnev);
 				if($width>="1")
 				{
-					$parancs="insert into ".$elotag."_slider(slidert,hiperlink,dumahozza,gombnev,gomblink,slidersor) values('".$fajlnev."','".$_POST["hivatkozas"]."','".$_POST["dumahozza"]."','".$_POST["gombnev"]."','".$_POST["gomblink"]."','".$_POST["slidersor"]."')";
+					$parancs="insert into ".$elotag."_slider_".$webaktlang." (slidert,hiperlink,dumahozza,gombnev,gomblink,slidersor) values('".$fajlnev."','".$_POST["hivatkozas"]."','".$_POST["dumahozza"]."','".$_POST["gombnev"]."','".$_POST["gomblink"]."','".$_POST["slidersor"]."')";
 					$hova="index.php?lng=".$webaktlang."&mod=y&sliderek=1";
 				}
 				else
@@ -303,14 +303,14 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 			$ext = strtolower(substr(strrchr($_FILES["modsliderkep"]["name"], "."), 1));
 			if($ext == "jpg" || $ext == "jpeg" || $ext == "png")
 			{
-				$fajlnev=$dazo."_".$SafeFile;
+				$fajlnev=$dazo."_".$webaktlang."_".$SafeFile;
 				
 				if(move_uploaded_file($_FILES['modsliderkep']['tmp_name'],"../slider/".$fajlnev))
 				{
 					list($width, $height) = getimagesize("../slider/".$fajlnev);
 					if($width>="1")
 					{
-						$parancs="update ".$elotag."_slider set slidert='".$fajlnev."',hiperlink='".$_POST["hivatkozas"]."',dumahozza='".$_POST["dumahozza"]."',gombnev='".$_POST["gombnev"]."',gomblink='".$_POST["gomblink"]."',slidersor='".$_POST["slidersor"]."' where sliderkod='".$_POST["sliderkodmod"]."')";
+						$parancs="update ".$elotag."_slider_".$webaktlang." set slidert='".$fajlnev."',hiperlink='".$_POST["hivatkozas"]."',dumahozza='".$_POST["dumahozza"]."',gombnev='".$_POST["gombnev"]."',gomblink='".$_POST["gomblink"]."',slidersor='".$_POST["slidersor"]."' where sliderkod='".$_POST["sliderkodmod"]."')";
 						$hova="index.php?lng=".$webaktlang."&mod=y&sliderek=1";
 					}
 					else
@@ -334,20 +334,20 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		}
 		else
 		{
-			$parancs="update ".$elotag."_slider set hiperlink='".$_POST["hivatkozas"]."',dumahozza='".$_POST["dumahozza"]."',gombnev='".$_POST["gombnev"]."',gomblink='".$_POST["gomblink"]."',slidersor='".$_POST["slidersor"]."' where sliderkod='".$_POST["sliderkodmod"]."'";
+			$parancs="update ".$elotag."_slider_".$webaktlang." set hiperlink='".$_POST["hivatkozas"]."',dumahozza='".$_POST["dumahozza"]."',gombnev='".$_POST["gombnev"]."',gomblink='".$_POST["gomblink"]."',slidersor='".$_POST["slidersor"]."' where sliderkod='".$_POST["sliderkodmod"]."'";
 			$hova="index.php?lng=".$webaktlang."&mod=y&sliderek=1";
 		}
 	}
 	//SLIDER blokk törlése
 	if(isset($_GET["sliderdel"]))
 	{
-		$bt=$pdo->query("select * from ".$elotag."_slider where sliderkod='".$_GET["sliderdel"]."'");
+		$bt=$pdo->query("select * from ".$elotag."_slider_".$webaktlang." where sliderkod='".$_GET["sliderdel"]."'");
 		$kpt=$bt->fetch();
 		if($kpt["slidert"]!="" AND $kpt["slidert"]!=" ")
 		{
 			unlink("../slider/".$kpt["slidert"]);
 		}
-		$parancs="delete from ".$elotag."_slider where sliderkod='".$_GET["sliderdel"]."'";
+		$parancs="delete from ".$elotag."_slider_".$webaktlang." where sliderkod='".$_GET["sliderdel"]."'";
 		$hova="index.php?lng=".$webaktlang."&mod=y&sliderek=1";
 	}
 	//új nyelv hozzáadásának mentése
@@ -362,6 +362,12 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		//oldalsáv és tartalma létrehozása
 		$letrehoz_oldalsav_most=$pdo->query("CREATE TABLE ".$elotag."_oldalsav_".$_POST["ujnyelv"]." (kod INT(10) auto_increment, cim VARCHAR(200), aktiv INT(2), szoveg TEXT, sorszam VARCHAR(2), PRIMARY KEY(kod)) DEFAULT CHARSET=utf8");
 		$feltolt_oldalsav_most=$pdo->query("insert into ".$elotag."_oldalsav_".$_POST["ujnyelv"]." (cim,szoveg,sorszam) values ('Doboz','Ide blokkokat helyezhet el, szerkesztheti őket, illetve törölni is tudja, ha nem kellenek! Mindezt az adminon való bejelentkezés után tudja megtenni! Az adminisztrátori bejelentkezéshez a telepítés során adta meg a hozzáférést!','1')");
+		//blog létrehozása (ha van!)
+		$vanblog=$pdo->query("select * from ".$elotag."_modulok where modulnev='blog'");
+		if($vanblog->rowCount()>0)
+		{
+			$letrehoz_hir=$pdo->query("CREATE TABLE ".$elotag."_hirkezelo_".$_POST["ujnyelv"]." (hirkod INT(20) auto_increment, furl TEXT, aktiv INT(2), cim VARCHAR(200), bevezeto VARCHAR(200), tags VARCHAR(200), szoveg TEXT, kiskep TEXT, metatitle TEXT, metakeywords TEXT, metadesc TEXT, datum DATETIME DEFAULT '0000-00-00 00:00:00', PRIMARY KEY (hirkod)) DEFAULT CHARSET=utf8");
+		}
 		//blog létrehozása (ha van!)
 		$vanblog=$pdo->query("select * from ".$elotag."_modulok where modulnev='blog'");
 		if($vanblog->rowCount()>0)
@@ -737,7 +743,12 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 				else
 				{
 					$save_mod=$pdo->query("insert into ".$elotag."_modulok (modulnev,bekapcsolva) values('slider','".$_POST["slidermodul"]."')");
-					$letrehoz_slider=$pdo->query("CREATE TABLE ".$elotag."_slider (sliderkod INT(10) auto_increment, slidert TEXT, hiperlink TEXT, dumahozza TEXT, PRIMARY KEY(sliderkod)) DEFAULT CHARSET=utf8");
+					$nyelvek=$pdo->query("select * from ".$elotag."_nyelvek");
+					while($egynyelv=$nyelvek->fetch())
+					{
+						$val=$egynyelv["langnev"];
+						$letrehoz_slider=$pdo->query("CREATE TABLE ".$elotag."_slider_".$val." (sliderkod INT(10) auto_increment, slidert TEXT, hiperlink TEXT, dumahozza TEXT, PRIMARY KEY(sliderkod)) DEFAULT CHARSET=utf8");
+					}
 					mkdir("../slider", 0777, true);
 				}
 			}
