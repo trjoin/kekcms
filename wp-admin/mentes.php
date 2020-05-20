@@ -368,11 +368,11 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		{
 			$letrehoz_hir=$pdo->query("CREATE TABLE ".$elotag."_hirkezelo_".$_POST["ujnyelv"]." (hirkod INT(20) auto_increment, furl TEXT, aktiv INT(2), cim VARCHAR(200), bevezeto VARCHAR(200), tags VARCHAR(200), szoveg TEXT, kiskep TEXT, metatitle TEXT, metakeywords TEXT, metadesc TEXT, datum DATETIME DEFAULT '0000-00-00 00:00:00', PRIMARY KEY (hirkod)) DEFAULT CHARSET=utf8");
 		}
-		//blog létrehozása (ha van!)
-		$vanblog=$pdo->query("select * from ".$elotag."_modulok where modulnev='blog'");
+		//slider létrehozása (ha van!)
+		$vanblog=$pdo->query("select * from ".$elotag."_modulok where modulnev='slider'");
 		if($vanblog->rowCount()>0)
 		{
-			$letrehoz_hir=$pdo->query("CREATE TABLE ".$elotag."_hirkezelo_".$_POST["ujnyelv"]." (hirkod INT(20) auto_increment, furl TEXT, aktiv INT(2), cim VARCHAR(200), bevezeto VARCHAR(200), tags VARCHAR(200), szoveg TEXT, kiskep TEXT, metatitle TEXT, metakeywords TEXT, metadesc TEXT, datum DATETIME DEFAULT '0000-00-00 00:00:00', PRIMARY KEY (hirkod)) DEFAULT CHARSET=utf8");
+			$letrehoz_slider=$pdo->query("CREATE TABLE ".$elotag."_slider_".$_POST["ujnyelv"]." (sliderkod INT(10) auto_increment, slidert TEXT, hiperlink TEXT, gombnev TEXT, gomblink TEXT, dumahozza TEXT, slidersor INT(5), PRIMARY KEY(sliderkod)) DEFAULT CHARSET=utf8");
 		}
 		
 		$parancs="insert into ".$elotag."_nyelvek (langnev,megjeleno) values ('".$_POST["ujnyelv"]."','".$langokneve[$_POST["ujnyelv"]]."')";
