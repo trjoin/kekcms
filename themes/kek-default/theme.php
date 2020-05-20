@@ -265,7 +265,7 @@ if(!isset($_REQUEST["furl"]))
 	$sliderblokk=$pdo->query("select * from ".$elotag."_slider_".$webaktlang." order by slidersor asc");
 	while($egy_sb=$sliderblokk->fetch())
 	{
-		echo '<div class="item item'.$i.' '.($i==1 ? "active" : "" ).'" style="background: linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)), url(slider/'.$egy_sb["slidert"].') center no-repeat; background-size:100%;">
+		echo '<div class="item item'.$i.' '.($i==1 ? "active" : "" ).'" style="background: linear-gradient(rgba(23, 22, 23, 0.2), rgba(23, 22, 23, 0.5)), url(/slider/'.$egy_sb["slidert"].') center no-repeat; background-size:100%;">
 				<div class="container">
 					<div class="carousel-caption">
 						'.($egy_sb["dumahozza"]!="" ? '<h3>'.$egy_sb["dumahozza"].'</h3>' : '').'
