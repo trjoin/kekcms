@@ -39,7 +39,7 @@ else
 		//ha almenüpont
 		$megjelenita=$pdo->query("select * from ".$elotag."_almenu_".$webaktlang." where aktiv='1' AND furl='".$_REQUEST["furl"]."'");
 		//ha hírcikk
-		$megjelenite=$pdo->query("select * from ".$elotag."_hirkezelo2_".$webaktlang." where aktiv='1' AND furl='".$_REQUEST["furl"]."'");
+		$megjelenite=$pdo->query("select * from ".$elotag."_hirkezelo_".$webaktlang." where aktiv='1' AND furl='".$_REQUEST["furl"]."'");
 		//hiba esetén visszaadjuk az alap paramétereket
 		$megjelenit=$pdo->query("select * from ".$elotag."_parameterek");
 		

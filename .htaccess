@@ -13,6 +13,8 @@ RewriteRule ^([A-Za-z0-9_-]+)/?$ index.php?furl=$1 [NC,NE,L]
 RewriteRule ^([A-Za-z0-9_-]+)/o/([0-9_-]+)/?$ index.php?furl=$1&oldal=$2 [NC,NE,L]
 ## NYELVVÁLTÁS ##
 RewriteRule ^n/([A-Za-z]+)/?$ index.php?lng=$1 [NC,NE,L]
+## TERMÉKEK A SHOPBAN ##
+RewriteRule ^([A-Za-z0-9_-]+)/([0-9_-]+)/?$ index.php?furl=$1&tid=$2 [NC,NE,L]
 ## BLOG ##
 RewriteRule ^blog/([A-Za-z0-9_-]+)/?$ index.php?hir=$1 [NC,NE,L]
 ## GALÉRIA ##
