@@ -132,8 +132,8 @@ else
 	<meta name="DC.title" content="<?php echo $title; ?>" />
 	<meta name="DC.type" content="Text" />
 	<link rel="schema.dcterms" href="https://purl.org/dc/terms/">
-	<link rel="shortcut icon" href="/favicon.png" />
-	<link rel="apple-touch-icon" href="/favicon.png">
+	<link rel="shortcut icon" href="/<?php echo $webadatok["favicon"]; ?>" />
+	<link rel="apple-touch-icon" href="/<?php echo $webadatok["favicon"]; ?>">
 	<script type="application/x-javascript">
 		addEventListener("load", function () {
 			setTimeout(hideURLbar, 0)
@@ -236,10 +236,15 @@ else
 		}
 	}
 		//nyelvek felolvasása
-		$egylang=$pdo->query("select * from ".$elotag."_nyelvek");
-		while($el=$egylang->fetch())
+		$bt1=$pdo->query("select * from ".$elotag."_modulok where modulnev='nyelv'");
+		$md1=$bt1->fetch();
+		if($md1["bekapcsolva"]=="igen")
 		{
-			echo '<li><a href="/n/'.$el["langnev"].'">'.$el["megjeleno"].' <img src="'.$absp.'/themes/'.$webadatok["sablon"].'/images/f_'.$el["langnev"].'.gif" alt="'.$el["megjeleno"].'"></a></li>';
+			$egylang=$pdo->query("select * from ".$elotag."_nyelvek");
+			while($el=$egylang->fetch())
+			{
+				echo '<li><a href="/n/'.$el["langnev"].'">'.$el["megjeleno"].' <img src="'.$absp.'/themes/'.$webadatok["sablon"].'/images/f_'.$el["langnev"].'.gif" alt="'.$el["megjeleno"].'"></a></li>';
+			}
 		}
 ?>
 							</ul>
