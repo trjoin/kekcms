@@ -30,7 +30,7 @@
 	<div class="navbar-inner">
 		<div class="container">
 			<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><i class="icon-cog"></i></a>
-			<a class="brand" href="index.php"><img src="https://trswebdesign.hu/images/logo.png" border="0" style="max-height:25px;"> K.E.K. CMS <small>v2.2</small></span></a>
+			<a class="brand" href="index.php"><img src="https://trswebdesign.hu/images/logo.png" border="0" style="max-height:25px;"> K.E.K. CMS <small>v2.3</small></span></a>
 			<div class="nav-collapse collapse">
 				<ul class="nav pull-right">
 					<li><a href="#"><b>Ügyfélszolgálat:</b></a></li>
@@ -195,7 +195,7 @@ if(isset($_POST["lepes3"]) AND $_POST["lepes3"]=="igen")
 	
 	//alap táblák létrehozása
 	$letrehoz_admin=$pdo->query("CREATE TABLE ".$elotag."_admin (kod INT(10) auto_increment, nev VARCHAR(250), jelszo VARCHAR(250), email VARCHAR(250), PRIMARY KEY(kod)) DEFAULT CHARSET=utf8");
-	$letrehoz_param=$pdo->query("CREATE TABLE ".$elotag."_parameterek (title VARCHAR(250), keywords VARCHAR(250), description VARCHAR(250), sitename VARCHAR(250), siteslogen VARCHAR(250), copyright VARCHAR(250), sablon VARCHAR(25), defaultlink TEXT, breakoff INT(2), debugmod INT(2) DEFAULT '0', ogimage TEXT, favicon TEXT, gdpr TEXT, PRIMARY KEY(title)) DEFAULT CHARSET=utf8");
+	$letrehoz_param=$pdo->query("CREATE TABLE ".$elotag."_parameterek (title VARCHAR(250), keywords VARCHAR(250), description VARCHAR(250), sitename VARCHAR(250), siteslogen VARCHAR(250), copyright VARCHAR(250), sablon VARCHAR(25), defaultlink TEXT, breakoff INT(2), debugmod INT(2) DEFAULT '0', ogimage TEXT, favicon TEXT, gdpr TEXT, akcioterv TEXT, PRIMARY KEY(title)) DEFAULT CHARSET=utf8");
 	$letrehoz_modul=$pdo->query("CREATE TABLE ".$elotag."_modulok (mid INT(10) auto_increment, modulnev TEXT, integ INT(0) DEFAULT '0', bekapcsolva ENUM('igen','nem') DEFAULT 'igen', PRIMARY KEY (mid)) DEFAULT CHARSET=utf8");
 	$letrehoz_nyelv=$pdo->query("CREATE TABLE ".$elotag."_nyelvek (langkod INT(10) AUTO_INCREMENT, langnev TEXT, megjeleno TEXT, PRIMARY KEY (langkod)) DEFAULT CHARSET=utf8");
 /*** modulos táblák létrehozása és feltöltése ***/
@@ -264,7 +264,7 @@ if(isset($_POST["lepes3"]) AND $_POST["lepes3"]=="igen")
 	//shop tábla
 		if($_POST["shopmodul"]=="igen")
 		{
-			$letrehoz_shop=$pdo->query("CREATE TABLE ".$elotag."_shop_termek (t_id int(20) NOT NULL AUTO_INCREMENT, t_gyarto varchar(200) NOT NULL, t_nev text NOT NULL, t_ar varchar(200) NOT NULL, t_kategoria varchar(200) NOT NULL, t_fkep text NOT NULL, t_kepek text NOT NULL, t_kleiras varchar(200) NOT NULL, t_nleiras text NOT NULL, t_datum date NOT NULL DEFAULT '0000-00-00', t_pdf text NOT NULL, PRIMARY KEY (t_id)) DEFAULT CHARSET=utf8");
+			$letrehoz_shop=$pdo->query("CREATE TABLE ".$elotag."_shop_termek (t_id int(20) NOT NULL AUTO_INCREMENT, t_gyarto varchar(200) NOT NULL, t_nev text NOT NULL, t_ar varchar(200) NOT NULL, t_kategoria varchar(200) NOT NULL, t_fkep text NOT NULL, t_kepek text NOT NULL, t_kleiras varchar(200) NOT NULL, t_nleiras text NOT NULL, t_datum date NOT NULL DEFAULT '0000-00-00', t_aktiv int(2) DEFAULT '1', t_pdf text NOT NULL, PRIMARY KEY (t_id)) DEFAULT CHARSET=utf8");
 			$letrehoz_gyartok=$pdo->query("CREATE TABLE ".$elotag."_shop_gyartok (shop_gyartoid int(20) NOT NULL AUTO_INCREMENT, shop_gyartonev varchar(200) NOT NULL, PRIMARY KEY (shop_gyartoid)) DEFAULT CHARSET=utf8");
 			$letrehoz_kategok=$pdo->query("CREATE TABLE ".$elotag."_shop_kategoriak (shop_kategoriaid int(20) NOT NULL AUTO_INCREMENT, shop_kategkep text NOT NULL, shop_kategorianev varchar(200) NOT NULL, PRIMARY KEY (shop_kategoriaid)) DEFAULT CHARSET=utf8");
 			$letrehoz_rendelesek=$pdo->query("CREATE TABLE ".$elotag."_shop_rendelesek (m_id int(20) NOT NULL AUTO_INCREMENT, megrendelo text NOT NULL, tetelek text NOT NULL, szallitas text NOT NULL, fizetes varchar(200) NOT NULL, datum date NOT NULL, duma text NOT NULL, PRIMARY KEY (m_id)) DEFAULT CHARSET=utf8");

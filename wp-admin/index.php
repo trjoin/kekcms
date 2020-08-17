@@ -210,6 +210,14 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 								</a>	    
 							
 								<ul class="dropdown-menu">';
+		//akció POP-UP tervezés
+			echo '					<li class="dropdown-submenu">
+									  <a tabindex="-1" href="#">POP-UP</a>
+									  <ul class="dropdown-menu">
+										<li><a tabindex="-2" href="index.php?lng='.$webaktlang.'&mod=y&popup=1">&plus; pop-up készítés</a></li>
+									  </ul>
+									</li>';
+									
 		$modlangbe=$pdo->query("select bekapcsolva from ".$elotag."_modulok where modulnev='nyelv'");
 		$langmod=$modlangbe->fetch();
 		if($langmod["bekapcsolva"]=="igen")
@@ -228,6 +236,18 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 								}
 			echo '						<li class="divider"></li>
 										<li><a tabindex="-2" href="index.php?lng='.$webaktlang.'&mod=y&ujnyelv=1">&plus; Új nyelv telepítése</a></li>
+									  </ul>
+									</li>';
+		}
+		$modslidebe=$pdo->query("select bekapcsolva from ".$elotag."_modulok where modulnev='slider'");
+		$slimod=$modslidebe->fetch();
+		if($slimod["bekapcsolva"]=="igen")
+		{
+			echo '					<li class="dropdown-submenu">
+									  <a tabindex="-1" href="#">Képváltó</a>
+									  <ul class="dropdown-menu">
+										<li><a tabindex="-2" href="index.php?lng='.$webaktlang.'&mod=y&sliderek=1">&raquo; Megtekintés és kezelés</a></li>
+										<li><a tabindex="-2" href="index.php?lng='.$webaktlang.'&mod=y&ujslider=1">&plus; Új kép feltöltése</a></li>
 									  </ul>
 									</li>';
 		}
@@ -256,18 +276,6 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 									  </ul>
 									</li>';
 		}
-		$modslidebe=$pdo->query("select bekapcsolva from ".$elotag."_modulok where modulnev='slider'");
-		$slimod=$modslidebe->fetch();
-		if($slimod["bekapcsolva"]=="igen")
-		{
-			echo '					<li class="dropdown-submenu">
-									  <a tabindex="-1" href="#">Képváltó</a>
-									  <ul class="dropdown-menu">
-										<li><a tabindex="-2" href="index.php?lng='.$webaktlang.'&mod=y&sliderek=1">&raquo; Megtekintés és kezelés</a></li>
-										<li><a tabindex="-2" href="index.php?lng='.$webaktlang.'&mod=y&ujslider=1">&plus; Új kép feltöltése</a></li>
-									  </ul>
-									</li>';
-		}
 		$modhirekbe=$pdo->query("select bekapcsolva from ".$elotag."_modulok where modulnev='blog'");
 		$hirmod=$modhirekbe->fetch();
 		if($hirmod["bekapcsolva"]=="igen")
@@ -288,18 +296,6 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 										<li><a tabindex="-2" href="index.php?lng='.$webaktlang.'&mod=y&ujblokk=1">&plus; Új hozzáadása</a></li>
 									  </ul>
 									</li>';
-		$moddown=$pdo->query("select bekapcsolva from ".$elotag."_modulok where modulnev='letoltes'");
-		$downmod=$moddown->fetch();
-		if($downmod["bekapcsolva"]=="igen")
-		{
-			echo '					<li class="dropdown-submenu">
-									  <a tabindex="-1" href="#">Letöltés kezelő</a>
-									  <ul class="dropdown-menu">
-										<li><a tabindex="-2" href="index.php?lng='.$webaktlang.'&mod=y&downmod=1">&raquo; Megtekintés és kezelés</a></li>
-										<li><a tabindex="-2" href="index.php?lng='.$webaktlang.'&mod=y&ujdown=1">&plus; Új fájl feltöltése</a></li>
-									  </ul>
-									</li>';
-		}
 		$modsocialbe=$pdo->query("select bekapcsolva from ".$elotag."_modulok where modulnev='social'");
 		$socmod=$modsocialbe->fetch();
 		if($socmod["bekapcsolva"]=="igen")
@@ -319,6 +315,18 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 									  <a tabindex="-1" href="#">Google MAPS</a>
 									  <ul class="dropdown-menu">
 										<li><a tabindex="-2" href="index.php?lng='.$webaktlang.'&mod=y&gmaps=1">&raquo; Térkép kezelése</a></li>
+									  </ul>
+									</li>';
+		}
+		$moddown=$pdo->query("select bekapcsolva from ".$elotag."_modulok where modulnev='letoltes'");
+		$downmod=$moddown->fetch();
+		if($downmod["bekapcsolva"]=="igen")
+		{
+			echo '					<li class="dropdown-submenu">
+									  <a tabindex="-1" href="#">Letöltés kezelő</a>
+									  <ul class="dropdown-menu">
+										<li><a tabindex="-2" href="index.php?lng='.$webaktlang.'&mod=y&downmod=1">&raquo; Megtekintés és kezelés</a></li>
+										<li><a tabindex="-2" href="index.php?lng='.$webaktlang.'&mod=y&ujdown=1">&plus; Új fájl feltöltése</a></li>
 									  </ul>
 									</li>';
 		}

@@ -27,6 +27,14 @@ else
 		}
 	}
 	/*** LANG END! ***/
+	
+	/*** DEBUGGER FIGYELÉSE ***/
+	if($webadatok["debugmod"]==1)
+	{
+		ini_set('display_errors', 1);
+		ini_set('display_startup_errors', 1);
+		error_reporting(E_ALL);
+	}
 ?>
 <!DOCTYPE html>
 <html lang="hu-HU" xml:lang="hu" dir="ltr">
@@ -102,7 +110,7 @@ else
 		$description=$ad["description"];
 		$sitename=$ad["sitename"];
 		$siteslogen=$ad["siteslogen"];
-		$ogimage=$ad["ogimage"];
+		$ogimage="/".$ad["ogimage"];
 		$ogimagealt=$sitename." ".$siteslogen;
 	}
 ?>
@@ -241,10 +249,15 @@ else
 		if($md1["bekapcsolva"]=="igen")
 		{
 			$egylang=$pdo->query("select * from ".$elotag."_nyelvek");
-			while($el=$egylang->fetch())
-			{
-				echo '<li><a href="/n/'.$el["langnev"].'">'.$el["megjeleno"].' <img src="'.$absp.'/themes/'.$webadatok["sablon"].'/images/f_'.$el["langnev"].'.gif" alt="'.$el["megjeleno"].'"></a></li>';
-			}
+			echo '<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="'.$absp.'/themes/'.$webadatok["sablon"].'/images/f_hun.gif" alt="Magyar"> Magyar <b class="caret"></b></a>
+					<ul class="dropdown-menu">';
+					while($el=$egylang->fetch())
+					{
+						echo '<li><a href="/n/'.$el["langnev"].'"><img src="'.$absp.'/themes/'.$webadatok["sablon"].'/images/f_'.$el["langnev"].'.gif" alt="'.$el["megjeleno"].'"> '.$el["megjeleno"].'</a></li>';
+					}
+			echo '	</ul>
+				  </li>';
 		}
 ?>
 							</ul>
@@ -656,7 +669,7 @@ if(!isset($_REQUEST["furl"]))
 	$socmod=$socmodbe->fetch();
 	if($socmod["bekapcsolva"]=="igen")
 	{
-		$soci=$pdo->query("select * from ".$elotag."_social");
+		$soci=$pdo->query("select * from ".$elotag."_social where sociallink!='#'");
 		if($soci->rowCount()>0)
 		{
 			echo '<p>';
@@ -682,6 +695,34 @@ if(!isset($_REQUEST["furl"]))
 	</script>
 	<script src="<?php echo $absp; ?>/themes/<?php print($webadatok["sablon"]); ?>/js/jquery.waypoints.min.js"></script>
 	<script type="text/javascript" src="<?php echo $absp; ?>/themes/<?php print($webadatok["sablon"]); ?>/js/bootstrap.js"></script>
+<!-- HA VAN ADMINON BEKAPCSOLT AKCIÓS POP-UP START -->
+<?php
+	if($webadatok["akcioterv"]!="" AND $webadatok["akcioterv"]!="|")
+	{
+		$akcio=explode("|",$webadatok["akcioterv"]);
+?>
+	<script type="text/javascript">
+		$(window).on('load',function(){
+			$('#myModalKEK').modal('show');
+		});
+	</script>
+	<div id="myModalKEK" class="modal fade" role="dialog">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+			  <div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 style="font-weight:700;"><?php echo $akcio[0]; ?></h4>
+			  </div>
+			  <div class="modal-body">
+				<?php echo $akcio[1]; ?>
+			  </div>
+			</div>
+		</div>
+	</div>
+<?php
+	}
+?>
+<!-- HA VAN ADMINON BEKAPCSOLT AKCIÓS POP-UP VÉGE -->
 </body>
 </html>
 <?php

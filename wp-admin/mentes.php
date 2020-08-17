@@ -485,6 +485,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		$menupontok="";
 		$almenupontok="";
 		$cikkek="";
+		$termekek="";
 		$elolap="<?xml version='1.0' encoding='UTF-8'?>
 <urlset
 	xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'
@@ -524,6 +525,20 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 				$cikkek.='<url>
 							  <loc>'.$webadatok["defaultlink"].'/'.$b["furl"].'</loc>
 							  <lastmod>'.str_replace(" ","T",$b["datum"]).'+00:00</lastmod>
+							  <priority>1.00</priority>
+							</url>';
+			}
+		}
+		//shop behivása
+		$shop=$pdo->query("select * from ".$elotag."_shop_termek where t_aktiv='1'");
+		if($shop)
+		{
+			while($t=$shop->fetch())
+			{
+				$datum=date("Y-m-d H:i:s");
+				$termekek.='<url>
+							  <loc>'.$webadatok["defaultlink"].'/'.str_replace($mirol,$mire,strtolower($t["t_nev"])).'/'.$t["tid"].'</loc>
+							  <lastmod>'.str_replace(" ","T",$datum).'+00:00</lastmod>
 							  <priority>1.00</priority>
 							</url>';
 			}
@@ -625,8 +640,14 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		}
 		
 		//mester parancs ami mindent feldolgoz!
-		$parancs="update ".$elotag."_parameterek set title='".$_POST["title"]."',keywords='".$_POST["keywords"]."',description='".$_POST["description"]."',sitename='".$_POST["sitename"]."',siteslogen='".$_POST["siteslogen"]."',copyright='".$_POST["copyright"]."',sablon='".$_POST["sablon"]."' ".$ogimage." ".$favicon."";
+		$parancs="update ".$elotag."_parameterek set title='".$_POST["title"]."',keywords='".$_POST["keywords"]."',description='".$_POST["description"]."',sitename='".$_POST["sitename"]."',siteslogen='".$_POST["siteslogen"]."',copyright='".$_POST["copyright"]."',sablon='".$_POST["sablon"]."',defaultlink='".$_POST["defaultlink"]."' ".$ogimage." ".$favicon."";
 		$hova="index.php?lng=".$webaktlang."&mod=y&settings=1";
+	}
+	//POP-UP mentése
+	if(isset($_POST["poptext"]))
+	{
+		$parancs="update ".$elotag."_parameterek set akcioterv='".$_POST["popcim"]."|".$_POST["poptext"]."'";
+		$hova="index.php?lng=".$webaktlang."";
 	}
 	//karbantartás mód bekapcsolása
 	if(isset($_GET["breakoff"]))

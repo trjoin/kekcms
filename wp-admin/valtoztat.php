@@ -396,6 +396,32 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		}
 		echo "</section><br />";
 	}
+	//POP-UP hozzáadása
+	if(isset($_REQUEST["popup"]))
+	{
+		$akcio=explode("|",$webadatok["akcioterv"]);
+		?>
+			<script type="text/javascript" src="ckeditor/ckeditor.js"></script>
+			<script src="ckeditor/adapters/jquery.js"></script>
+			<script>
+				CKEDITOR.env.isCompatible = true;
+			</script>
+		<?php
+		echo "<h2>POP-UP felugró ablak tervezése</h2>
+		<form name='popup' method='POST' action='index.php?lng=".$webaktlang."&mod=y'>
+			<font face='Verdana' size='2' color='#000000'><b>Felugró ablak címe:</b></font><br><input type='text' name='popcim' value='".$akcio[0]."' style='width:400px;' placeholder='Ablakban egjelenő fejléc címe'><br />
+			<font face='Verdana' size='2' color='#000000'><b>Felugró ablak szövege:</b></font><br><textarea name='poptext' style='width:400px;' placeholder='A felugró ablak testének tartalma...'>".$akcio[1]."</textarea><br />
+			<input type='submit' value=' mentés ' class='btn btn-large btn-secondary'>
+		</form>";
+		?>
+		<script>
+			CKEDITOR.replace( 'poptext', {
+				language: 'hu',
+				toolbar : 'Full'
+			});
+		</script>
+		<?php
+	}
 	//videó hozzáadása
 	if(isset($_REQUEST["ujvideo"]))
 	{
@@ -407,7 +433,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 			</script>
 		<?php
 		echo "<h2>Videótár - hozzáadás</h2>
-		<form name='ujvidi' method='POST' action='index.php?lng=".$webaktlang."&mod=y' enctype='multipart/form-data'>
+		<form name='ujvidi' method='POST' action='index.php?lng=".$webaktlang."&mod=y'>
 			<font face='Verdana' size='2' color='#000000'><b>Videó címe:</b></font><br><input type='text' name='ujvideocim' id='ujvideocim' style='width:400px;' placeholder='Videó címe'><br />
 			<font face='Verdana' size='2' color='#000000'><b>Videó linkje:</b></font><br><input type='text' name='vhiv' id='vhiv' style='width:400px;' placeholder='Videó LINK-je a böngésző címsorából'><br />
 			<font face='Verdana' size='2' color='#000000'><b>Videó leírása:</b></font><br><textarea name='vtext' style='width:400px;' placeholder='Oktató anyag, vagy leírás a videóról'></textarea><br />
@@ -520,6 +546,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 				}
 			}
 		echo "</select></p>";
+		echo "Weboldal URL-je:<br />&nbsp;&nbsp;&nbsp;<input type='text' name='defaultlink' value='".$beallitasok["defaultlink"]."' style='width:200px;' required><br />";
 		echo "<br /><input type='submit' value='mentés' class='btn btn-large btn-secondary'></form><br>";
 	}
 	//root modulok telepítése
