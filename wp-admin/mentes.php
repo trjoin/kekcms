@@ -310,7 +310,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 					list($width, $height) = getimagesize("../slider/".$fajlnev);
 					if($width>="1")
 					{
-						$parancs="update ".$elotag."_slider_".$webaktlang." set slidert='".$fajlnev."',hiperlink='".$_POST["hivatkozas"]."',dumahozza='".$_POST["dumahozza"]."',gombnev='".$_POST["gombnev"]."',gomblink='".$_POST["gomblink"]."',slidersor='".$_POST["slidersor"]."' where sliderkod='".$_POST["sliderkodmod"]."')";
+						$parancs="update ".$elotag."_slider_".$webaktlang." set slidert='".$fajlnev."',hiperlink='".$_POST["hivatkozas"]."',dumahozza='".$_POST["dumahozza"]."',gombnev='".$_POST["gombnev"]."',gomblink='".$_POST["gomblink"]."',slidersor='".$_POST["slidersor"]."' where sliderkod='".$_POST["sliderkodmod"]."'";
 						$hova="index.php?lng=".$webaktlang."&mod=y&sliderek=1";
 					}
 					else
