@@ -19,6 +19,11 @@ if(isset($_GET["modosit"]))
 	echo "<p align='left'><big><b><u>Meta TITLE:</u></b></big><br><input type='text' name='metatitle' value='".$oldal["metatitle"]."'></p>";
 	echo "<p align='left'><big><b><u>Meta KEYWORDS:</u></b></big><br><input type='text' name='metakeywords' value='".$oldal["metakeywords"]."'></p>";
 	echo "<p align='left'><big><b><u>Meta DESCRIPTION:</u></b></big><br><input type='text' name='metadesc' value='".$oldal["metadesc"]."'></p>";
+	echo "<p align='left'><big><b><u>Kiemelt kép:</u></b></big><br><small>Ha raksz be képet, azzal lecseréled az előzőt!</small><br><input type='file' name='ogimage'></p>";
+	if($oldal["ogimage"]!="")
+	{
+		echo '<p><img src="/menu/'.$oldal["ogimage"].'"></p>';
+	}
 	echo "<p align='left'><big><b><u>Külső hivatkozás (ha van):</u></b></big><br><input type='text' name='tolink' value='".$oldal["tolink"]."'></p>";
 	$bt1=$pdo->query("select * from ".$elotag."_modulok where bekapcsolva='igen' and integ='1'");
 	if($bt1->rowCount()>0)
@@ -41,6 +46,11 @@ if(isset($_GET["almodosit"]))
 	echo "<p align='left'><big><b><u>Meta TITLE:</u></b></big><br><input type='text' name='metatitle' value='".$oldal["metatitle"]."'></p>";
 	echo "<p align='left'><big><b><u>Meta KEYWORDS:</u></b></big><br><input type='text' name='metakeywords' value='".$oldal["metakeywords"]."'></p>";
 	echo "<p align='left'><big><b><u>Meta DESCRIPTION:</u></b></big><br><input type='text' name='metadesc' value='".$oldal["metadesc"]."'></p>";
+	echo "<p align='left'><big><b><u>Kiemelt kép:</u></b></big><br><small>Ha raksz be képet, azzal lecseréled az előzőt!</small><br><input type='file' name='ogimage'></p>";
+	if($oldal["ogimage"]!="")
+	{
+		echo '<p><img src="/menu/'.$oldal["ogimage"].'"></p>';
+	}
 	echo "<p align='left'><big><b><u>Külső hivatkozás (ha van):</u></b></big><br><input type='text' name='tolink' value='".$oldal["tolink"]."'></p>";
 	$bt1=$pdo->query("select * from ".$elotag."_modulok where bekapcsolva='igen' and integ='1'");
 	if($bt1->rowCount()>0)

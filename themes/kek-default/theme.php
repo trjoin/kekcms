@@ -60,7 +60,7 @@ else
 			$description=$ad["metadesc"];
 			$sitename=$ad["metatitle"];
 			$siteslogen="";
-			$ogimage=$ad["ogimage"];
+			$ogimage="/menu/".$ad["ogimage"];
 			$ogimagealt=$ad["metadesc"];
 		}
 		elseif($megjelenite->rowCount()>0)
@@ -84,20 +84,20 @@ else
 			$description=$ad["metadesc"];
 			$sitename=$ad["metatitle"];
 			$siteslogen="";
-			$ogimage=$ad["ogimage"];
+			$ogimage="/menu/".$ad["ogimage"];
 			$ogimagealt=$ad["metadesc"];
 		}
 		else
 		{
 			$ad=$megjelenit->fetch();
-			
-			$title=$ad["metatitle"];
-			$keywords=$ad["metakeywords"];
-			$description=$ad["metadesc"];
-			$sitename=$ad["metatitle"];
-			$siteslogen="";
-			$ogimage="/blog/".$ad["kiskep"];
-			$ogimagealt=$ad["bevezeto"];
+		
+			$title=$ad["title"];
+			$keywords=$ad["keywords"];
+			$description=$ad["description"];
+			$sitename=$ad["sitename"];
+			$siteslogen=$ad["siteslogen"];
+			$ogimage="/".$ad["ogimage"];
+			$ogimagealt=$sitename." ".$siteslogen;
 		}
 	}
 	else
