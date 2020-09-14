@@ -60,7 +60,7 @@ else
 			$description=$ad["metadesc"];
 			$sitename=$ad["metatitle"];
 			$siteslogen="";
-			$ogimage="/menu/".$ad["ogimage"];
+			$ogimage=$absp."/menu/".$ad["ogimage"];
 			$ogimagealt=$ad["metadesc"];
 		}
 		elseif($megjelenite->rowCount()>0)
@@ -72,7 +72,7 @@ else
 			$description=$ad["metadesc"];
 			$sitename=$ad["metatitle"];
 			$siteslogen="";
-			$ogimage="/blog/".$ad["kiskep"];
+			$ogimage=$absp."/blog/".$ad["kiskep"];
 			$ogimagealt=$ad["bevezeto"];
 		}
 		elseif($megjelenita->rowCount()>0)
@@ -84,7 +84,7 @@ else
 			$description=$ad["metadesc"];
 			$sitename=$ad["metatitle"];
 			$siteslogen="";
-			$ogimage="/menu/".$ad["ogimage"];
+			$ogimage=$absp."/menu/".$ad["ogimage"];
 			$ogimagealt=$ad["metadesc"];
 		}
 		else
@@ -96,7 +96,7 @@ else
 			$description=$ad["description"];
 			$sitename=$ad["sitename"];
 			$siteslogen=$ad["siteslogen"];
-			$ogimage="/".$ad["ogimage"];
+			$ogimage=$absp."/".$ad["ogimage"];
 			$ogimagealt=$sitename." ".$siteslogen;
 		}
 	}
@@ -110,7 +110,7 @@ else
 		$description=$ad["description"];
 		$sitename=$ad["sitename"];
 		$siteslogen=$ad["siteslogen"];
-		$ogimage="/".$ad["ogimage"];
+		$ogimage=$absp."/".$ad["ogimage"];
 		$ogimagealt=$sitename." ".$siteslogen;
 	}
 ?>
