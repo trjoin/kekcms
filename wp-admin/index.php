@@ -363,6 +363,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 									<li><a href="index.php?lng='.$webaktlang.'&mod=y&createxml=1">Oldaltérkép készítése</a></li>
 									<li><a href="index.php?lng='.$webaktlang.'&mod=y&gdpr=1">GDPR kezelése</a></li>
 									<li><a href="index.php?lng='.$webaktlang.'&mod=y&ganal=1">Google Analytics</a></li>
+									<li><a href="'.$absp.'/__public_stat_aws.html" target="_blank">Tárhely statisztika megtekintése</a></li>
 								</ul>    				
 							</li>';
 		echo '			</ul>
