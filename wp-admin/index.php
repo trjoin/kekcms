@@ -42,7 +42,7 @@ if(isset($_POST["username"]) AND $_POST["username"]!="" AND $_POST["username"]!=
 		{
 			include("../supportend.php");
 			$datumt = strtotime($support); //telepítési idő
-			$finale = date("Y-m-d", strtotime("+24 month", $datumt)); //telepítéstől számított +24 hónap - azaz a lejárat napja!
+			$finale = strtotime(date("Y-m-d", strtotime("+24 month", $datumt))); //telepítéstől számított +24 hónap - azaz a lejárat napja!
 			$ma = strtotime(date("Y-m-d"));
 			if($finale<=$ma)
 			{
