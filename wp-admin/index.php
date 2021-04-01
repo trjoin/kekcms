@@ -44,7 +44,7 @@ if(isset($_POST["username"]) AND $_POST["username"]!="" AND $_POST["username"]!=
 			$datumt = strtotime($support); //telepítési idő
 			$finale = strtotime(date("Y-m-d", strtotime("+24 month", $datumt))); //telepítéstől számított +24 hónap - azaz a lejárat napja!
 			$ma = strtotime(date("Y-m-d"));
-			if($finale<=$ma)
+			if($finale>=$ma)
 			{
 				$egy_sor=$login->fetch(\PDO::FETCH_ASSOC);
 				$_SESSION["userlogged"]=$egy_sor["nev"];
