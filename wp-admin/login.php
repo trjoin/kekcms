@@ -17,6 +17,7 @@
 			<div class="login-actions">
 				<button class="button btn btn-warning btn-large">BEJELENTKEZÉS</button>
 			</div>
-		</form>
+		</form><br>
+		<a href="index.php?lost" class="btn-danger btn-sm">&nbsp; Elfelejtett jelszó &nbsp;</a>
 	</div>
 </div>

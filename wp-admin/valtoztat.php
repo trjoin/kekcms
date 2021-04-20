@@ -486,6 +486,33 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		echo "<input type='submit' value='készítés' class='btn btn-large btn-secondary'>";
 		echo "</form>";
 	}
+	//adatbázis biztonsági mentése készitése
+	if(isset($_REQUEST["dbackup"]))
+	{
+		echo "<h3>SQL adatbázis biztonsági mentése<br><small>(ez csak a legfontosabb, alapvető táblákról készít mentést!)</small></h3>";
+		//volt már backup?
+		$volte=$pdo->query("select * from ".$elotag."_parameterek_bkp");
+		if($volte)
+		{
+			$mikor=$pdo->query("select bkpdate from ".$elotag."_parameterek");
+			$mk=$mikor->fetch();
+			echo '<p>Készült már biztonsági mentés '.str_replace("-",".",$mk["bkpdate"]).'.-kor. Visszaállítod abból az adatokat?</p>';
+			echo '<p><a href="index.php?lng='.$webaktlang.'&mod=y&dbrestore=1" class="btn btn-secondary">KATTINTS IDE A VISSZAÁLLÍTÁSHOZ</a></p><hr>';
+		}
+		echo "<form action='index.php?lng=".$webaktlang."&mod=y' method='POST'>";
+		echo "<input type='hidden' name='dbackup' value='1'>";
+		echo "<input type='submit' value='BIZTONSÁGI MENTÉS INDÍTÁSA' class='btn btn-large btn-secondary'>";
+		echo "</form>";
+	}
+	//adatbázis biztonsági mentése visszaállítása
+	if(isset($_REQUEST["dbrestore"]))
+	{
+		echo "<h3>SQL adatbázis biztonsági mentés visszaállítása</h3>";
+		echo "<form action='index.php?lng=".$webaktlang."&mod=y' method='POST'>";
+		echo "<input type='hidden' name='dbrestore' value='1'>";
+		echo "<input type='submit' value='BIZTONSÁGI MENTÉS VISSZAÁLLÍTÁSA' class='btn btn-large btn-secondary'>";
+		echo "</form>";
+	}
 	//GDPR dokumentáció feltöltése
 	if(isset($_REQUEST["gdpr"]))
 	{

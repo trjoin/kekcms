@@ -26,7 +26,6 @@
 		include("../supportend.php");
 		$datumt = strtotime($support); //telepítési idő
 		$finale = strtotime(date("Y-m-d", strtotime("+24 month", $datumt))); //telepítéstől számított +24 hónap - azaz a lejárat napja!
-		$lejar = date("Y-m-d", strtotime("+24 month", $datumt)); //telepítéstől számított +24 hónap - azaz a lejárat napja!
 		$ma = strtotime(date("Y-m-d"));
 		if($finale>=$ma)
 		{

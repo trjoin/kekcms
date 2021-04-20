@@ -187,15 +187,15 @@ if(isset($_POST["lepes3"]) AND $_POST["lepes3"]=="igen")
 	//nyelvesített alaptáblák létrehozása
 		foreach($_POST["langok"] as $val)
 		{
-			$letrehoza=$pdo->query("CREATE TABLE ".$elotag."_menu_".$val." (kod INT(10) auto_increment, furl TEXT, tolink TEXT, tomodul TEXT, aktiv INT(2), nev VARCHAR(50), tartalom TEXT, metatitle TEXT, metakeywords TEXT, metadesc TEXT, ogimage TEXT, sorszam VARCHAR(2), datum DATETIME DEFAULT '0000-00-00 00:00:00', PRIMARY KEY(kod)) DEFAULT CHARSET=utf8");
-			$letrehozb=$pdo->query("CREATE TABLE ".$elotag."_almenu_".$val." (kod INT(10) auto_increment, furl TEXT, tolink TEXT, tomodul TEXT, aktiv INT(2), nev VARCHAR(50), szulo int(20), tartalom TEXT, metatitle TEXT, metakeywords TEXT, metadesc TEXT, ogimage TEXT, datum DATETIME DEFAULT '0000-00-00 00:00:00', PRIMARY KEY(kod)) DEFAULT CHARSET=utf8");
+			$letrehoza=$pdo->query("CREATE TABLE ".$elotag."_menu_".$val." (kod INT(10) auto_increment, furl TEXT, tolink TEXT, tomodul TEXT, aktiv INT(2), nev VARCHAR(200), tartalom TEXT, metatitle TEXT, metakeywords TEXT, metadesc TEXT, ogimage TEXT, sorszam VARCHAR(2), datum DATETIME DEFAULT '0000-00-00 00:00:00', PRIMARY KEY(kod)) DEFAULT CHARSET=utf8");
+			$letrehozb=$pdo->query("CREATE TABLE ".$elotag."_almenu_".$val." (kod INT(10) auto_increment, furl TEXT, tolink TEXT, tomodul TEXT, aktiv INT(2), nev VARCHAR(200), szulo int(20), tartalom TEXT, metatitle TEXT, metakeywords TEXT, metadesc TEXT, ogimage TEXT, datum DATETIME DEFAULT '0000-00-00 00:00:00', PRIMARY KEY(kod)) DEFAULT CHARSET=utf8");
 			$letrehozc=$pdo->query("CREATE TABLE ".$elotag."_oldalsav_".$val." (kod INT(10) auto_increment, cim VARCHAR(200), aktiv INT(2), szoveg TEXT, sorszam VARCHAR(2), PRIMARY KEY(kod)) DEFAULT CHARSET=utf8");
 			if(!$letrehoza OR !$letrehozb OR !$letrehozc) { $hibak_l++; $hibauzenet=$hibauzenet."- Nyelvi tábla (".$val.") nem készült el!<br>"; }
 		}
 	
 	//alap táblák létrehozása
 	$letrehoz_admin=$pdo->query("CREATE TABLE ".$elotag."_admin (kod INT(10) auto_increment, nev VARCHAR(250), jelszo VARCHAR(250), email VARCHAR(250), PRIMARY KEY(kod)) DEFAULT CHARSET=utf8");
-	$letrehoz_param=$pdo->query("CREATE TABLE ".$elotag."_parameterek (title VARCHAR(250), keywords VARCHAR(250), description VARCHAR(250), sitename VARCHAR(250), siteslogen VARCHAR(250), copyright VARCHAR(250), sablon VARCHAR(25), defaultlink TEXT, breakoff INT(2), debugmod INT(2) DEFAULT '0', ogimage TEXT, favicon TEXT, gdpr TEXT, akcioterv TEXT, PRIMARY KEY(title)) DEFAULT CHARSET=utf8");
+	$letrehoz_param=$pdo->query("CREATE TABLE ".$elotag."_parameterek (title VARCHAR(250), keywords VARCHAR(250), description VARCHAR(250), sitename VARCHAR(250), siteslogen VARCHAR(250), copyright VARCHAR(250), sablon VARCHAR(25), defaultlink TEXT, breakoff INT(2), debugmod INT(2) DEFAULT '0', ogimage TEXT, favicon TEXT, gdpr TEXT, akcioterv TEXT, bkpdate DATE DEFAULT '0000-00-00', PRIMARY KEY(title)) DEFAULT CHARSET=utf8");
 	$letrehoz_modul=$pdo->query("CREATE TABLE ".$elotag."_modulok (mid INT(10) auto_increment, modulnev TEXT, integ INT(0) DEFAULT '0', bekapcsolva ENUM('igen','nem') DEFAULT 'igen', PRIMARY KEY (mid)) DEFAULT CHARSET=utf8");
 	$letrehoz_nyelv=$pdo->query("CREATE TABLE ".$elotag."_nyelvek (langkod INT(10) AUTO_INCREMENT, langnev TEXT, megjeleno TEXT, PRIMARY KEY (langkod)) DEFAULT CHARSET=utf8");
 /*** modulos táblák létrehozása és feltöltése ***/

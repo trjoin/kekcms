@@ -649,10 +649,144 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 			touch("../sitemap.xml");
 		}
 		//sitemap összefoglalás
-		$fullsitemap=$elolap.$menupontok.$almenupontok.$cikkek."</urlset>";
+		$fullsitemap=$elolap.$menupontok.$almenupontok.$cikkek.$termekek."</urlset>";
 		//sitemap irása
 		$fm=fopen("../sitemap.xml","a");
 		fwrite($fm,$fullsitemap);
+		$parancs="select langnev from ".$elotag."_nyelvek limit 1";
+		$hova="index.php";
+	}
+	//SQL backup készités
+	if(isset($_POST["dbackup"]))
+	{
+		//alapértelmezett nyelv meghatározása
+		$nyelvek=$pdo->query("select langnev from ".$elotag."_nyelvek limit 1");
+		$n=$nyelvek->fetch();
+		$aktnyelv=$n["langnev"];
+		
+		//alap SQL táblák tömbbe foglalása
+		$tablanevek=array(
+			$elotag."_menu_".$aktnyelv."",
+			$elotag."_almenu_".$aktnyelv."",
+			$elotag."_oldalsav_".$aktnyelv."",
+			$elotag."_admin",
+			$elotag."_parameterek",
+			$elotag."_modulok",
+			$elotag."_nyelvek",
+			$elotag."_ganal"
+		);
+		
+		//modulok vizsgálata
+		$modulok=$pdo->query("select * from ".$elotag."_modulok where bekapcsolva='igen'");
+		while($m=$modulok->fetch())
+		{
+			if($m["modulnev"]=="slider")
+			{
+				array_push($tablanevek,$elotag."_slider_".$aktnyelv."");
+			}
+			if($m["modulnev"]=="galeria")
+			{
+				array_push($tablanevek,$elotag."_mappak");
+			}
+			if($m["modulnev"]=="video")
+			{
+				array_push($tablanevek,$elotag."_videok");
+			}
+			if($m["modulnev"]=="blog")
+			{
+				array_push($tablanevek,$elotag."_hirkezelo_".$aktnyelv."");
+			}
+			if($m["modulnev"]=="social")
+			{
+				array_push($tablanevek,$elotag."_social");
+			}
+			if($m["modulnev"]=="gmaps")
+			{
+				array_push($tablanevek,$elotag."_gmaps");
+			}
+			if($m["modulnev"]=="letoltes")
+			{
+				array_push($tablanevek,$elotag."_letoltesek");
+			}
+		}
+		
+		
+
+		foreach($tablanevek as $k => $v)
+		{
+			//volt-e már backup? ellenőrzés és ha igen akkor eldobás
+			$volte=$pdo->query("select * from ".$v."_bkp");
+			if($volte)
+			{
+				$pdo->query("DROP TABLE ".$v."_bkp");
+			}
+			//backup copy kreálása
+			$backupre=$pdo->query("CREATE TABLE ".$v."_bkp LIKE ".$v." ");
+			$backupin=$pdo->query("INSERT INTO ".$v."_bkp SELECT * FROM ".$v." ");
+		}
+		$parancs="update ".$elotag."_parameterek set bkpdate=now()";
+		$hova="index.php";
+	}
+	//SQL restore készités
+	if(isset($_POST["dbrestore"]))
+	{
+		//alapértelmezett nyelv meghatározása
+		$nyelvek=$pdo->query("select langnev from ".$elotag."_nyelvek limit 1");
+		$n=$nyelvek->fetch();
+		$aktnyelv=$n["langnev"];
+		
+		//alap SQL táblák tömbbe foglalása
+		$tablanevek=array(
+			$elotag."_menu_".$aktnyelv."",
+			$elotag."_almenu_".$aktnyelv."",
+			$elotag."_oldalsav_".$aktnyelv."",
+			$elotag."_admin",
+			$elotag."_parameterek",
+			$elotag."_modulok",
+			$elotag."_nyelvek",
+			$elotag."_ganal"
+		);
+		
+		//modulok vizsgálata
+		$modulok=$pdo->query("select * from ".$elotag."_modulok where bekapcsolva='igen'");
+		while($m=$modulok->fetch())
+		{
+			if($m["modulnev"]=="slider")
+			{
+				array_push($tablanevek,$elotag."_slider_".$aktnyelv."");
+			}
+			if($m["modulnev"]=="galeria")
+			{
+				array_push($tablanevek,$elotag."_mappak");
+			}
+			if($m["modulnev"]=="video")
+			{
+				array_push($tablanevek,$elotag."_videok");
+			}
+			if($m["modulnev"]=="blog")
+			{
+				array_push($tablanevek,$elotag."_hirkezelo_".$aktnyelv."");
+			}
+			if($m["modulnev"]=="social")
+			{
+				array_push($tablanevek,$elotag."_social");
+			}
+			if($m["modulnev"]=="gmaps")
+			{
+				array_push($tablanevek,$elotag."_gmaps");
+			}
+			if($m["modulnev"]=="letoltes")
+			{
+				array_push($tablanevek,$elotag."_letoltesek");
+			}
+		}
+
+		foreach($tablanevek as $k => $v)
+		{
+			$pdo->query("DROP TABLE ".$v." ");
+			$backupre=$pdo->query("CREATE TABLE ".$v." LIKE ".$v."_bkp ");
+			$backupin=$pdo->query("INSERT INTO ".$v." SELECT * FROM ".$v."_bkp ");
+		}
 		$parancs="select langnev from ".$elotag."_nyelvek limit 1";
 		$hova="index.php";
 	}
