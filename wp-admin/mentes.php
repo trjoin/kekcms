@@ -795,6 +795,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 	{
 		$ogimage="";
 		$favicon="";
+		$ceglogo="";
 		
 		if(isset($_FILES['ogimage']) AND $_FILES['ogimage']['name']!="")
 		{
@@ -836,6 +837,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		
 		if(isset($_FILES['favicon']) AND $_FILES['favicon']['name']!="")
 		{
+			
 			$ext = strtolower(substr(strrchr($_FILES["favicon"]["name"], "."), 1));
 			if($ext == "png" || $ext == "ico")
 			{
@@ -869,8 +871,46 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 			}
 		}
 		
+		if(isset($_FILES['ceglogo']) AND $_FILES['ceglogo']['name']!="")
+		{
+			$SafeFile = $_FILES['ceglogo']['name'];
+			$SafeFile = strtolower($SafeFile);
+			$SafeFile = str_replace($mirol, $mire, $SafeFile);
+			$fajlnev=$SafeFile;
+			
+			$ext = strtolower(substr(strrchr($_FILES["ceglogo"]["name"], "."), 1));
+			if($ext == "png" || $ext == "jpg")
+			{
+				if(move_uploaded_file($_FILES['ceglogo']['tmp_name'],"../".$fajlnev))
+				{
+					list($width, $height) = getimagesize("../".$fajlnev);
+					if($width>="1")
+					{
+						$ceglogo=",ceglogo='".$fajlnev."'";
+					}
+					else
+					{
+						$ceglogo="";
+						unlink("../".$fajlnev);
+						echo "<script> alert('Fájl feltöltési hiba, ez nem kép!'); </script>";
+					}
+				}
+				else
+				{
+					$ceglogo="";
+					echo "<script> alert('Sikertelen művelet. :( A képet nem sikerült feltölteni.'); </script>";
+				}
+				
+			}
+			else
+			{
+				$ceglogo="";
+				echo "<script> alert('Sikertelen művelet. :( A kép formátuma nem volt megfelelő, a feltölthető formátum: JPG, PNG.'); </script>";
+			}
+		}
+		
 		//mester parancs ami mindent feldolgoz!
-		$parancs="update ".$elotag."_parameterek set title='".$_POST["title"]."',keywords='".$_POST["keywords"]."',description='".$_POST["description"]."',sitename='".$_POST["sitename"]."',siteslogen='".$_POST["siteslogen"]."',copyright='".$_POST["copyright"]."',sablon='".$_POST["sablon"]."',defaultlink='".$_POST["defaultlink"]."' ".$ogimage." ".$favicon."";
+		$parancs="update ".$elotag."_parameterek set title='".$_POST["title"]."',keywords='".$_POST["keywords"]."',description='".$_POST["description"]."',sitename='".$_POST["sitename"]."',siteslogen='".$_POST["siteslogen"]."',kapcstel='".$_POST["kapcstel"]."',kapcsemail='".$_POST["kapcsemail"]."',copyright='".$_POST["copyright"]."',sablon='".$_POST["sablon"]."',defaultlink='".$_POST["defaultlink"]."' ".$ogimage." ".$favicon." ".$ceglogo." ";
 		$hova="index.php?lng=".$webaktlang."&mod=y&settings=1";
 	}
 	//POP-UP mentése

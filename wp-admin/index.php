@@ -312,7 +312,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		if($mapsmod["bekapcsolva"]=="igen")
 		{
 			echo '					<li class="dropdown-submenu">
-									  <a tabindex="-1" href="#">Google MAPS</a>
+									  <a tabindex="-1" href="#">Google térkép</a>
 									  <ul class="dropdown-menu">
 										<li><a tabindex="-2" href="index.php?lng='.$webaktlang.'&mod=y&gmaps=1">&raquo; Térkép kezelése</a></li>
 									  </ul>

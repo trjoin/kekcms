@@ -552,6 +552,8 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		echo "META leírás (DESCRIPTION):<br />&nbsp;&nbsp;&nbsp;<input type='text' name='description' value='".$beallitasok["description"]."' style='width:200px;' required><br />";
 		echo "Fejléc szöveg (SITENAME):<br />&nbsp;&nbsp;&nbsp;<input type='text' name='sitename' value='".$beallitasok["sitename"]."' style='width:200px;' required><br />";
 		echo "Szlogen (SITESLOGEN):<br />&nbsp;&nbsp;&nbsp;<input type='text' name='siteslogen' value='".$beallitasok["siteslogen"]."' style='width:200px;' required><br />";
+		echo "Kapcsolati telefonszám:<br />&nbsp;&nbsp;&nbsp;<input type='text' name='kapcstel' value='".$beallitasok["kapcstel"]."' style='width:200px;'><br />";
+		echo "Kapcsolati e-mail cím:<br />&nbsp;&nbsp;&nbsp;<input type='email' name='kapcsemail' value='".$beallitasok["kapcsemail"]."' style='width:200px;'><br />";
 		echo "Megosztási kép (OG:IMG):<br />&nbsp;&nbsp;&nbsp;<input type='file' name='ogimage' style='width:200px;'><br />";
 		if($beallitasok["ogimage"]!="")
 		{
@@ -562,6 +564,11 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		if($beallitasok["favicon"]!="")
 		{
 			echo '<img src="/'.$beallitasok["favicon"].'" class="img-responsive" style="max-width:250px !important;"><br>';
+		}
+		echo "Logó:<br />&nbsp;&nbsp;&nbsp;<input type='file' name='ceglogo' style='width:200px;'><br />";
+		if($beallitasok["favicon"]!="")
+		{
+			echo '<img src="/'.$beallitasok["ceglogo"].'" class="img-responsive" style="max-width:250px !important;"><br>';
 		}
 		echo "<br>Téma:<br />&nbsp;&nbsp;&nbsp;<select name='sablon' size='1' style='width:200px;'>";
 			$themes=opendir("../themes");

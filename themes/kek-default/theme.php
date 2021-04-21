@@ -63,18 +63,6 @@ else
 			$ogimage=$absp."/menu/".$ad["ogimage"];
 			$ogimagealt=$ad["metadesc"];
 		}
-		elseif($megjelenite->rowCount()>0)
-		{
-			$ad=$megjelenite->fetch();
-			
-			$title=$ad["metatitle"];
-			$keywords=$ad["metakeywords"];
-			$description=$ad["metadesc"];
-			$sitename=$ad["metatitle"];
-			$siteslogen="";
-			$ogimage=$absp."/blog/".$ad["kiskep"];
-			$ogimagealt=$ad["bevezeto"];
-		}
 		elseif($megjelenita->rowCount()>0)
 		{
 			$ad=$megjelenita->fetch();
@@ -86,6 +74,18 @@ else
 			$siteslogen="";
 			$ogimage=$absp."/menu/".$ad["ogimage"];
 			$ogimagealt=$ad["metadesc"];
+		}
+		elseif($megjelenite->rowCount()>0)
+		{
+			$ad=$megjelenite->fetch();
+			
+			$title=$ad["metatitle"];
+			$keywords=$ad["metakeywords"];
+			$description=$ad["metadesc"];
+			$sitename=$ad["metatitle"];
+			$siteslogen="";
+			$ogimage=$absp."/blog/".$ad["kiskep"];
+			$ogimagealt=$ad["bevezeto"];
 		}
 		else
 		{
@@ -208,6 +208,7 @@ else
 						</button>
 						<a class="navbar-brand" href="index.php">
 							<h1><span class="fa fa-code" aria-hidden="true"></span><?php print($webadatok["sitename"]); ?> <label><?php print($webadatok["siteslogen"]); ?></label></h1>
+							<br><p><?php print($webadatok["kapcstel"]); ?> | <?php print($webadatok["kapcsemail"]); ?></p>
 						</a>
 					</div>
 					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
