@@ -6,6 +6,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 	$frissit=$pdo->query("ALTER TABLE `".$elotag."_parameterek` ADD `bkpdate` DATE NOT NULL DEFAULT '0000-00-00' AFTER `akcioterv`");
 	$frissit=$pdo->query("ALTER TABLE `".$elotag."_parameterek` ADD `ceglogo` TEXT NOT NULL AFTER `favicon`");
 	$frissit=$pdo->query("ALTER TABLE `".$elotag."_parameterek` ADD `kapcstel` TEXT NOT NULL AFTER `siteslogen`, ADD `kapcsemail` TEXT NOT NULL AFTER `kapcstel`");
+	$frissit=$pdo->query("ALTER TABLE `".$elotag."_modulok` ADD `modultartalom` INT(2) NOT NULL AFTER `modulnev`");
 	
 	if($frissit)
 	{

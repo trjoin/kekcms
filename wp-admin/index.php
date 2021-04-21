@@ -125,7 +125,9 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 							<li class="divider"></li>';
 							if($_SESSION["userlogged"]=="nimda")
 							{
-								echo '<li><a href="index.php?lng='.$webaktlang.'&mod=y&rootmodul=1">Modulok kezelése</a></li>
+								echo '<li><a href="index.php?lng='.$webaktlang.'&mod=y&rootmodul=1">Alap modulok kezelése</a></li>
+										<li><a href="index.php?lng='.$webaktlang.'&mod=y&ujmodul=1">Új modul létrehozása</a></li>
+										<li><a href="index.php?lng='.$webaktlang.'&mod=y&modmod=1">Modul szerkesztése</a></li>
 										<li class="divider"></li>';
 								echo '<li><a href="index.php?lng='.$webaktlang.'&mod=y&debugger='.($webadatok["debugmod"]==1 ? '0' : '1').'">Debug mód '.($webadatok["debugmod"]==1 ? 'ki' : 'be').'kapcsolása</a></li>
 										<li class="divider"></li>';

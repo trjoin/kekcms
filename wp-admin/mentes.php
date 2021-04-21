@@ -1240,6 +1240,55 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		$parancs="select title from ".$elotag."_parameterek";
 		$hova="index.php?lng=".$webaktlang."";
 	}
+	//új modul készítése
+	if(isset($_POST["modulcreate"]) AND $_POST["modulcreate"]!="" AND $_POST["modulcreate"]!=" " AND $_SESSION["userlogged"]=="nimda")
+	{
+		if(!file_exists("../module_".$_POST["modulnev"].".trj"))
+		{
+			$modulnev=str_replace($mirol,$mire,strtolower($_POST["modulnev"]));
+			touch("../module_".$modulnev.".trj");
+			$fm=fopen("../module_".$modulnev.".trj","w");
+			fwrite($fm,$_POST["modultartalom"]);
+			
+			$savemodule=$pdo->query("insert into ".$elotag."_modulok(modulnev,modultartalom,integ,bekapcsolva) values('".$modulnev."','1','1','igen')");
+			
+			$parancs="select title from ".$elotag."_parameterek";
+		}
+		else
+		{
+			$parancs="";
+		}
+
+		$hova="index.php?lng=".$webaktlang."&mod=y&modmod=1";
+	}
+	//modul szerkesztés mentése
+	if(isset($_POST["modulmoding"]) AND $_POST["modulmoding"]!="" AND $_POST["modulmoding"]!=" " AND $_SESSION["userlogged"]=="nimda")
+	{
+		if(file_exists("../module_".$_POST["modulnev"].".trj"))
+		{
+			unlink("../module_".$_POST["modulnev"].".trj");
+			touch("../module_".$_POST["modulnev"].".trj");
+			$fm=fopen("../module_".$_POST["modulnev"].".trj","w");
+			fwrite($fm,$_POST["modultartalom"]);
+			$parancs="update ".$elotag."_modulok set modulnev='".$_POST["modulnev"]."' where mid='".$_POST["modulmoding"]."'";
+		}
+		else
+		{
+			$parancs="";
+		}
+		
+		$hova="index.php?lng=".$webaktlang."&mod=y&modmod=1";
+	}
+	//modul törlése
+	if(isset($_REQUEST["moduldel"]))
+	{
+		$leker=$pdo->query("select * from ".$elotag."_modulok where mid='".$_REQUEST["moduldel"]."'");
+		$l=$leker->fetch();
+		$modulnev=$l["modulnev"];
+		unlink("../module_".$modulnev.".trj");
+		$parancs="delete from ".$elotag."_modulok where mid='".$_REQUEST["moduldel"]."'";
+		$hova="index.php?lng=".$webaktlang."&mod=y&modmod=1";
+	}
 	//parancsok lefuttatása
 	if(isset($parancs) AND $parancs!="")
 	{

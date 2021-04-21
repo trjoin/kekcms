@@ -335,7 +335,14 @@ if(!isset($_REQUEST["furl"]))
 				
 				if($oldal["tomodul"]!="")
 				{
-					include($oldal["tomodul"].".php");
+					if(file_exists($oldal["tomodul"].".php"))
+					{
+						include($oldal["tomodul"].".php");
+					}
+					else
+					{
+						include("module_".$oldal["tomodul"].".trj");
+					}
 				}
 				
 		echo '		<div class="clearfix"> </div>
@@ -353,7 +360,14 @@ if(!isset($_REQUEST["furl"]))
 				
 				if($oldal["tomodul"]!="")
 				{
-					include($oldal["tomodul"].".php");
+					if(file_exists($oldal["tomodul"].".php"))
+					{
+						include($oldal["tomodul"].".php");
+					}
+					else
+					{
+						include("module_".$oldal["tomodul"].".trj");
+					}
 				}
 				
 		echo '	<div class="clearfix"> </div>

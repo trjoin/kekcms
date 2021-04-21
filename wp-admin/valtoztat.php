@@ -628,6 +628,58 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 			echo '<input type="submit" value="mentés" class="btn btn-large btn-secondary">';
 		echo "</form>";
 	}
+	//új modul hozzáadása
+	if(isset($_REQUEST["ujmodul"]) AND $_SESSION["userlogged"]=="nimda")
+	{
+		echo '<h4>Weboldal MODUL hozzáadása:</h4>';
+		echo '<form name="root-module" action="index.php?lng='.$webaktlang.'&mod=y" method="POST">';
+		echo '<input type="hidden" name="modulcreate" value="root">';
+		echo '<input type="text" name="modulnev" placeholder="Új modul neve" style="width:200px;" requried>';
+		echo '<textarea name="modultartalom" style="width:100%;height:450px" placeholder="Modul programkódja..."></textarea>';
+		echo '<input type="submit" value="mentés" class="btn btn-secondary">';
+		echo '</form>';
+	}
+	//modulok szerkesztése
+	if(isset($_REQUEST["modmod"]) AND $_SESSION["userlogged"]=="nimda")
+	{
+		echo '<h4>Weboldal MODULOK szerkesztése:</h4>';
+		if(isset($_REQUEST["modulkod"]) AND $_REQUEST["modulkod"]!="" AND $_REQUEST["modulkod"]!=" ")
+		{
+			$modulokload=$pdo->query("select * from ".$elotag."_modulok where mid='".$_REQUEST["modulkod"]."'");
+			$md=$modulokload->fetch();
+			
+			$fm=fopen("../module_".$md["modulnev"].".trj","r");
+			$szoveg="";
+			while(!feof($fm))
+			{
+				$betu=fgetc($fm);
+				$szoveg=$szoveg.$betu;
+			}
+			$modultartalom=$szoveg;
+			echo '<form name="root-module" action="index.php?lng='.$webaktlang.'&mod=y" method="POST">';
+			echo '<input type="hidden" name="modulmoding" value="'.$md["mid"].'">';
+			echo '<input type="hidden" name="modulnev" value="'.$md["modulnev"].'">';
+			echo '<input type="text" name="modulnamed" style="width:200px;" value="'.$md["modulnev"].'" disabled>';
+			echo '<textarea name="modultartalom" style="width:100%;height:450px" placeholder="Modul programkódja...">'.$modultartalom.'</textarea>';
+			echo '<input type="submit" value="mentés" class="btn btn-secondary">';
+			echo '</form>';
+		}
+		else
+		{
+			$modulokload=$pdo->query("select * from ".$elotag."_modulok where modultartalom!='0'");
+			if($modulokload->rowCount()>0)
+			{
+				while($md=$modulokload->fetch())
+				{
+					echo '<b>Modul név:</b> '.$md["modulnev"].' | <a href="index.php?lng='.$webaktlang.'&mod=y&modmod=1&modulkod='.$md["mid"].'" class="btn btn-sm btn-secondary"><i class="fa fa-pencil"></i></a> <a href="index.php?lng='.$webaktlang.'&mod=y&moduldel='.$md["mid"].'" class="btn btn-sm btn-secondary"><i class="fa fa-trash"></i></a><br>';
+				}
+			}
+			else
+			{
+				echo '<p><b>Még nincs létrehozva modul!</b><br><br><a href="index.php?lng='.$webaktlang.'&mod=y&ujmodul=1" class="btn btn-secondary btn-sm">új létrehozása</a></p>';
+			}
+		}
+	}
 	//alaprendszer frissítése
 	if(isset($_REQUEST["sysupd"]))
 	{

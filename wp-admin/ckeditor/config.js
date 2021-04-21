@@ -7,7 +7,7 @@ CKEDITOR.editorConfig = function( config ) {
 	config.language = 'hu';
 	config.allowedContent = true;
 	config.extraPlugins = 'imageresize';
-	
+	config.extraPlugins = 'syntaxhighlight';
 	config.extraPlugins = 'youtube';
 	config.youtube_width = '100%';
 	config.youtube_responsive = true;
