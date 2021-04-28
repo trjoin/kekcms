@@ -31,6 +31,12 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 					list($width, $height) = getimagesize("../menu/".$fajlnev);
 					if($width>="1")
 					{
+						//töröljük a régi képet
+						$leker=$pdo->querty("select * from ".$elotag."_menu_".$webaktlang." where kod='".$_POST["modosit"]."'");
+						$l=$leker->fetch();
+						$regikep=$l["ogimage"];
+						unlink('../menu/'.$regikep);
+						
 						$parancs="update ".$elotag."_menu_".$webaktlang." set furl='".$furl."',tolink='".$_POST["tolink"]."',tomodul='".$_POST["tomodul"]."',nev='".$_POST["mfnev"]."',tartalom='".trim($_POST["tartalom"])."',metatitle='".trim($_POST["metatitle"])."',metakeywords='".trim($_POST["metakeywords"])."',metadesc='".trim($_POST["metadesc"])."',ogimage='".$fajlnev."',datum=now() where kod='".$_POST["modosit"]."'";
 						$hova="index.php?lng=".$webaktlang."&page=".$_POST["modosit"];
 					}
@@ -144,6 +150,12 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 					list($width, $height) = getimagesize("../menu/".$fajlnev);
 					if($width>="1")
 					{
+						//töröljük a régi képet
+						$leker=$pdo->querty("select * from ".$elotag."_almenu_".$webaktlang." where kod='".$_POST["almodosit"]."'");
+						$l=$leker->fetch();
+						$regikep=$l["ogimage"];
+						unlink('../menu/'.$regikep);
+						
 						$parancs="update ".$elotag."_almenu_".$webaktlang." set furl='".$furl."',tolink='".$_POST["tolink"]."',tomodul='".$_POST["tomodul"]."',nev='".$_POST["manev"]."',tartalom='".trim($_POST["tartalom"])."',metatitle='".trim($_POST["metatitle"])."',metakeywords='".trim($_POST["metakeywords"])."',metadesc='".trim($_POST["metadesc"])."',ogimage='".$fajlnev."',datum=now() where kod='".$_POST["almodosit"]."'";
 						$hova="index.php?lng=".$webaktlang."&alpage=".$_POST["almodosit"];
 					}
