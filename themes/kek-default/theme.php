@@ -169,10 +169,16 @@ else
 		if($webadatok["gdpr"]!="")
 		{
 	?>
+	<!-- Cookie Consent by https://www.CookieConsent.com -->
+	<script type="text/javascript" src="//www.cookieconsent.com/releases/3.1.0/cookie-consent.js"></script>
 	<script type="text/javascript">
-		window.cookieconsent_options = {"message":"Ez a weboldal sütiket (cookie-kat) használ a jobb felhasználói élmény érdekében.","dismiss":"Rendben","learnMore":"További infó","link":"<?php echo $absp.'/'.$webadatok['gdpr']; ?>","theme":"light-bottom"};
+	document.addEventListener('DOMContentLoaded', function () {
+	cookieconsent.run({"notice_banner_type":"interstitial","consent_type":"implied","palette":"light","language":"hu","website_name":"<?php echo $absp; ?>","cookies_policy_url":"<?php echo $absp.'/'.$webadatok['gdpr']; ?>","change_preferences_selector":"#changeprefs"});
+	});
 	</script>
-	<script async src="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/1.0.10/cookieconsent.min.js"></script>
+
+	<noscript>ePrivacy and GPDR Cookie Consent by <a href="https://www.CookieConsent.com/" rel="nofollow noopener">Cookie Consent</a></noscript>
+	<!-- End Cookie Consent by https://www.CookieConsent.com -->
 	<?php
 		}
 	?>
@@ -699,7 +705,7 @@ if(!isset($_REQUEST["furl"]))
 		}
 	}
 ?>
-		<p>Copyright &copy; <?php $d=getDate(); $datum=$d["year"]; echo $datum." ".$webadatok["copyright"]; ?> | Programozás: <a href="https://trswebdesign.hu" target="_blank" title="webfejlesztés szolnok" rel="nofollow">TrJoin</a></p>
+<p>Copyright &copy; <?php $d=getDate(); $datum=$d["year"]; echo $datum." ".$webadatok["copyright"]; ?> | <a href="#" id="changeprefs">Change your cookie preferences</a> | <?php  if($webadatok["gdpr"]!=""){ ?><a href="<?php echo $absp.'/'.$webadatok['gdpr']; ?>" target="_blank">ADATVÉDELMI TÁJÉKOZTATÓ</a> |<?php } ?> Programozás: <a href="https://trswebdesign.hu" target="_blank" title="webfejlesztés szolnok" rel="nofollow">TrJoin</a></p>
 	</div>
 	<script>
 		$('ul.dropdown-menu li').hover(function () {
