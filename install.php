@@ -195,7 +195,7 @@ if(isset($_POST["lepes3"]) AND $_POST["lepes3"]=="igen")
 	
 	//alap táblák létrehozása
 	$letrehoz_admin=$pdo->query("CREATE TABLE ".$elotag."_admin (kod INT(10) auto_increment, nev VARCHAR(250), jelszo VARCHAR(250), email VARCHAR(250), PRIMARY KEY(kod)) DEFAULT CHARSET=utf8");
-	$letrehoz_param=$pdo->query("CREATE TABLE ".$elotag."_parameterek (title VARCHAR(250), keywords VARCHAR(250), description VARCHAR(250), sitename VARCHAR(250), siteslogen VARCHAR(250), copyright VARCHAR(250), sablon VARCHAR(25), defaultlink TEXT, breakoff INT(2), debugmod INT(2) DEFAULT '0', ogimage TEXT, favicon TEXT, gdpr TEXT, akcioterv TEXT, bkpdate DATE DEFAULT '0000-00-00', PRIMARY KEY(title)) DEFAULT CHARSET=utf8");
+	$letrehoz_param=$pdo->query("CREATE TABLE ".$elotag."_parameterek (title VARCHAR(250), keywords VARCHAR(250), description VARCHAR(250), sitename VARCHAR(250), siteslogen VARCHAR(250), copyright VARCHAR(250), sablon VARCHAR(25), defaultlink TEXT, breakoff INT(2), debugmod INT(2) DEFAULT '0', ogimage TEXT, favicon TEXT, ceglogo TEXT, kapcstel TEXT, kapcsemail TEXT, gdpr TEXT, akcioterv TEXT, bkpdate DATE DEFAULT '0000-00-00', PRIMARY KEY(title)) DEFAULT CHARSET=utf8");
 	$letrehoz_modul=$pdo->query("CREATE TABLE ".$elotag."_modulok (mid INT(10) auto_increment, modulnev TEXT, modultartalom INT(2), integ INT(0) DEFAULT '0', bekapcsolva ENUM('igen','nem') DEFAULT 'igen', PRIMARY KEY (mid)) DEFAULT CHARSET=utf8");
 	$letrehoz_nyelv=$pdo->query("CREATE TABLE ".$elotag."_nyelvek (langkod INT(10) AUTO_INCREMENT, langnev TEXT, megjeleno TEXT, PRIMARY KEY (langkod)) DEFAULT CHARSET=utf8");
 /*** modulos táblák létrehozása és feltöltése ***/
