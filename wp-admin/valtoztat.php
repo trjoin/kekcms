@@ -648,7 +648,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 			$modulokload=$pdo->query("select * from ".$elotag."_modulok where mid='".$_REQUEST["modulkod"]."'");
 			$md=$modulokload->fetch();
 			
-			$fm=fopen("../module_".$md["modulnev"].".trj","r");
+			$fm=fopen("../modules/module_".$md["modulnev"].".trj","r");
 			$szoveg="";
 			while(!feof($fm))
 			{

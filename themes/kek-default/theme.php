@@ -341,13 +341,13 @@ if(!isset($_REQUEST["furl"]))
 				
 				if($oldal["tomodul"]!="")
 				{
-					if(file_exists($oldal["tomodul"].".php"))
+					if(file_exists("modules/".$oldal["tomodul"].".php"))
 					{
-						include($oldal["tomodul"].".php");
+						include("modules/".$oldal["tomodul"].".php");
 					}
 					else
 					{
-						include("module_".$oldal["tomodul"].".trj");
+						include("modules/module_".$oldal["tomodul"].".trj");
 					}
 				}
 				
@@ -366,13 +366,13 @@ if(!isset($_REQUEST["furl"]))
 				
 				if($oldal["tomodul"]!="")
 				{
-					if(file_exists($oldal["tomodul"].".php"))
+					if(file_exists("modules/".$oldal["tomodul"].".php"))
 					{
-						include($oldal["tomodul"].".php");
+						include("modules/".$oldal["tomodul"].".php");
 					}
 					else
 					{
-						include("module_".$oldal["tomodul"].".trj");
+						include("modules/module_".$oldal["tomodul"].".trj");
 					}
 				}
 				
