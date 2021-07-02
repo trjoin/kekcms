@@ -176,8 +176,6 @@ else
 	cookieconsent.run({"notice_banner_type":"interstitial","consent_type":"implied","palette":"light","language":"hu","website_name":"<?php echo $absp; ?>","cookies_policy_url":"<?php echo $absp.'/'.$webadatok['gdpr']; ?>","change_preferences_selector":"#changeprefs"});
 	});
 	</script>
-
-	<noscript>ePrivacy and GPDR Cookie Consent by <a href="https://www.CookieConsent.com/" rel="nofollow noopener">Cookie Consent</a></noscript>
 	<!-- End Cookie Consent by https://www.CookieConsent.com -->
 	<?php
 		}

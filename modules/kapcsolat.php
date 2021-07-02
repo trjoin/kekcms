@@ -1,25 +1,46 @@
-<script src="https://www.google.com/recaptcha/api.js"></script>
 <?php
-$captcha="";
-if(isset($_POST["g-recaptcha-response"])){
-	$captcha=$_POST["g-recaptcha-response"];
+session_start();
+$kuldott="";
+if(isset($_SESSION["titkos"]) AND $_SESSION["titkos"]!="" AND $_SESSION["titkos"]!=" " AND isset($_POST["csapta"]))
+{
+	foreach($_SESSION["titkos"] as $ujbetu)
+	{
+		$kuldott=$kuldott.$ujbetu;
+	}
+}
+else
+{
+	$_SESSION["titkos"]="";
+	/*** SAJÁT CSAPTA KÉSZITÉSE ***/
+	$betuk=array("A","B","C","D","E","F","G","H","J","K","L","M","N","O","P","R","S","T","U","W","X","Y","Z","2","3","4","5","6","7","8","9");
+	$betutomb=array();
+	$titkos="";
+	for($i=0;$i<6;$i++)
+	{
+		$velbetu=$betuk[rand(0,count($betuk)-1)];
+		$titkos=$titkos.$velbetu;
+		array_push($betutomb,$velbetu);
+	}
+
+	$_SESSION["titkos"]=$betutomb;
 }
 
-$response=file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=6LcpYwUTAAAAAPVTd2VpyoAsgG3izvEeIMcItx3c&response=".$captcha."&remoteip=".$_SERVER["REMOTE_ADDR"]);
-
-if($captcha!="" AND $response.success!=false AND isset($_POST["email"]) AND $_POST["email"]!="")
+if($kuldott!="" AND $kuldott!=" " AND $kuldott==$_POST["csapta"] AND isset($_POST["email"]) AND $_POST["email"]!="")
 {
 	$targy="Üzenet a weboldalról!";
+	$targyu="Köszönjük érdeklődését!";
 	$felado=trim($_POST["name"]);
 	$email=trim($_POST["email"]);
 	$phone=trim($_POST["telefonszam"]);
 	$uzenet=trim($_POST["message"]);
 	$mailcim  = "info@trswebdesign.hu";
 	$headers  = "MIME-Version: 1.0" . "\r\n";    
-	$headers .= "Content-type:text/html;charset=utf8" . "\r\n";   
+	$headers .= "Content-type:text/html;charset=utf-8" . "\r\n";   
 	$headers .= "From: <".$email.">" . "\r\n";
 	$ido = ("Beérkezett: ".date("Y.m.d. H:i:s", time())."\r\n\r\n");
-	$level=mail ($mailcim, $targy, "<b>Üzenete érkezett!</b><br /><br />Az adatforgalmi figyelő értesít, hogy ".$felado." üzenetet írt az alábbiakban részletezett adatokkal.<br /><br /><b>Küldő adatai:</b><br />Név: ".$felado."<br />E-mail: ".$email."<br />Telefonszám: ".$phone."<br /><br />Üzenet:<br />" .$uzenet. "<br /><br /><br />" .$ido. "<br />",$headers);
+	$level=mail ($mailcim, $targy, "<b>Üzenete érkezett!</b><br /><br />Az adatforgalmi figyelő értesít, hogy ".$felado." üzenetet írt az alábbiakban részletezett adatokkal.<br /><br /><b>Küldő adatai:</b><br />Név: ".$felado."<br />E-mail: ".$email."<br />Telefonszám: ".$phone."<br />Üzenet: ".$uzenet."<br /><br /><br />" .$ido. "<br />",$headers);
+	//levél az ügyfélnek
+	mail ($email, $targyu, "<b>Kedves ".$felado.".<br><br>Köszönjük, hogy ".$absp." weboldalunkról elküldte üzenetét, megkeresését.</b><br /><br />Hamarosan felvesszük Önnel a kapcsolatot, és segítünk megoldást találni kérésére.<br /><br />További szép napot.<br>" .$ido. "</font><br />",$headers);
 	if($level)
 	{
 		print("
@@ -27,7 +48,6 @@ if($captcha!="" AND $response.success!=false AND isset($_POST["email"]) AND $_PO
 				function atiranyit()
 				{
 					alert('Sikeres.');
-					location.href = 'index.php';
 				}
 				ID = window.setTimeout('atiranyit();', 1*1);
 			</script>
@@ -39,7 +59,6 @@ if($captcha!="" AND $response.success!=false AND isset($_POST["email"]) AND $_PO
 				function atiranyit()
 				{
 					alert('Hiba történt!');
-					location.href = 'index.php';
 				}
 				ID = window.setTimeout('atiranyit();', 1*1);
 			  </script>");
@@ -66,8 +85,10 @@ if($captcha!="" AND $response.success!=false AND isset($_POST["email"]) AND $_PO
 		<td><textarea id="message" name="message" rows="8" cols="50"></textarea></td>
 	  </tr>
 	  <tr>
-	    <td>
-			<div class="g-recaptcha" name="g-recaptcha" data-sitekey="6LcpYwUTAAAAAL-H7Vv9y73fuOik9A_aUC0JvHUX"></div>
+	    <td valign="top"><label for="csapta">Grafikus kód *:</label></td>
+		<td valign="top">
+			<img src="modules/csapta.php"><br><br>
+			<input type="text" name="csapta" id="csapta" placeholder="Adja meg a fentebb látható kódot" class="pix_text" required />
 		</td>
 	  </tr>
 	  <tr>
