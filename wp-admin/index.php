@@ -350,6 +350,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 									<li><a href="index.php?lng='.$webaktlang.'&page=shop&kategoriak=y">Kategóriák kezelése</a></li>
 									<li><a href="index.php?lng='.$webaktlang.'&page=shop&gyartok=y">Gyártók kezelése</a></li>
 									<li><a href="index.php?lng='.$webaktlang.'&page=shop&rendelesek=y">Megrendelések kezelése</a></li>
+									<li><a href="index.php?lng='.$webaktlang.'&page=hirlevel">Hírlevél kezelése</a></li>
 								</ul>    				
 							</li>';
 		}
@@ -441,6 +442,22 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 						<div class="row-fluid">
 							<div class="span12">';
 				include("shopadmin.php");
+			echo '			</div>
+						</div>
+					</div>
+				</div>';
+		}
+		elseif($_REQUEST["page"]=="hirlevel")
+		{
+			echo '<div class="widget stacked">
+					<div class="widget-header">
+						<i class="icon-th-large"></i>
+						<h3>Hírlevél küldő - [K.E.K. Admin]</h3>
+					</div>
+					<div class="widget-content">
+						<div class="row-fluid">
+							<div class="span12">';
+				include("hirlevel.php");
 			echo '			</div>
 						</div>
 					</div>

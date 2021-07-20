@@ -268,10 +268,11 @@ if(isset($_POST["lepes3"]) AND $_POST["lepes3"]=="igen")
 			$letrehoz_gyartok=$pdo->query("CREATE TABLE ".$elotag."_shop_gyartok (shop_gyartoid int(20) NOT NULL AUTO_INCREMENT, shop_gyartonev varchar(200) NOT NULL, PRIMARY KEY (shop_gyartoid)) DEFAULT CHARSET=utf8");
 			$letrehoz_kategok=$pdo->query("CREATE TABLE ".$elotag."_shop_kategoriak (shop_kategoriaid int(20) NOT NULL AUTO_INCREMENT, shop_kategkep text NOT NULL, shop_kategorianev varchar(200) NOT NULL, PRIMARY KEY (shop_kategoriaid)) DEFAULT CHARSET=utf8");
 			$letrehoz_rendelesek=$pdo->query("CREATE TABLE ".$elotag."_shop_rendelesek (m_id int(20) NOT NULL AUTO_INCREMENT, megrendelo text NOT NULL, tetelek text NOT NULL, szallitas text NOT NULL, fizetes varchar(200) NOT NULL, datum date NOT NULL, duma text NOT NULL, PRIMARY KEY (m_id)) DEFAULT CHARSET=utf8");
+			$letrehoz_hirlevel=$pdo->query("CREATE TABLE ".$elotag."_hirlevel (nid int(20) NOT NULL AUTO_INCREMENT, ntargy text NOT NULL, ntartalom longtext NOT NULL, ndatum date NOT NULL DEFAULT '0000-00-00', kikuldve date NOT NULL DEFAULT '0000-00-00', PRIMARY KEY (nid)) DEFAULT CHARSET=utf8");
 			mkdir("./shop", 0777, true);
 			mkdir("./shop/kepek", 0777, true);
 			mkdir("./shop/kateg", 0777, true);
-			if(!$letrehoz_shop OR !$letrehoz_gyartok OR !$letrehoz_kategok OR !$letrehoz_rendelesek){ $hibak_l++; $hibauzenet=$hibauzenet."- WEBSHOP-kezelő tábla létrehozása sikertelen!<br>"; }
+			if(!$letrehoz_shop OR !$letrehoz_gyartok OR !$letrehoz_kategok OR !$letrehoz_rendelesek OR !$letrehoz_hirlevel){ $hibak_l++; $hibauzenet=$hibauzenet."- WEBSHOP-kezelő tábla létrehozása sikertelen!<br>"; }
 		}
 
 	if($hibak_l=="0" AND $hibauzenet=="")

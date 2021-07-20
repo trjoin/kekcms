@@ -210,7 +210,7 @@ else
 							<span class="icon-bar"></span>
 							<span class="icon-bar"></span>
 						</button>
-						<a class="navbar-brand" href="index.php">
+						<a class="navbar-brand" href="/index.php">
 							<h1><span class="fa fa-code" aria-hidden="true"></span><?php print($webadatok["sitename"]); ?> <label><?php print($webadatok["siteslogen"]); ?></label></h1>
 							<br><p><?php print($webadatok["kapcstel"]); ?> | <?php print($webadatok["kapcsemail"]); ?></p>
 						</a>
@@ -255,7 +255,7 @@ else
 		{
 			$egylang=$pdo->query("select * from ".$elotag."_nyelvek");
 			echo '<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="'.$absp.'/themes/'.$webadatok["sablon"].'/images/f_hun.gif" alt="Magyar"> Magyar <b class="caret"></b></a>
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="'.$absp.'/themes/'.$webadatok["sablon"].'/images/f_'.$webaktlang.'.gif" alt="'.$webaktlang.'"> <b class="caret"></b></a>
 					<ul class="dropdown-menu">';
 					while($el=$egylang->fetch())
 					{
