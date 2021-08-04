@@ -9,6 +9,7 @@ else
 {
 	$absp=(isset($_SERVER['HTTPS']) ? "https" : "http") . "://".$_SERVER["HTTP_HOST"];
 	$fullurl=$absp.$_SERVER["REQUEST_URI"];
+	$defaultlink=$webadatok["defaultlink"];
 	/*** NYELVVÁLTÁS, MUNKAMENETTEL, BÁRMELYIK ÉS BÁRMENNYI NYELVHEZ JÓ! ***/
 	if(isset($_REQUEST["lng"]))
 	{
