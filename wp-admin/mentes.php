@@ -32,7 +32,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 					if($width>="1")
 					{
 						//töröljük a régi képet
-						$leker=$pdo->querty("select * from ".$elotag."_menu_".$webaktlang." where kod='".$_POST["modosit"]."'");
+						$leker=$pdo->query("select * from ".$elotag."_menu_".$webaktlang." where kod='".$_POST["modosit"]."'");
 						$l=$leker->fetch();
 						$regikep=$l["ogimage"];
 						if($regikep!="")
@@ -154,7 +154,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 					if($width>="1")
 					{
 						//töröljük a régi képet
-						$leker=$pdo->querty("select * from ".$elotag."_almenu_".$webaktlang." where kod='".$_POST["almodosit"]."'");
+						$leker=$pdo->query("select * from ".$elotag."_almenu_".$webaktlang." where kod='".$_POST["almodosit"]."'");
 						$l=$leker->fetch();
 						$regikep=$l["ogimage"];
 						if($regikep!="")
