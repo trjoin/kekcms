@@ -344,9 +344,13 @@ if(!isset($_REQUEST["furl"]))
 					{
 						include("modules/".$oldal["tomodul"].".php");
 					}
-					else
+					elseif(file_exists("modules/module_".$oldal["tomodul"].".trj"))
 					{
 						include("modules/module_".$oldal["tomodul"].".trj");
+					}
+					else
+					{
+						include("modules/404.php");
 					}
 				}
 				
@@ -704,7 +708,7 @@ if(!isset($_REQUEST["furl"]))
 		}
 	}
 ?>
-<p>Copyright &copy; <?php $d=getDate(); $datum=$d["year"]; echo $datum." ".$webadatok["copyright"]; ?> | <a href="#" id="changeprefs">Change your cookie preferences</a> | <?php  if($webadatok["gdpr"]!=""){ ?><a href="<?php echo $absp.'/'.$webadatok['gdpr']; ?>" target="_blank">ADATVÉDELMI TÁJÉKOZTATÓ</a> |<?php } ?> Programozás: <a href="https://trswebdesign.hu" target="_blank" title="webfejlesztés szolnok" rel="nofollow">TrJoin</a></p>
+<p>Copyright &copy; <?php $d=getDate(); $datum=$d["year"]; echo $datum." ".$webadatok["copyright"]; ?> | <?php if($webadatok["gdpr"]!=""){ ?><a href="#" id="changeprefs">Süti beállítások</a> | <a href="<?php echo $absp.'/'.$webadatok['gdpr']; ?>" target="_blank">ADATVÉDELMI TÁJÉKOZTATÓ</a> |<?php } ?> Programozás: <a href="https://trswebdesign.hu" target="_blank" title="webfejlesztés szolnok" rel="nofollow">TrJoin</a></p>
 	</div>
 	<script>
 		$('ul.dropdown-menu li').hover(function () {
