@@ -2,7 +2,7 @@
 session_start();
 if($webadatok["breakoff"]=="1" AND !isset($_SESSION["userlogged"]))
 {
-	header("Location: under.html");
+	header("Location: /under.html");
 	exit;
 }
 else
