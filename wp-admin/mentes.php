@@ -40,34 +40,34 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 							unlink('../menu/'.$regikep);
 						}
 						
-						$parancs="update ".$elotag."_menu_".$webaktlang." set furl='".$furl."',tolink='".$_POST["tolink"]."',tomodul='".$_POST["tomodul"]."',nev='".$_POST["mfnev"]."',tartalom='".trim($_POST["tartalom"])."',metatitle='".trim($_POST["metatitle"])."',metakeywords='".trim($_POST["metakeywords"])."',metadesc='".trim($_POST["metadesc"])."',ogimage='".$fajlnev."',datum=now() where kod='".$_POST["modosit"]."'";
+						$parancs="update ".$elotag."_menu_".$webaktlang." set furl='".$furl."',tolink='".$_POST["tolink"]."',tomodul='".$_POST["tomodul"]."',nev='".$_POST["mfnev"]."',tartalom='".trim($_POST["tartalom"])."',metatitle='".trim($_POST["metatitle"])."',metakeywords='".trim($_POST["metakeywords"])."',metadesc='".trim($_POST["metadesc"])."',ogimage='".$fajlnev."' where kod='".$_POST["modosit"]."'";
 						$hova="index.php?lng=".$webaktlang."&page=".$_POST["modosit"];
 					}
 					else
 					{
 						unlink("../menu/".$fajlnev);
 						echo "<script> alert('Fájl feltöltési hiba, ez nem kép! De az adatokat mentettük!'); </script>";
-						$parancs="update ".$elotag."_menu_".$webaktlang." set furl='".$furl."',tolink='".$_POST["tolink"]."',tomodul='".$_POST["tomodul"]."',nev='".$_POST["mfnev"]."',tartalom='".trim($_POST["tartalom"])."',metatitle='".trim($_POST["metatitle"])."',metakeywords='".trim($_POST["metakeywords"])."',metadesc='".trim($_POST["metadesc"])."',datum=now() where kod='".$_POST["modosit"]."'";
+						$parancs="update ".$elotag."_menu_".$webaktlang." set furl='".$furl."',tolink='".$_POST["tolink"]."',tomodul='".$_POST["tomodul"]."',nev='".$_POST["mfnev"]."',tartalom='".trim($_POST["tartalom"])."',metatitle='".trim($_POST["metatitle"])."',metakeywords='".trim($_POST["metakeywords"])."',metadesc='".trim($_POST["metadesc"])."' where kod='".$_POST["modosit"]."'";
 						$hova="index.php?lng=".$webaktlang."&page=".$_POST["modosit"];
 					}
 				}
 				else
 				{
 					echo "<script> alert('Sikertelen művelet. :( A kép nem volt megfelelő és nem sikerült feltölteni, de az adatokat mentettük.'); </script>";
-					$parancs="update ".$elotag."_menu_".$webaktlang." set furl='".$furl."',tolink='".$_POST["tolink"]."',tomodul='".$_POST["tomodul"]."',nev='".$_POST["mfnev"]."',tartalom='".trim($_POST["tartalom"])."',metatitle='".trim($_POST["metatitle"])."',metakeywords='".trim($_POST["metakeywords"])."',metadesc='".trim($_POST["metadesc"])."',datum=now() where kod='".$_POST["modosit"]."'";
+					$parancs="update ".$elotag."_menu_".$webaktlang." set furl='".$furl."',tolink='".$_POST["tolink"]."',tomodul='".$_POST["tomodul"]."',nev='".$_POST["mfnev"]."',tartalom='".trim($_POST["tartalom"])."',metatitle='".trim($_POST["metatitle"])."',metakeywords='".trim($_POST["metakeywords"])."',metadesc='".trim($_POST["metadesc"])."' where kod='".$_POST["modosit"]."'";
 					$hova="index.php?lng=".$webaktlang."&page=".$_POST["modosit"];
 				}
 			}
 			else
 			{
 				echo "<script> alert('Sikertelen művelet. :( A kép formátuma nem volt megfelelő, a feltölthető formátum: JPG, PNG. De az adatokat mentettük!'); </script>";
-				$parancs="update ".$elotag."_menu_".$webaktlang." set furl='".$furl."',tolink='".$_POST["tolink"]."',tomodul='".$_POST["tomodul"]."',nev='".$_POST["mfnev"]."',tartalom='".trim($_POST["tartalom"])."',metatitle='".trim($_POST["metatitle"])."',metakeywords='".trim($_POST["metakeywords"])."',metadesc='".trim($_POST["metadesc"])."',datum=now() where kod='".$_POST["modosit"]."'";
+				$parancs="update ".$elotag."_menu_".$webaktlang." set furl='".$furl."',tolink='".$_POST["tolink"]."',tomodul='".$_POST["tomodul"]."',nev='".$_POST["mfnev"]."',tartalom='".trim($_POST["tartalom"])."',metatitle='".trim($_POST["metatitle"])."',metakeywords='".trim($_POST["metakeywords"])."',metadesc='".trim($_POST["metadesc"])."' where kod='".$_POST["modosit"]."'";
 				$hova="index.php?lng=".$webaktlang."&page=".$_POST["modosit"];
 			}
 		}
 		else
 		{
-			$parancs="update ".$elotag."_menu_".$webaktlang." set furl='".$furl."',tolink='".$_POST["tolink"]."',tomodul='".$_POST["tomodul"]."',nev='".$_POST["mfnev"]."',tartalom='".trim($_POST["tartalom"])."',metatitle='".trim($_POST["metatitle"])."',metakeywords='".trim($_POST["metakeywords"])."',metadesc='".trim($_POST["metadesc"])."',datum=now() where kod='".$_POST["modosit"]."'";
+			$parancs="update ".$elotag."_menu_".$webaktlang." set furl='".$furl."',tolink='".$_POST["tolink"]."',tomodul='".$_POST["tomodul"]."',nev='".$_POST["mfnev"]."',tartalom='".trim($_POST["tartalom"])."',metatitle='".trim($_POST["metatitle"])."',metakeywords='".trim($_POST["metakeywords"])."',metadesc='".trim($_POST["metadesc"])."' where kod='".$_POST["modosit"]."'";
 			$hova="index.php?lng=".$webaktlang."&page=".$_POST["modosit"];
 		}
 	}
@@ -75,7 +75,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 	if(isset($_POST["menunev"]))
 	{
 		$furl=str_replace($mirol, $mire, strtolower($_POST["menunev"]));
-		$parancs="insert into ".$elotag."_menu_".$webaktlang." (furl,tolink,nev,tartalom,sorszam,datum) values('".$furl."','".$_POST["tolink"]."','".$_POST["menunev"]."','".addslashes(trim($_POST["tartalom"]))."','".$_POST["sorszam"]."',now())";
+		$parancs="insert into ".$elotag."_menu_".$webaktlang." (furl,tolink,nev,tartalom,sorszam) values('".$furl."','".$_POST["tolink"]."','".$_POST["menunev"]."','".addslashes(trim($_POST["tartalom"]))."','".$_POST["sorszam"]."')";
 		$hova="index.php?lng=".$webaktlang."&page=saved";
 	}
 	//menüpont aktiválás
@@ -162,34 +162,34 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 							unlink('../menu/'.$regikep);
 						}
 						
-						$parancs="update ".$elotag."_almenu_".$webaktlang." set furl='".$furl."',tolink='".$_POST["tolink"]."',tomodul='".$_POST["tomodul"]."',nev='".$_POST["manev"]."',tartalom='".trim($_POST["tartalom"])."',metatitle='".trim($_POST["metatitle"])."',metakeywords='".trim($_POST["metakeywords"])."',metadesc='".trim($_POST["metadesc"])."',ogimage='".$fajlnev."',datum=now() where kod='".$_POST["almodosit"]."'";
+						$parancs="update ".$elotag."_almenu_".$webaktlang." set furl='".$furl."',tolink='".$_POST["tolink"]."',tomodul='".$_POST["tomodul"]."',nev='".$_POST["manev"]."',tartalom='".trim($_POST["tartalom"])."',metatitle='".trim($_POST["metatitle"])."',metakeywords='".trim($_POST["metakeywords"])."',metadesc='".trim($_POST["metadesc"])."',ogimage='".$fajlnev."' where kod='".$_POST["almodosit"]."'";
 						$hova="index.php?lng=".$webaktlang."&alpage=".$_POST["almodosit"];
 					}
 					else
 					{
 						unlink("../menu/".$fajlnev);
 						echo "<script> alert('Fájl feltöltési hiba, ez nem kép! De az adatokat mentettük!'); </script>";
-						$parancs="update ".$elotag."_almenu_".$webaktlang." set furl='".$furl."',tolink='".$_POST["tolink"]."',tomodul='".$_POST["tomodul"]."',nev='".$_POST["manev"]."',tartalom='".trim($_POST["tartalom"])."',metatitle='".trim($_POST["metatitle"])."',metakeywords='".trim($_POST["metakeywords"])."',metadesc='".trim($_POST["metadesc"])."',datum=now() where kod='".$_POST["almodosit"]."'";
+						$parancs="update ".$elotag."_almenu_".$webaktlang." set furl='".$furl."',tolink='".$_POST["tolink"]."',tomodul='".$_POST["tomodul"]."',nev='".$_POST["manev"]."',tartalom='".trim($_POST["tartalom"])."',metatitle='".trim($_POST["metatitle"])."',metakeywords='".trim($_POST["metakeywords"])."',metadesc='".trim($_POST["metadesc"])."' where kod='".$_POST["almodosit"]."'";
 						$hova="index.php?lng=".$webaktlang."&alpage=".$_POST["almodosit"];
 					}
 				}
 				else
 				{
 					echo "<script> alert('Sikertelen művelet. :( A kép nem volt megfelelő és nem sikerült feltölteni, de az adatokat mentettük.'); </script>";
-					$parancs="update ".$elotag."_almenu_".$webaktlang." set furl='".$furl."',tolink='".$_POST["tolink"]."',tomodul='".$_POST["tomodul"]."',nev='".$_POST["manev"]."',tartalom='".trim($_POST["tartalom"])."',metatitle='".trim($_POST["metatitle"])."',metakeywords='".trim($_POST["metakeywords"])."',metadesc='".trim($_POST["metadesc"])."',datum=now() where kod='".$_POST["almodosit"]."'";
+					$parancs="update ".$elotag."_almenu_".$webaktlang." set furl='".$furl."',tolink='".$_POST["tolink"]."',tomodul='".$_POST["tomodul"]."',nev='".$_POST["manev"]."',tartalom='".trim($_POST["tartalom"])."',metatitle='".trim($_POST["metatitle"])."',metakeywords='".trim($_POST["metakeywords"])."',metadesc='".trim($_POST["metadesc"])."' where kod='".$_POST["almodosit"]."'";
 					$hova="index.php?lng=".$webaktlang."&alpage=".$_POST["almodosit"];
 				}
 			}
 			else
 			{
 				echo "<script> alert('Sikertelen művelet. :( A kép formátuma nem volt megfelelő, a feltölthető formátum: JPG, PNG. De az adatokat mentettük!'); </script>";
-				$parancs="update ".$elotag."_almenu_".$webaktlang." set furl='".$furl."',tolink='".$_POST["tolink"]."',tomodul='".$_POST["tomodul"]."',nev='".$_POST["manev"]."',tartalom='".trim($_POST["tartalom"])."',metatitle='".trim($_POST["metatitle"])."',metakeywords='".trim($_POST["metakeywords"])."',metadesc='".trim($_POST["metadesc"])."',datum=now() where kod='".$_POST["almodosit"]."'";
+				$parancs="update ".$elotag."_almenu_".$webaktlang." set furl='".$furl."',tolink='".$_POST["tolink"]."',tomodul='".$_POST["tomodul"]."',nev='".$_POST["manev"]."',tartalom='".trim($_POST["tartalom"])."',metatitle='".trim($_POST["metatitle"])."',metakeywords='".trim($_POST["metakeywords"])."',metadesc='".trim($_POST["metadesc"])."' where kod='".$_POST["almodosit"]."'";
 				$hova="index.php?lng=".$webaktlang."&alpage=".$_POST["almodosit"];
 			}
 		}
 		else
 		{
-			$parancs="update ".$elotag."_almenu_".$webaktlang." set furl='".$furl."',tolink='".$_POST["tolink"]."',tomodul='".$_POST["tomodul"]."',nev='".$_POST["manev"]."',tartalom='".trim($_POST["tartalom"])."',metatitle='".trim($_POST["metatitle"])."',metakeywords='".trim($_POST["metakeywords"])."',metadesc='".trim($_POST["metadesc"])."',datum=now() where kod='".$_POST["almodosit"]."'";
+			$parancs="update ".$elotag."_almenu_".$webaktlang." set furl='".$furl."',tolink='".$_POST["tolink"]."',tomodul='".$_POST["tomodul"]."',nev='".$_POST["manev"]."',tartalom='".trim($_POST["tartalom"])."',metatitle='".trim($_POST["metatitle"])."',metakeywords='".trim($_POST["metakeywords"])."',metadesc='".trim($_POST["metadesc"])."' where kod='".$_POST["almodosit"]."'";
 			$hova="index.php?lng=".$webaktlang."&alpage=".$_POST["almodosit"];
 		}
 	}
@@ -197,7 +197,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 	if(isset($_POST["almenunev"]))
 	{
 		$furl=str_replace($mirol, $mire, strtolower($_POST["almenunev"]));
-		$parancs="insert into ".$elotag."_almenu_".$webaktlang." (furl,tolink,nev,szulo,tartalom,datum) values('".$furl."','".$_POST["tolink"]."','".$_POST["almenunev"]."','".$_POST["szulo"]."','".addslashes (trim ($_POST["tartalom"]))."',now())";
+		$parancs="insert into ".$elotag."_almenu_".$webaktlang." (furl,tolink,nev,szulo,tartalom) values('".$furl."','".$_POST["tolink"]."','".$_POST["almenunev"]."','".$_POST["szulo"]."','".addslashes (trim ($_POST["tartalom"]))."')";
 		$hova="index.php?lng=".$webaktlang."&page=saved";
 	}
 	//almenüpont aktiválás
