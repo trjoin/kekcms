@@ -606,6 +606,8 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 	xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
 	xsi:schemaLocation='http://www.sitemaps.org/schemas/sitemap/0.9
 	http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd'>";
+		//dátum megállapitása
+		$datum=date("Y-m-d H:i:s");
 		//elsődleges nyelv meghatározása
 		$egylang=$pdo->query("select * from ".$elotag."_nyelvek limit 1");
 		$ezanyelv=$egylang->fetch();
@@ -616,7 +618,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		{
 			$menupontok.='<url>
 						  <loc>'.$webadatok["defaultlink"].'/'.$e["furl"].'</loc>
-						  <lastmod>'.str_replace(" ","T",$e["datum"]).'+00:00</lastmod>
+						  <lastmod>'.str_replace(" ","T",$datum).'+00:00</lastmod>
 						  <priority>1.00</priority>
 						</url>';
 		}
@@ -626,7 +628,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 		{
 			$almenupontok.='<url>
 						  <loc>'.$webadatok["defaultlink"].'/'.$a["furl"].'</loc>
-						  <lastmod>'.str_replace(" ","T",$a["datum"]).'+00:00</lastmod>
+						  <lastmod>'.str_replace(" ","T",$datum).'+00:00</lastmod>
 						  <priority>0.80</priority>
 						</url>';
 		}
@@ -638,7 +640,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 			{
 				$cikkek.='<url>
 							  <loc>'.$webadatok["defaultlink"].'/'.$b["furl"].'</loc>
-							  <lastmod>'.str_replace(" ","T",$b["datum"]).'+00:00</lastmod>
+							  <lastmod>'.str_replace(" ","T",$datum).'+00:00</lastmod>
 							  <priority>1.00</priority>
 							</url>';
 			}
