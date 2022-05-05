@@ -26,10 +26,11 @@
 		include("../supportend.php");
 		$datumt = strtotime($support); //telepítési idő
 		$finale = strtotime(date("Y-m-d", strtotime("+24 month", $datumt))); //telepítéstől számított +24 hónap - azaz a lejárat napja!
+		$finaldatum = date("Y-m-d", $finale);
 		$ma = strtotime(date("Y-m-d"));
 		if($finale>=$ma)
 		{
-			echo '<li>Az Ön terméktámogatása <b>'.str_replace("-",".",$finale).'.</b> jár le, hosszabbításért kérjük keressen minket.</li>';
+			echo '<li>Az Ön terméktámogatása <b>'.str_replace("-",".",$finaldatum).'.</b> jár le, hosszabbításért kérjük keressen minket.</li>';
 		}
 		else
 		{
