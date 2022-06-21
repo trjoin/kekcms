@@ -504,6 +504,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 					<div class="widget-content">
 						<div class="row-fluid">
 							<div class="span12">';
+					echo 'Menüpont Friendly URL-je: /'.$oldal["furl"].'<br><br>';
 				if($oldal["aktiv"]=="1")
 				{
 					echo "<a href='index.php?lng=".$webaktlang."&mod=y&menustop=".$oldal["kod"]."' class='btn'><i class='fa fa-power-off'></i> kikapcsolás</a> ";
@@ -542,6 +543,7 @@ if(isset($_SESSION["userlogged"]) AND $_SESSION["userlogged"]!="" AND $_SESSION[
 					<div class="widget-content">
 						<div class="row-fluid">
 							<div class="span12">';
+					echo 'Almenüpont Friendly URL-je: /'.$oldal["furl"].'<br><br>';
 			if($oldal["aktiv"]=="1")
 			{
 				echo "<a href='index.php?lng=".$webaktlang."&mod=y&almenustop=".$oldal["kod"]."' class='btn'><i class='fa fa-power-off'></i> kikapcsolás</a> ";
