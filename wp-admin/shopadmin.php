@@ -1249,7 +1249,11 @@ function PDFetismod(f)
 	</style>
 	<script type="text/javascript">
 		$.extend( true, $.fn.dataTable.defaults, {
+			dom: '<"top"B>r<t><"bottom"lip><"clear">',
 			responsive: false,
+			paging:   true,
+			pageLength: 10,
+			order: [[ 0, "desc" ]],
 			buttons: [
 				{
 					extend: 'copy',
@@ -1315,24 +1319,21 @@ function PDFetismod(f)
 			}
 		});
 		$(document).ready(function() {
-			$('#datatables tfoot th').each( function () {
-				$(this).html( '<input type="text" />' );
-			});
+			$('#datatables thead tr:eq(1) th').each( function () {
+				var title = $(this).text();
+				$(this).html( '<input type="text" placeholder="Keresés '+title+'" class="column_search" />' );
+			} );
 
 			var table = $('#datatables').DataTable({
-				"pageLength": 50,
-				"order": [[ 0, "desc" ]],
-				dom: 'Brtip'
+				orderCellsTop: true,
+				fixedHeader: true,
 			});
 
-			table.columns().every( function () {
-				var column = this;
-			 
-				$( 'input', this.footer() ).on( 'keyup change', function () {
-					column
-						.search( this.value )
-						.draw();
-				});
+			$('#datatables thead').on( 'keyup', ".column_search",function () {
+				table
+					.column( $(this).parent().index() )
+					.search( this.value )
+					.draw();
 			});
 		});
 	</script>
@@ -1345,6 +1346,11 @@ function PDFetismod(f)
 					<br />
 					<table id='datatables' class='display'>
 						<thead>
+							<tr>
+								<th>Megrendelés ID</th>
+								<th>Megrendelés dátuma</th>
+								<th>Művelet</th>
+							</tr>
 							<tr>
 								<th>Megrendelés ID</th>
 								<th>Megrendelés dátuma</th>
@@ -1370,6 +1376,11 @@ function PDFetismod(f)
 					<br /><br />
 					<table id='datatables' class='display'>
 						<thead>
+							<tr>
+								<th>Kategória ID</th>
+								<th>Kategória név</th>
+								<th>Művelet</th>
+							</tr>
 							<tr>
 								<th>Kategória ID</th>
 								<th>Kategória név</th>
@@ -1411,6 +1422,11 @@ function PDFetismod(f)
 								<th>Gyártó név</th>
 								<th>Művelet</th>
 							</tr>
+							<tr>
+								<th>Gyártó ID</th>
+								<th>Gyártó név</th>
+								<th>Művelet</th>
+							</tr>
 						</thead><tbody>";
 			while($row = $osszes->fetch())
 			{
@@ -1438,6 +1454,13 @@ function PDFetismod(f)
 								<th>Termék ár</th>
 								<th>Művelet</th>
 							</tr>
+							<tr>
+								<th>Gyártó</th>
+								<th>Termék név</th>
+								<th>Termék kategória</th>
+								<th>Termék ár</th>
+								<th>Művelet</th>
+							</tr>
 						</thead><tbody>";
 			while($row = $osszes->fetch())
 			{
@@ -1450,15 +1473,6 @@ function PDFetismod(f)
 					   </tr>";
 			}
 			echo "</tbody>
-					<tfoot>
-						<tr>
-							<th align='left'><input type='text' name='search_t_gyarto' class='search_init' style='width:100px;' /></th>
-							<th align='left'><input type='text' name='search_t_nev' class='search_init' style='width:300px;' /></th>
-							<th align='left'><input type='text' name='search_t_kategoria' class='search_init' style='width:300px;' /></th>
-							<th align='left'><input type='text' style='display:none;' /></th>
-							<th align='left'><input type='text' style='display:none;' /></th>
-						</tr>
-					</tfoot>
 				</table>";
 		}
 	}
